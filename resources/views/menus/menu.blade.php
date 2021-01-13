@@ -257,14 +257,14 @@
                                             <span class="menu-text">List Team</span>
                                         </a>
                                     </li>
-                                    <li class="{{ (request()->routeIs('genelogy')) ? 'menu-item-active' : '' }} menu-item" aria-haspopup="true">
-                                        <a href="{{route('genelogy')}}" class="menu-link">
-                                            <i class="menu-bullet menu-bullet-dot">
-                                                <span></span>
-                                            </i>
-                                            <span class="menu-text">Genelogy</span>
-                                        </a>
-                                    </li>
+                                    {{--<li class="{{ (request()->routeIs('genelogy')) ? 'menu-item-active' : '' }} menu-item" aria-haspopup="true">--}}
+                                        {{--<a href="{{route('genelogy')}}" class="menu-link">--}}
+                                            {{--<i class="menu-bullet menu-bullet-dot">--}}
+                                                {{--<span></span>--}}
+                                            {{--</i>--}}
+                                            {{--<span class="menu-text">Genelogy</span>--}}
+                                        {{--</a>--}}
+                                    {{--</li>--}}
                                     <li class="{{ (request()->routeIs('roles')) ? 'menu-item-active' : '' }} menu-item" aria-haspopup="true">
                                         <a href="{{route('roles')}}" class="menu-link">
                                             <i class="menu-bullet menu-bullet-dot">
@@ -448,14 +448,14 @@
                                                 <span class="menu-text">List Team</span>
                                             </a>
                                         </li>
-                                        <li class="{{ (request()->routeIs('genelogy')) ? 'menu-item-active' : '' }} menu-item" aria-haspopup="true">
-                                            <a href="{{route('genelogy')}}" class="menu-link">
-                                                <i class="menu-bullet menu-bullet-dot">
-                                                    <span></span>
-                                                </i>
-                                                <span class="menu-text">Genelogy</span>
-                                            </a>
-                                        </li>
+                                        {{--<li class="{{ (request()->routeIs('genelogy')) ? 'menu-item-active' : '' }} menu-item" aria-haspopup="true">--}}
+                                            {{--<a href="{{route('genelogy')}}" class="menu-link">--}}
+                                                {{--<i class="menu-bullet menu-bullet-dot">--}}
+                                                    {{--<span></span>--}}
+                                                {{--</i>--}}
+                                                {{--<span class="menu-text">Genelogy</span>--}}
+                                            {{--</a>--}}
+                                        {{--</li>--}}
                                     </ul>
                                 </div>
                             </li>

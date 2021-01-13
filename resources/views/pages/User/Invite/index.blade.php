@@ -1230,7 +1230,7 @@
                                     </div>
                                     <div class="form-group ">
                                         <div id="app">
-                                            <example-component></example-component>
+                                            <state-territory-component></state-territory-component>
                                         </div>
                                     </div>
                                     <div class="form-group ">
@@ -1264,8 +1264,8 @@
                                             <input class="form-control" type="password" placeholder="Confirm Password" name="password_confirmation" />
                                             <input type="hidden" name="leader" value="{{$user->id}}">
                                             <input type="hidden" name="leader_level" value="{{$agent_levels->id}}">
-                                            <input type="hidden" name="territory" value="{{$leader->territory_id}}">
-                                            <input type="hidden" name="state" value="{{$leader->state_id}}">
+                                            {{--<input type="hidden" name="territory" value="{{$leader->territory_id}}">--}}
+                                            {{--<input type="hidden" name="state" value="{{$leader->state_id}}">--}}
 
                                         </div>
                                     </div>

@@ -77,6 +77,7 @@ class RegisterController extends Controller
              'postcode' => $data['postcode'],
              'address_1' => $data['address_1'],
              'city' => $data['city'],
+             'country' => 'Malaysia',
              'nric' => $data['nric'],
              'ssm' => $data['ssm'],
              'company_name' => $data['company_name'],
@@ -125,6 +126,10 @@ class RegisterController extends Controller
         //$data['level'] = $agent->Level->name;
 
         return $user;
+
+
+
+
 //        $user = User::create([
 //            'name' => $data['name'],
 //            'email' => $data['email'],

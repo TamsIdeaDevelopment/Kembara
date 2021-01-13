@@ -21,3 +21,4 @@
 <script src="/assets2/js/validator.min.js "></script>
 <!--custom js-->
 <script src="/assets2/js/scripts.js "></script>
+<script src="{{ asset('js/app.js') }}"></script>

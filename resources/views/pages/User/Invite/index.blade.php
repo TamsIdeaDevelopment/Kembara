@@ -1229,6 +1229,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group ">
+                                        <div id="app">
+                                            <example-component></example-component>
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
                                         <div class="input-group input-group-merge ">
                                             <div class="input-icon ">
                                                 <span class="color-primary "></span>

@@ -1,16 +1,40 @@
 <template>
     <div class="container-fluid">
         <div class="row p-0 d-flex"  v-if="AgentDetails.status == 1">
-            <div class="col-lg-12">
+            <div class="col-lg-6 col-xxl-6">
                 <div class="alert alert-shadow alert-white p-4" role="alert">
                     <div class="">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-10">
                                 <label class="h6">Referral Link</label>
                                 <input type="text" class="form-control" :value="'http://staging.kembarabusiness.com/invite/KM'+ (String('00000' + this.AgentDetails.member_no).slice(-5))" id="myInput">
                             </div>
+                            <div class="col-lg-2">
+                                <button class="btn btn-primary ml-5 mt-7" @click="copyLink">Copy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-6">
+                <div class="alert alert-shadow alert-white p-4" role="alert">
+                    <div class="">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label class="h6">Point Collected</label>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-lg-6">
-                                <button class="btn btn-primary ml-5 mt-7" @click="copyLink">Copy Link</button>
+                                <input type="text" class="form-control" :value="AgentDetails.point" disabled>
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="/list-product" class="btn btn-primary ml-5">Buy Now</a>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <div class="col-lg-12">
+                                <span class="text-danger">* The point will be collected once agent that you invited made their first purchase. This just applied for agent that you invited join as same level with you.</span>
                             </div>
                         </div>
                     </div>
@@ -48,7 +72,7 @@
                     fetch('/api/v1/team/Lists/' + this.data.id +'/agent-details').then(response => response.json())
                         .then(response => {
                             this.AgentDetails = response;
-                            console.log(this.AgentDetails.member_no)
+//                            console.log(this.AgentDetails)
                         })
                         .catch(error => console.log(error))
                 },

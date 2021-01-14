@@ -11680,6 +11680,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
   data: function data() {
@@ -11700,8 +11724,7 @@ __webpack_require__.r(__webpack_exports__);
       fetch('/api/v1/team/Lists/' + this.data.id + '/agent-details').then(function (response) {
         return response.json();
       }).then(function (response) {
-        _this.AgentDetails = response;
-        console.log(_this.AgentDetails.member_no);
+        _this.AgentDetails = response; //                            console.log(this.AgentDetails)
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -34473,7 +34496,7 @@ var render = function() {
     [
       _vm.AgentDetails.status == 1
         ? _c("div", { staticClass: "row p-0 d-flex" }, [
-            _c("div", { staticClass: "col-lg-12" }, [
+            _c("div", { staticClass: "col-lg-6 col-xxl-6" }, [
               _c(
                 "div",
                 {
@@ -34483,7 +34506,7 @@ var render = function() {
                 [
                   _c("div", {}, [
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-lg-6" }, [
+                      _c("div", { staticClass: "col-lg-10" }, [
                         _c("label", { staticClass: "h6" }, [
                           _vm._v("Referral Link")
                         ]),
@@ -34501,17 +34524,46 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-6" }, [
+                      _c("div", { staticClass: "col-lg-2" }, [
                         _c(
                           "button",
                           {
                             staticClass: "btn btn-primary ml-5 mt-7",
                             on: { click: _vm.copyLink }
                           },
-                          [_vm._v("Copy Link")]
+                          [_vm._v("Copy")]
                         )
                       ])
                     ])
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 col-xxl-6" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "alert alert-shadow alert-white p-4",
+                  attrs: { role: "alert" }
+                },
+                [
+                  _c("div", {}, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-lg-6" }, [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: { type: "text", disabled: "" },
+                          domProps: { value: _vm.AgentDetails.point }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(1)
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2)
                   ])
                 ]
               )
@@ -34533,7 +34585,47 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c("label", { staticClass: "h6" }, [_vm._v("Point Collected")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary ml-5",
+          attrs: { href: "/list-product" }
+        },
+        [_vm._v("Buy Now")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c("span", { staticClass: "text-danger" }, [
+          _vm._v(
+            "* The point will be collected once agent that you invited made their first purchase. This just applied for agent that you invited join as same level with you."
+          )
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

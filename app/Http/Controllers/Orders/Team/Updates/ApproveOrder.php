@@ -44,6 +44,7 @@ class ApproveOrder
     {
         $order = $this->order->findOrFail($order_id);
         $order->status = 1;
+        $order->delivery_status = 0;
 
         $buyer = Agent::where('user_id',$order->buyer_id)->first();
         if($buyer->paid == 0)

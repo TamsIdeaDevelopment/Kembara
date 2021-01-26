@@ -86,6 +86,14 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr v-if="$parent.IsSellerHQ == 1 && $parent.delivery_type == 0">
+                            <td colspan="3"></td>
+                            <td class="font-weight-bolder font-size-h6 text-right">Delivery Fees</td>
+                            <td class="font-weight-bolder font-size-h6 text-right">RM {{$parent.total_delivery_fee}}</td>
+                            <!--<span v-if="$parent.delivery_type == 0">-->
+
+                            <!--</span>-->
+                        </tr>
                         <tr>
                             <td colspan="3"></td>
                             <td class="font-weight-bolder font-size-h4 text-right">Subtotal</td>
@@ -108,20 +116,35 @@
         data() {
             return {
                 isCoupon: false,
+                isSeller: '',
             }
         },
         mounted() {
             EventBus.$on('updateElementsCart', () => {
                 this.fetchCart();
             });
+
         },
         watch: {
-            data() {}
+            data: function() {
+            }
         },
         created(){
             this.fetchCart();
+            this.fetchAgentDetails();
+
         },
         methods: {
+            fetchAgentDetails(){
+                console.log(this.$parent.isSellerHQ)
+                fetch('/api/v1/team/Lists/' + this.$parent.data +'/agent-info').then(response => response.json())
+                    .then(response => {
+                        this.isSeller = response.data.leader_id.HQ;
+                        console.log(this.isSeller);
+
+                    })
+                    .catch(error => console.log(error))
+            },
             coupon(){
                 this.isCoupon= !this.isCoupon;
                 if(this.isCoupon == true)
@@ -141,6 +164,8 @@
                 axios.get('/api/v1/cart/list-cart')
                     .then(function (response) {
                         this.$parent.Carts = response.data;
+                        this.isSeller = this.$parent.IsSellerHQ;
+
                         this.fetchCount();
                         this.fetchTotals();
                     }.bind(this));
@@ -154,12 +179,31 @@
             fetchTotals(){
                 axios.get('/api/v1/cart/total-cart')
                     .then(function (response) {
-                        this.$parent.Totals = response.data;
+                        this.$parent.Totals = response.data+(6.90*this.$parent.Count);
+
+//                        alert(this.isSeller)
+
+                        if(this.isSeller == 1)
+                        {
+//                            this.$parent.total_delivery_fee = 0;
+//                            console.log('seller1:' +this.isSeller)
+                            this.$parent.total_delivery_fee = 6.90 * this.$parent.Count;
+                            this.$parent.Totals = response.data+this.$parent.total_delivery_fee;
+                        }
+                        if(this.isSeller == 0)
+                        {
+//                            console.log('seller1:' +this.isSeller)
+//                            console.log('Totals : '+this.$parent.Totals);
+
+                            this.$parent.Totals = response.data;
+                        }
                     }.bind(this));
             },
             decreaseQuantity(rowId,quantity,productId)
             {
                 quantity = quantity -1;
+                console.log(this.$parent.total_delivery_fee)
+//                this.$parent.total_delivery_fee = this.$parent.total_delivery_fee - 6.90;
                 var url = '/api/v1/cart/'+ this.$parent.data+'/'+ rowId + '/' +  quantity +'/decrease-quantity', method = 'post';
 
                 fetch(url, {
@@ -170,9 +214,12 @@
                     }
                 }).then(response => response.json())
                     .then(response => {
+
                         this.fetchCart();
                         EventBus.$emit('updateDashboardCart');
                         EventBus.$emit('updateTotalCart');
+                        this.$parent.total_delivery_fee = this.$parent.total_delivery_fee - 6.90;
+
                     })
 //                this.errors=[];
 //                fetch('/api/v1/product/Lists/' + productId + '/'+ this.AgentDetails.agent_levels_id.id +'/agent-moq').then(response => response.json())
@@ -205,6 +252,8 @@
 
                 var quantity = parseInt(quantity);
                 quantity = quantity +1;
+                console.log(this.$parent.total_delivery_fee)
+//                this.$parent.total_delivery_fee = this.$parent.total_delivery_fee + 6.90;
                 var url = '/api/v1/cart/'+ this.$parent.data+'/'+ rowId + '/' +  quantity +'/add-quantity', method = 'post';
 
                 fetch(url, {
@@ -218,12 +267,15 @@
                         this.fetchCart();
                         EventBus.$emit('updateDashboardCart');
                         EventBus.$emit('updateTotalCart');
+                        this.$parent.total_delivery_fee = this.$parent.total_delivery_fee + 6.90;
+
                     })
 
             },
 
             removeItems(rowId)
             {
+                this.$parent.total_delivery_fee = 0;
                 var url = '/api/v1/cart/'+ this.$parent.data +'/'+ rowId +'/remove-item', method = 'post';
 
                 fetch(url, {
@@ -234,9 +286,12 @@
                     }
                 }).then(response => response.json())
                     .then(response => {
+
                         this.fetchCart();
                         EventBus.$emit('updateDashboardCart');
                         EventBus.$emit('updateTotalCart');
+                        this.$parent.Totals = this.$parent.Totals-this.$parent.total_delivery_fee;
+
                     })
             }
         }

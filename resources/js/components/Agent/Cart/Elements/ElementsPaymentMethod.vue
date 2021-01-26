@@ -72,7 +72,7 @@
                                     <span></span>
                                      Pay Later
                                 </label>
-                                ( <span class="text-danger">* Please note that order will be automatically declined if the payment exceeds 30 minutes. </span> )
+                                ( <span class="text-danger">* Please note that order will be automatically declined if the payment exceeds 24 Hours. </span> )
                             </div>
                         </div>
                         <div class="form-group" v-if="!isPayLater">
@@ -143,7 +143,7 @@
                                 <span></span>
                                 Pay Later
                             </label>
-                            ( <span class="text-danger">* Please note that order will be automatically declined if the payment exceeds 30 minutes. </span> )
+                            ( <span class="text-danger">* Please note that order will be automatically declined if the payment exceeds 24 Hours. </span> )
                         </div>
                     </div>
                     <div class="form-group" v-if="!isPayLater">

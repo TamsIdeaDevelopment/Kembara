@@ -7,7 +7,7 @@
                         <div class="row">
                             <div class="col-lg-10">
                                 <label class="h6">Referral Link</label>
-                                <input type="text" class="form-control" :value="'http://staging.kembarabusiness.com/invite/KM'+ (String('00000' + this.AgentDetails.member_no).slice(-5))" id="myInput">
+                                <input type="text" class="form-control" :value="'http://kembarabusiness.com/invite/KM'+ (String('00000' + this.AgentDetails.member_no).slice(-5))" id="myInput">
                             </div>
                             <div class="col-lg-2">
                                 <button class="btn btn-primary ml-5 mt-7" @click="copyLink">Copy</button>

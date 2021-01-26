@@ -45,26 +45,53 @@ class CreateOrder
 
         if($input['payment_methods'] ==1)
         {
+            if($input['delivery_type'] == 0)
+            {
+                $order = $this->repository->create([
+                    'point' => $input['point'],
+                    'HQ' => $details['HQ'],
+                    'seller_id' => $details['seller_id'],
+                    'buyer_id' => $details['buyer_id'],
+                    'delivery_type' => $input['delivery_type'],
+                    'payment_methods' => $input['payment_methods'],
+                    'status' => 2,
+                    'paid' => 0,
+                    'total' => $total,
+                    'deliver_to' => $details['deliver_to'],
+                    'deliver_to_phone_no' => $details['deliver_to_phone_no'],
+                    'shipping_address' => $details['shipping_address'],
+                    'city' => $details['city'],
+                    'state' => $details['state'],
+                    'country' => $details['country'],
+                    'postcode' => $details['postcode'],
+                    'tracking_number' => $details['tracking_number'],
+                    'remarks' => $details['remarks'],
+                ]);
+            }
+            if($input['delivery_type'] == 1)
+            {
+                $order = $this->repository->create([
+                    'point' => $input['point'],
+                    'HQ' => $details['HQ'],
+                    'seller_id' => $details['seller_id'],
+                    'buyer_id' => $details['buyer_id'],
+                    'delivery_type' => $input['delivery_type'],
+                    'payment_methods' => $input['payment_methods'],
+                    'status' => 2,
+                    'paid' => 0,
+                    'total' => $total,
+                    'deliver_to' => 'Self Pickup',
+                    'deliver_to_phone_no' => '',
+                    'shipping_address' => '',
+                    'city' => '',
+                    'state' => '',
+                    'country' => '',
+                    'postcode' => '',
+                    'tracking_number' => '',
+                    'remarks' => $details['remarks'],
+                ]);
+            }
 
-            $order = $this->repository->create([
-                'point' => $input['point'],
-                'HQ' => $details['HQ'],
-                'seller_id' => $details['seller_id'],
-                'buyer_id' => $details['buyer_id'],
-                'payment_methods' => $input['payment_methods'],
-                'status' => 2,
-                'paid' => 0,
-                'total' => $total,
-                'deliver_to' => $details['deliver_to'],
-                'deliver_to_phone_no' => $details['deliver_to_phone_no'],
-                'shipping_address' => $details['shipping_address'],
-                'city' => $details['city'],
-                'state' => $details['state'],
-                'country' => $details['country'],
-                'postcode' => $details['postcode'],
-                'tracking_number' => $details['tracking_number'],
-                'remarks' => $details['remarks'],
-            ]);
 
 
             foreach($input_order_items as $key) {
@@ -115,53 +142,111 @@ class CreateOrder
             if($details['paid_at'] != null)
             {
                 $paid_at = Carbon::parse($details['paid_at'])->toDateTimeString();
-                $order = $this->repository->create([
-                    'point' => $input['point'],
-                    'HQ' => $details['HQ'],
-                    'seller_id' => $details['seller_id'],
-                    'buyer_id' => $details['buyer_id'],
-                    'payment_methods' => $input['payment_methods'],
-                    'status' => 2,
-                    'paid' => 0,
-                    'ref_no' => $fileNameToStore,
-                    'total_paid' => $details['total_paid'],
-                    'paid_at' => $paid_at,
-                    'total' => $total,
-                    'deliver_to' => $details['deliver_to'],
-                    'deliver_to_phone_no' => $details['deliver_to_phone_no'],
-                    'shipping_address' => $details['shipping_address'],
-                    'city' => $details['city'],
-                    'state' => $details['state'],
-                    'country' => $details['country'],
-                    'postcode' => $details['postcode'],
-                    'tracking_number' => $details['tracking_number'],
-                    'remarks' => $details['remarks'],
-                ]);
-
+                if($input['delivery_type'] == 0)
+                {
+                    $order = $this->repository->create([
+                        'point' => $input['point'],
+                        'HQ' => $details['HQ'],
+                        'seller_id' => $details['seller_id'],
+                        'buyer_id' => $details['buyer_id'],
+                        'delivery_type' => $input['delivery_type'],
+                        'payment_methods' => $input['payment_methods'],
+                        'status' => 2,
+                        'paid' => 0,
+                        'ref_no' => $fileNameToStore,
+                        'total_paid' => $details['total_paid'],
+                        'paid_at' => $paid_at,
+                        'total' => $total,
+                        'deliver_to' => $details['deliver_to'],
+                        'deliver_to_phone_no' => $details['deliver_to_phone_no'],
+                        'shipping_address' => $details['shipping_address'],
+                        'city' => $details['city'],
+                        'state' => $details['state'],
+                        'country' => $details['country'],
+                        'postcode' => $details['postcode'],
+                        'tracking_number' => $details['tracking_number'],
+                        'remarks' => $details['remarks'],
+                    ]);
+                }
+                if($input['delivery_type'] == 1)
+                {
+                    $order = $this->repository->create([
+                        'point' => $input['point'],
+                        'HQ' => $details['HQ'],
+                        'seller_id' => $details['seller_id'],
+                        'buyer_id' => $details['buyer_id'],
+                        'delivery_type' => $input['delivery_type'],
+                        'payment_methods' => $input['payment_methods'],
+                        'status' => 2,
+                        'paid' => 0,
+                        'ref_no' => $fileNameToStore,
+                        'total_paid' => $details['total_paid'],
+                        'paid_at' => $paid_at,
+                        'total' => $total,
+                        'deliver_to' => 'Self Pickup',
+                        'deliver_to_phone_no' => '',
+                        'shipping_address' => '',
+                        'city' => '',
+                        'state' => '',
+                        'country' => '',
+                        'postcode' => '',
+                        'tracking_number' => '',
+                        'remarks' => $details['remarks'],
+                    ]);
+                }
             }
             if($details['paid_at'] == null && $details['total_paid'] == null)
             {
-                $order = $this->repository->create([
-                    'point' => $input['point'],
-                    'HQ' => $details['HQ'],
-                    'seller_id' => $details['seller_id'],
-                    'buyer_id' => $details['buyer_id'],
-                    'payment_methods' => $input['payment_methods'],
-                    'status' => 2,
-                    'paid' => 0,
-                    'ref_no' => $fileNameToStore,
-                    'total_paid' => 0,
-                    'total' => $total,
-                    'deliver_to' => $details['deliver_to'],
-                    'deliver_to_phone_no' => $details['deliver_to_phone_no'],
-                    'shipping_address' => $details['shipping_address'],
-                    'city' => $details['city'],
-                    'state' => $details['state'],
-                    'country' => $details['country'],
-                    'postcode' => $details['postcode'],
-                    'tracking_number' => $details['tracking_number'],
-                    'remarks' => $details['remarks'],
-                ]);
+                if($input['delivery_type'] == 0)
+                {
+                    $order = $this->repository->create([
+                        'point' => $input['point'],
+                        'HQ' => $details['HQ'],
+                        'seller_id' => $details['seller_id'],
+                        'buyer_id' => $details['buyer_id'],
+                        'delivery_type' => $input['delivery_type'],
+                        'payment_methods' => $input['payment_methods'],
+                        'status' => 2,
+                        'paid' => 0,
+                        'ref_no' => $fileNameToStore,
+                        'total_paid' => 0,
+                        'total' => $total,
+                        'deliver_to' => $details['deliver_to'],
+                        'deliver_to_phone_no' => $details['deliver_to_phone_no'],
+                        'shipping_address' => $details['shipping_address'],
+                        'city' => $details['city'],
+                        'state' => $details['state'],
+                        'country' => $details['country'],
+                        'postcode' => $details['postcode'],
+                        'tracking_number' => $details['tracking_number'],
+                        'remarks' => $details['remarks'],
+                    ]);
+                }
+                if($input['delivery_type'] == 1)
+                {
+                    $order = $this->repository->create([
+                        'point' => $input['point'],
+                        'HQ' => $details['HQ'],
+                        'seller_id' => $details['seller_id'],
+                        'buyer_id' => $details['buyer_id'],
+                        'delivery_type' => $input['delivery_type'],
+                        'payment_methods' => $input['payment_methods'],
+                        'status' => 2,
+                        'paid' => 0,
+                        'ref_no' => $fileNameToStore,
+                        'total_paid' => 0,
+                        'total' => $total,
+                        'deliver_to' => 'Self Pickup',
+                        'deliver_to_phone_no' => '',
+                        'shipping_address' => '',
+                        'city' => '',
+                        'state' => '',
+                        'country' => '',
+                        'postcode' => '',
+                        'tracking_number' => '',
+                        'remarks' => $details['remarks'],
+                    ]);
+                }
             }
 
 
@@ -193,25 +278,53 @@ class CreateOrder
 
         if($input['payment_methods'] ==3)
         {
-            $order = $this->repository->create([
-                'point' => $input['point'],
-                'HQ' => $details['HQ'],
-                'seller_id' => $details['seller_id'],
-                'buyer_id' => $details['buyer_id'],
-                'payment_methods' => $input['payment_methods'],
-                'status' => 2,
-                'paid' => 0,
-                'total' => $total,
-                'deliver_to' => $details['deliver_to'],
-                'deliver_to_phone_no' => $details['deliver_to_phone_no'],
-                'shipping_address' => $details['shipping_address'],
-                'city' => $details['city'],
-                'state' => $details['state'],
-                'country' => $details['country'],
-                'postcode' => $details['postcode'],
-                'tracking_number' => $details['tracking_number'],
-                'remarks' => $details['remarks'],
-            ]);
+            if($input['delivery_type'] == 0)
+            {
+                $order = $this->repository->create([
+                    'point' => $input['point'],
+                    'HQ' => $details['HQ'],
+                    'seller_id' => $details['seller_id'],
+                    'buyer_id' => $details['buyer_id'],
+                    'delivery_type' => $input['delivery_type'],
+                    'payment_methods' => $input['payment_methods'],
+                    'status' => 2,
+                    'paid' => 0,
+                    'total' => $total,
+                    'deliver_to' => $details['deliver_to'],
+                    'deliver_to_phone_no' => $details['deliver_to_phone_no'],
+                    'shipping_address' => $details['shipping_address'],
+                    'city' => $details['city'],
+                    'state' => $details['state'],
+                    'country' => $details['country'],
+                    'postcode' => $details['postcode'],
+                    'tracking_number' => $details['tracking_number'],
+                    'remarks' => $details['remarks'],
+                ]);
+            }
+            if($input['delivery_type'] == 1)
+            {
+                $order = $this->repository->create([
+                    'point' => $input['point'],
+                    'HQ' => $details['HQ'],
+                    'seller_id' => $details['seller_id'],
+                    'buyer_id' => $details['buyer_id'],
+                    'delivery_type' => $input['delivery_type'],
+                    'payment_methods' => $input['payment_methods'],
+                    'status' => 2,
+                    'paid' => 0,
+                    'total' => $total,
+                    'deliver_to' => 'Self Pickup',
+                    'deliver_to_phone_no' => '',
+                    'shipping_address' => '',
+                    'city' => '',
+                    'state' => '',
+                    'country' => '',
+                    'postcode' => '',
+                    'tracking_number' => '',
+                    'remarks' => $details['remarks'],
+                ]);
+            }
+
 
 
             foreach($input_order_items as $key) {
@@ -239,25 +352,53 @@ class CreateOrder
         }
         if($input['payment_methods'] ==4)
         {
-            $order = $this->repository->create([
-                'point' => $input['point'],
-                'HQ' => $details['HQ'],
-                'seller_id' => $details['seller_id'],
-                'buyer_id' => $details['buyer_id'],
-                'payment_methods' => $input['payment_methods'],
-                'status' => 2,
-                'paid' => 0,
-                'total' => $total,
-                'deliver_to' => $details['deliver_to'],
-                'deliver_to_phone_no' => $details['deliver_to_phone_no'],
-                'shipping_address' => $details['shipping_address'],
-                'city' => $details['city'],
-                'state' => $details['state'],
-                'country' => $details['country'],
-                'postcode' => $details['postcode'],
-                'tracking_number' => $details['tracking_number'],
-                'remarks' => $details['remarks'],
-            ]);
+            if($input['delivery_type'] == 0)
+            {
+                $order = $this->repository->create([
+                    'point' => $input['point'],
+                    'HQ' => $details['HQ'],
+                    'seller_id' => $details['seller_id'],
+                    'buyer_id' => $details['buyer_id'],
+                    'delivery_type' => $input['delivery_type'],
+                    'payment_methods' => $input['payment_methods'],
+                    'status' => 2,
+                    'paid' => 0,
+                    'total' => $total,
+                    'deliver_to' => $details['deliver_to'],
+                    'deliver_to_phone_no' => $details['deliver_to_phone_no'],
+                    'shipping_address' => $details['shipping_address'],
+                    'city' => $details['city'],
+                    'state' => $details['state'],
+                    'country' => $details['country'],
+                    'postcode' => $details['postcode'],
+                    'tracking_number' => $details['tracking_number'],
+                    'remarks' => $details['remarks'],
+                ]);
+            }
+            if($input['delivery_type'] == 1)
+            {
+                $order = $this->repository->create([
+                    'point' => $input['point'],
+                    'HQ' => $details['HQ'],
+                    'seller_id' => $details['seller_id'],
+                    'buyer_id' => $details['buyer_id'],
+                    'delivery_type' => $input['delivery_type'],
+                    'payment_methods' => $input['payment_methods'],
+                    'status' => 2,
+                    'paid' => 0,
+                    'total' => $total,
+                    'deliver_to' => 'Self Pickup',
+                    'deliver_to_phone_no' => '',
+                    'shipping_address' => '',
+                    'city' => '',
+                    'state' => '',
+                    'country' => '',
+                    'postcode' => '',
+                    'tracking_number' => '',
+                    'remarks' => $details['remarks'],
+                ]);
+            }
+
 
 
             foreach($input_order_items as $key) {

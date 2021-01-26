@@ -81,6 +81,8 @@ Route::get('/user-profile', 'HomeController@UserProfile')->name('user.profile')-
 
 Route::get('/classroom', 'HomeController@classroom')->name('classroom')->middleware('verified');
 
+Route::get('/shipping', 'HomeController@shipping')->name('shipping')->middleware('verified');
+
 
 Route::get('/agent-details/{agentID}', function ($agentID) {
     return view('pages.Admin.Teams.Team.details',['agentID' => $agentID]);

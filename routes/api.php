@@ -200,6 +200,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
             });
 
             Route::group(['prefix' => 'Updates', 'as' => 'Updates.','namespace' => 'Updates'], function () {
+                Route::post('{order_id}/{tracking_no}/update-shipment', 'UpdateShipment@updateShipment')->name('update-shipment');
             });
 
             Route::group(['prefix' => 'Deletes', 'as' => 'Deletes.','namespace' => 'Deletes'], function () {
@@ -214,6 +215,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
                 Route::get('/check-last-order', 'ListOrder@checkLastOrder')->name('check-last-order');
 
                 Route::get('/admin-chart', 'ListAdminChart@listChart')->name('admin-chart');
+
+
+                Route::get('/list-shipment', 'ListShipment@listShipment')->name('list-shipment');
 
             });
 

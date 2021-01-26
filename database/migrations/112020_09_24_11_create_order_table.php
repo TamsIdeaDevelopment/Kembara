@@ -19,6 +19,7 @@ class CreateOrderTable extends Migration
             $table->unsignedBigInteger('seller_id')->nullable();
             $table->unsignedBigInteger('buyer_id')->nullable();
             $table->string('buyer_type')->nullable();
+            $table->string('delivery_type')->nullable();
             $table->string('status')->nullable();
             $table->integer('paid')->nullable();
             $table->integer('total')->nullable();
@@ -27,6 +28,7 @@ class CreateOrderTable extends Migration
             $table->string('state')->nullable();
             $table->string('country')->nullable();
             $table->string('postcode')->nullable();
+            $table->string('delivery_status')->nullable();
             $table->string('tracking_no')->nullable();
             $table->string('deleted_at')->nullable();
             $table->string('remarks')->nullable();

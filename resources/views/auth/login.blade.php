@@ -5,9 +5,9 @@
         <div class="login login-4 login-signin-on d-flex flex-row-fluid" id="kt_login">
             <div class="d-flex flex-center flex-row-fluid bgi-size-cover bgi-position-top bgi-no-repeat" style="background-image: url('assets/media/bg/bg-3.jpg');">
                 <div class="login-form text-center p-7 position-relative overflow-hidden">
-                    <div class="d-flex flex-center mb-15">
+                    <div class="d-flex flex-center mb-n10">
                         <a href="#">
-                            <img src="{{ asset('assets/img/kembaraLogo1.png') }}" class="max-h-100px" alt=""  style="height:150px; width:250px"/>
+                            <img src="{{ asset('assets/img/kembara-logo-depan.png') }}" class="max-h-250px" alt=""  style="height:250px; width:300px"/>
                         </a>
                     </div>
                     <div class="login-signin">

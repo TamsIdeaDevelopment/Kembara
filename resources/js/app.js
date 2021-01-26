@@ -3,14 +3,16 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
+import JsonExcel from 'vue-json-excel';
 //require('./bootstrap');
 window.axios = require('axios');
 window.Vue = require('vue');
 window.VueEvent = new Vue();
 //window.Event = new Vue();
 var VueScrollTo = require('vue-scrollto');
-Vue.use(VueScrollTo)
+Vue.use(VueScrollTo);
+Vue.component('downloadExcel', JsonExcel);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -26,6 +28,12 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('state-territory-component', require('./components/StateTerritory.vue').default);
 
 /********************************************* Admin ****************************************************************/
+
+/**  Dashboard  */
+Vue.component('admin-shipping-dashboard', require('./components/Admin/Shipping/Dashboard/dashboard.vue').default);
+Vue.component('admin-shipping-list', require('./components/Admin/Shipping/Lists/ListsShipment.vue').default);
+Vue.component('admin-shipping-element', require('./components/Admin/Shipping/Elements/ElementsShipment.vue').default);
+
 
 /**  Dashboard  */
 Vue.component('admin-dashboard', require('./components/Admin/Dashboard/Dashboard/dashboard.vue').default);

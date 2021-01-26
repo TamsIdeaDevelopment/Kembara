@@ -100,4 +100,9 @@ class HomeController extends Controller
     {
         return view('pages.Admin.Classroom.index');
     }
+
+    public function shipping()
+    {
+        return view('pages.Admin.Shipping.index');
+    }
 }

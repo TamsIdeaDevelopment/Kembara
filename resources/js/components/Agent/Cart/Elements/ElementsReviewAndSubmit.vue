@@ -20,12 +20,15 @@
                     </div>
                     <div class="col-lg-6 mt-5">
                         <h6 class="font-weight-bolder mb-3">Delivery Address:</h6>
-                        <div class="text-dark-50 line-height-lg">
+                        <div class="text-dark-50 line-height-lg" v-if="$parent.delivery_type == 0">
                             <div>{{$parent.DeliveryDetails.name}}</div>
                             <div>{{$parent.DeliveryDetails.address_1}}</div>
                             <div>{{$parent.DeliveryDetails.city}}, {{$parent.DeliveryDetails.postcode}},</div>
                             <div>{{$parent.DeliveryDetails.state}}, {{$parent.DeliveryDetails.country}}</div>
                             <div>{{$parent.DeliveryDetails.phone_no}}</div>
+                        </div>
+                        <div class="text-dark-50 line-height-lg" v-if="$parent.delivery_type == 1">
+                            <div>Self Pick Up</div>
                         </div>
                     </div>
                 </div>
@@ -71,10 +74,10 @@
                                 <td class="font-weight-bolder text-right">Total Item</td>
                                 <td class="font-weight-bolder text-right pr-0">{{$parent.Count}}</td>
                             </tr>
-                            <tr>
+                            <tr v-if="$parent.delivery_type == 0 && $parent.IsSellerHQ == 1">
                                 <td colspan="2" class="border-0 pt-0"></td>
                                 <td class="border-0 pt-0 font-weight-bolder text-right">Delivery Fees</td>
-                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0">RM 15.00</td>
+                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0">RM {{$parent.delivery_fee}}</td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="border-0 pt-0"></td>

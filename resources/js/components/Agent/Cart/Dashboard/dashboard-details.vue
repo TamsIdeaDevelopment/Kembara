@@ -51,7 +51,7 @@
                                 <div class="col-xl-12 col-xxl-12">
                                     <!--<form class="form" id="kt_form" @submit.prevent="CreateTestOrder"  enctype="multipart/form-data">-->
                                     <form class="form" id="kt_form" @submit.prevent="checkValidation"  enctype="multipart/form-data">
-                                        <agent-cart-elements></agent-cart-elements>
+                                        <agent-cart-elements :data="IsSellerHQ"></agent-cart-elements>
                                         <agent-cart-delivery-address-elements></agent-cart-delivery-address-elements>
                                         <agent-cart-payment-method-elements></agent-cart-payment-method-elements>
                                         <agent-cart-review-submit-elements></agent-cart-review-submit-elements>
@@ -94,6 +94,7 @@
                 payment_selected:'',
                 proof_of_payment_image:'',
                 Orders: {
+                    delivery_type:'',
                     payment_methods:'',
                     proof_of_payment:'',
                     point:0,
@@ -120,6 +121,9 @@
                 paid_at : '',
                 total_paid : '',
                 SellerDetails:[],
+                delivery_type:0,
+                delivery_fee: 6.90,
+                total_delivery_fee:0,
             }
         },
         mounted() {
@@ -140,6 +144,7 @@
                         this.BillingDetails = response.data.user_id;
                         this.seller_id = response.data.leader_id.user_id;
                         this.fetchSellerDetails();
+
                     })
                     .catch(error => console.log(error))
             },
@@ -148,72 +153,76 @@
                     .then(response => {
                         this.IsSellerHQ = response.data.HQ;
                         this.SellerDetails = response.data.user_id;
-                        console.log(this.SellerDetails);
+//                        console.log(this.IsSellerHQ);
                     })
                     .catch(error => console.log(error))
             },
             checkValidation(){
                 this.errors = [];
-                if((this.DeliveryDetails.name) && (this.DeliveryDetails.phone_no) && (this.DeliveryDetails.address_1) && (this.DeliveryDetails.postcode) && (this.DeliveryDetails.city) && (this.DeliveryDetails.state) && (this.DeliveryDetails.country) && (this.DeliveryDetails.country))
+                if(this.delivery_type == 0)
+                {
+                    if((this.DeliveryDetails.name) && (this.DeliveryDetails.phone_no) && (this.DeliveryDetails.address_1) && (this.DeliveryDetails.postcode) && (this.DeliveryDetails.city) && (this.DeliveryDetails.state) && (this.DeliveryDetails.country) && (this.DeliveryDetails.country))
+                    {
+                        this.CreateOrder();
+                    }
+                    if(!this.DeliveryDetails.name)
+                    {
+                        this.errors['name'] = "Please insert the name"
+                    }
+                    if(!this.DeliveryDetails.phone_no)
+                    {
+                        this.errors['phone_no'] = "Please insert the phone no"
+
+                    }
+                    if(!this.DeliveryDetails.address_1)
+                    {
+                        this.errors['address_1'] = "Please insert the address"
+                    }
+                    if(!this.DeliveryDetails.postcode)
+                    {
+                        this.errors['postcode'] = "Please insert the postcode"
+                    }
+                    if(!this.DeliveryDetails.city)
+                    {
+                        this.errors['city'] = "Please insert the city"
+                    }
+                    if(!this.DeliveryDetails.state)
+                    {
+                        this.errors['state'] = "Please insert the state"
+                    }
+                    if(!this.DeliveryDetails.country)
+                    {
+                        this.errors['country'] = "Please insert the country"
+                    }
+
+                    if(!this.DeliveryDetails.name || !this.DeliveryDetails.phone_no || !this.DeliveryDetails.address_1 || !this.DeliveryDetails.postcode || !this.DeliveryDetails.city || !this.DeliveryDetails.state || !this.DeliveryDetails.country || !this.DeliveryDetails.country)
+                    {
+                        this.errors['all'] = "Please complete the form"
+
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": false,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        };
+                        toastr.error("Please complete the delivery details", "Failed");
+                    }
+                }
+                if(this.delivery_type == 1)
                 {
                     this.CreateOrder();
                 }
-                if(!this.DeliveryDetails.name)
-                {
-                    this.errors['name'] = "Please insert the name"
-                }
-                if(!this.DeliveryDetails.phone_no)
-                {
-                    this.errors['phone_no'] = "Please insert the phone no"
-
-                }
-                if(!this.DeliveryDetails.address_1)
-                {
-                    this.errors['address_1'] = "Please insert the address"
-                }
-                if(!this.DeliveryDetails.postcode)
-                {
-                    this.errors['postcode'] = "Please insert the postcode"
-                }
-                if(!this.DeliveryDetails.city)
-                {
-                    this.errors['city'] = "Please insert the city"
-                }
-                if(!this.DeliveryDetails.state)
-                {
-                    this.errors['state'] = "Please insert the state"
-                }
-                if(!this.DeliveryDetails.country)
-                {
-                    this.errors['country'] = "Please insert the country"
-                }
-
-                if(!this.DeliveryDetails.name || !this.DeliveryDetails.phone_no || !this.DeliveryDetails.address_1 || !this.DeliveryDetails.postcode || !this.DeliveryDetails.city || !this.DeliveryDetails.state || !this.DeliveryDetails.country || !this.DeliveryDetails.country)
-                {
-                    this.errors['all'] = "Please complete the form"
-
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": false,
-                        "positionClass": "toast-top-right",
-                        "preventDuplicates": false,
-                        "onclick": null,
-                        "showDuration": "300",
-                        "hideDuration": "1000",
-                        "timeOut": "5000",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut"
-                    };
-                    toastr.error("Please complete the delivery details", "Failed");
-                }
-
-
-
             },
             CreateOrder()
             {
@@ -226,6 +235,7 @@
                     this.Orders.details.paid_at = this.paid_at;
                     this.Orders.details.total_paid = this.total_paid;
                 }
+                this.Orders.delivery_type=this.delivery_type;
                 this.Orders.payment_methods=this.payment_selected;
                 this.Orders.proof_of_payment=this.proof_of_payment_image;
                 this.Orders.point=this.point;

@@ -127,6 +127,7 @@ class CartController
     public function totalCarts()
     {
         $data = Cart::subtotal();
+        $data = floatval(preg_replace('/[^\d.]/', '', $data));
         return $data;
 
     }

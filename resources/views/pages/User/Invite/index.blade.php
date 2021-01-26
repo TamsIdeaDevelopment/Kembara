@@ -19,7 +19,7 @@
         <nav class="navbar navbar-expand-lg fixed-top bg-transparent">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('/') }}">
-                    <img src="/assets2/image/kembara-logo2.png" alt="logo" class="img-fluid" style="width:100px; height: 50px;" />
+                    <img src="/assets2/image/kembara-logo-depan.png" alt="logo" class="img-fluid" style="width:150px; height: 100px;" />
                 </a>
                 <a href="{{ route('login') }}">
                     <button class="btn btn-block primary-solid-btn border-radius mt-4 mb-3">

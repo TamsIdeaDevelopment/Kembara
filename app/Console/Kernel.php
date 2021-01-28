@@ -24,12 +24,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('Cancel:Order')->everyMinute();
+//         $schedule->command('Cancel:Order')->everyMinute();
 //         $schedule->command('Cancel:Order')->everyTwoMinutes();
 //
 //        $schedule->command('monthly:membership')
 //            ->monthlyOn(1, '00:00');
-         $schedule->command('monthly:membership')->everyMinute();
+//         $schedule->command('monthly:membership')->everyMinute();
     }
 
     /**

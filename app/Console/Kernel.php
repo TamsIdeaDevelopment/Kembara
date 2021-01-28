@@ -24,7 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//         $schedule->command('Cancel:Order')->everyMinute();
+         $schedule->command('Cancel:Order')->everyMinute();
+//         $schedule->command('Cancel:Order')->daily();
 //         $schedule->command('Cancel:Order')->everyTwoMinutes();
 //
 //        $schedule->command('monthly:membership')

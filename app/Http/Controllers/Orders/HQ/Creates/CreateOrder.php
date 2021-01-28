@@ -9,12 +9,15 @@
 namespace App\Http\Controllers\Orders\HQ\Creates;
 
 use App\Agent;
+use App\Mail\OrderEmail;
 use App\Order;
 Use App\Http\Resources\Orders as OrdersResources;
 use App\Order_items;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Cart;
+use Illuminate\Support\Facades\Mail;
 
 class CreateOrder
 {
@@ -92,7 +95,8 @@ class CreateOrder
                 ]);
             }
 
-
+            $user = User::findOrFail($details['buyer_id']);
+            Mail::to($user->email)->send(new OrderEmail($order,$user));
 
             foreach($input_order_items as $key) {
 
@@ -121,9 +125,6 @@ class CreateOrder
 
         if($input['payment_methods'] ==2)
         {
-
-
-
             if($request->hasFile('proof_of_payment'))
             {
 
@@ -152,7 +153,7 @@ class CreateOrder
                         'delivery_type' => $input['delivery_type'],
                         'payment_methods' => $input['payment_methods'],
                         'status' => 2,
-                        'paid' => 0,
+                        'paid' => 1,
                         'ref_no' => $fileNameToStore,
                         'total_paid' => $details['total_paid'],
                         'paid_at' => $paid_at,
@@ -178,7 +179,7 @@ class CreateOrder
                         'delivery_type' => $input['delivery_type'],
                         'payment_methods' => $input['payment_methods'],
                         'status' => 2,
-                        'paid' => 0,
+                        'paid' => 1,
                         'ref_no' => $fileNameToStore,
                         'total_paid' => $details['total_paid'],
                         'paid_at' => $paid_at,
@@ -249,7 +250,8 @@ class CreateOrder
                 }
             }
 
-
+            $user = User::findOrFail($details['buyer_id']);
+            Mail::to($user->email)->send(new OrderEmail($order,$user));
 
 
             foreach($input_order_items as $key) {
@@ -325,7 +327,8 @@ class CreateOrder
                 ]);
             }
 
-
+            $user = User::findOrFail($details['buyer_id']);
+            Mail::to($user->email)->send(new OrderEmail($order,$user));
 
             foreach($input_order_items as $key) {
 
@@ -399,7 +402,8 @@ class CreateOrder
                 ]);
             }
 
-
+            $user = User::findOrFail($details['buyer_id']);
+            Mail::to($user->email)->send(new OrderEmail($order,$user));
 
             foreach($input_order_items as $key) {
 

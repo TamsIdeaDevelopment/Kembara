@@ -21,6 +21,11 @@ Auth::routes(['verify' => true]);
 
 Route::get('/invite/KM{leader_id}', 'CreateInvite@index')->name('invite');
 
+
+Route::get('/test1', function () {
+    return view('HQMembershipEmail');
+})->name('/test1');
+
 //Route::get('{leader_id}/invite1', 'CreateInvite@index')->name('invite1');
 
 //

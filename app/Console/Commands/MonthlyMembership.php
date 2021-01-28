@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Agent;
+use App\Mail\HQMembershipEmail;
 use App\Mail\MembershipEmail;
 use App\Order;
 use App\User;
@@ -61,9 +62,14 @@ class MonthlyMembership extends Command
 
         foreach($listInActiveAgent as $inActiveAgent)
         {
+            $HQ = User::where('role_id',1)->first();
             $user = User::findOrFail($inActiveAgent);
+            $agent = Agent::where('user_id',$inActiveAgent)->first();
+
 
             Mail::to($user->email)->send(new MembershipEmail($user));
+            Mail::to($HQ->email)->send(new HQMembershipEmail($user,$agent));
         }
+
     }
 }

@@ -3,12 +3,15 @@
 namespace App\Console\Commands;
 
 use App\Agent;
+use App\Mail\CancelOrderEmail;
 use App\Order;
 use App\Order_items;
 use App\Product;
 use App\Stock_agent;
+use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class CancelOrder extends Command
 {
@@ -92,6 +95,13 @@ class CancelOrder extends Command
             $key->status = 3;
             $key->paid = 2;
             $key->save();
+            $user = User::findOrFail($key['buyer_id']);
+//            Log::info($user);
+//            Log::info($key);
+//            $key['buyer_id'];
+
+
+            Mail::to($user->email)->send(new CancelOrderEmail($key,$user));
         }
        Log::info($order);
 

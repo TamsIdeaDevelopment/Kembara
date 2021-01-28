@@ -2,7 +2,7 @@
 <br/>
 <p>We noticed that you haven't restock our product for 3 months. Please click button below to restock our product.</p>
 <br/>
-<a style="background-color: #008CBA;border: none;color: white;padding: 16px 32px;text-align: center;text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  transition-duration: 0.4s;  cursor: pointer;" href="http://staging.kembarabusiness.com/list-product">Buy Product</a>
+<a style="background-color: #008CBA;border: none;color: white;padding: 16px 32px;text-align: center;text-decoration: none;  display: inline-block;  font-size: 16px;  margin: 4px 2px;  transition-duration: 0.4s;  cursor: pointer;" href="https://kembarabusiness.com/list-product">Buy Product</a>
 <br/>
 <p>Please kindly purchase our product to remain active as our agent or don't hesitate to contact us if you encounter any problems.</p>
 <br/>

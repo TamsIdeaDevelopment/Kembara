@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
 //
 //        $schedule->command('monthly:membership')
 //            ->monthlyOn(1, '00:00');
-//         $schedule->command('monthly:membership')->everyMinute();
+         $schedule->command('monthly:membership')->everyMinute();
     }
 
     /**

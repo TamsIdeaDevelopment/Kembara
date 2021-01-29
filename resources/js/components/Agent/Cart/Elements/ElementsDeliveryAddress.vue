@@ -56,7 +56,7 @@
                                     <div class="col-xl-6">
                                         <div class="form-group">
                                             <label>City</label>
-                                            <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.city" placeholder="State"  disabled />
+                                            <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.city" placeholder="City"  disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -64,13 +64,13 @@
                                     <div class="col-xl-6">
                                         <div class="form-group">
                                             <label>State</label>
-                                            <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.state" placeholder="Postcode"  disabled/>
+                                            <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.state" placeholder="State"  disabled/>
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="form-group">
                                             <label>Country</label>
-                                            <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.country" placeholder="State"  disabled />
+                                            <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.country" placeholder="Country"  disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +124,7 @@
                                                     <label class="text-danger">{{$parent.errors['city']}}</label>
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.city" placeholder="State" />
+                                            <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.city" placeholder="City" />
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +137,7 @@
                                                     <label class="text-danger">{{$parent.errors['state']}}</label>
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="Postcode"/>
+                                            <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
@@ -148,7 +148,7 @@
                                                     <label class="text-danger">{{$parent.errors['country']}}</label>
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.country" placeholder="State" />
+                                            <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.country" placeholder="Country" />
                                         </div>
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>City</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.city" placeholder="State"  disabled />
+                                        <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.city" placeholder="City"  disabled />
                                     </div>
                                 </div>
                             </div>
@@ -199,13 +199,13 @@
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>State</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.state" placeholder="Postcode"  disabled/>
+                                        <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.state" placeholder="State"  disabled/>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label>Country</label>
-                                        <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.country" placeholder="State"  disabled />
+                                        <input type="text" class="form-control form-control-solid form-control-lg" v-model="$parent.BillingDetails.country" placeholder="Country"  disabled />
                                     </div>
                                 </div>
                             </div>
@@ -259,7 +259,7 @@
                                                 <label class="text-danger">{{$parent.errors['city']}}</label>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.city" placeholder="State" />
+                                        <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.city" placeholder="City" />
                                     </div>
                                 </div>
                             </div>
@@ -272,7 +272,7 @@
                                                 <label class="text-danger">{{$parent.errors['state']}}</label>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="Postcode"/>
+                                        <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
@@ -283,7 +283,7 @@
                                                 <label class="text-danger">{{$parent.errors['country']}}</label>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.country" placeholder="State" />
+                                        <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.country" placeholder="Country" />
                                     </div>
                                 </div>
                             </div>

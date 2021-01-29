@@ -33473,7 +33473,7 @@ var render = function() {
                                   "form-control form-control-solid form-control-lg",
                                 attrs: {
                                   type: "text",
-                                  placeholder: "State",
+                                  placeholder: "City",
                                   disabled: ""
                                 },
                                 domProps: {
@@ -33514,7 +33514,7 @@ var render = function() {
                                   "form-control form-control-solid form-control-lg",
                                 attrs: {
                                   type: "text",
-                                  placeholder: "Postcode",
+                                  placeholder: "State",
                                   disabled: ""
                                 },
                                 domProps: {
@@ -33553,7 +33553,7 @@ var render = function() {
                                   "form-control form-control-solid form-control-lg",
                                 attrs: {
                                   type: "text",
-                                  placeholder: "State",
+                                  placeholder: "Country",
                                   disabled: ""
                                 },
                                 domProps: {
@@ -33799,7 +33799,7 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control form-control-lg",
-                                attrs: { type: "text", placeholder: "State" },
+                                attrs: { type: "text", placeholder: "City" },
                                 domProps: {
                                   value: _vm.$parent.DeliveryDetails.city
                                 },
@@ -33851,10 +33851,7 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control form-control-lg",
-                                attrs: {
-                                  type: "text",
-                                  placeholder: "Postcode"
-                                },
+                                attrs: { type: "text", placeholder: "State" },
                                 domProps: {
                                   value: _vm.$parent.DeliveryDetails.state
                                 },
@@ -33907,7 +33904,7 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control form-control-lg",
-                                attrs: { type: "text", placeholder: "State" },
+                                attrs: { type: "text", placeholder: "Country" },
                                 domProps: {
                                   value: _vm.$parent.DeliveryDetails.country
                                 },
@@ -34127,7 +34124,7 @@ var render = function() {
                           "form-control form-control-solid form-control-lg",
                         attrs: {
                           type: "text",
-                          placeholder: "State",
+                          placeholder: "City",
                           disabled: ""
                         },
                         domProps: { value: _vm.$parent.BillingDetails.city },
@@ -34166,7 +34163,7 @@ var render = function() {
                           "form-control form-control-solid form-control-lg",
                         attrs: {
                           type: "text",
-                          placeholder: "Postcode",
+                          placeholder: "State",
                           disabled: ""
                         },
                         domProps: { value: _vm.$parent.BillingDetails.state },
@@ -34203,7 +34200,7 @@ var render = function() {
                           "form-control form-control-solid form-control-lg",
                         attrs: {
                           type: "text",
-                          placeholder: "State",
+                          placeholder: "Country",
                           disabled: ""
                         },
                         domProps: { value: _vm.$parent.BillingDetails.country },
@@ -34419,7 +34416,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control form-control-lg",
-                        attrs: { type: "text", placeholder: "State" },
+                        attrs: { type: "text", placeholder: "City" },
                         domProps: { value: _vm.$parent.DeliveryDetails.city },
                         on: {
                           input: function($event) {
@@ -34463,7 +34460,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control form-control-lg",
-                        attrs: { type: "text", placeholder: "Postcode" },
+                        attrs: { type: "text", placeholder: "State" },
                         domProps: { value: _vm.$parent.DeliveryDetails.state },
                         on: {
                           input: function($event) {
@@ -34505,7 +34502,7 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control form-control-lg",
-                        attrs: { type: "text", placeholder: "State" },
+                        attrs: { type: "text", placeholder: "Country" },
                         domProps: {
                           value: _vm.$parent.DeliveryDetails.country
                         },

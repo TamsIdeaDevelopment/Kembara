@@ -34,7 +34,7 @@ class ListShipment
 
     public function listShipment()
     {
-        $data = $this->repository->where('HQ',1)->whereNotNull('delivery_status')->latest()->get();
+        $data = $this->repository->where('HQ',1)->where('delivery_type',0)->whereNotNull('delivery_status')->latest()->get();
         return OrdersResources::collection($data);
 //        $shipment_details = array();
 

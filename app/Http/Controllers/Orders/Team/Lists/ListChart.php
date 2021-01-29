@@ -17,6 +17,7 @@ class ListChart
     public function listChart($user_id)
     {
         $week = Order::where('seller_id',$user_id)
+            ->where('HQ',0)
             ->where('status',1)
             ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
             ->sum('total_paid');
@@ -42,7 +43,6 @@ class ListChart
             'year' => $year,
             'total' => $total,
         );
-
 
         return $data;
 

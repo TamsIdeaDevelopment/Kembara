@@ -170,7 +170,7 @@
                                                                 </h3>
                                                             </div>
                                                         </div>
-                                                        <agent-stock-elements :data="this.Stock"></agent-stock-elements>
+                                                        <admin-stock-elements :data="this.Stock" :data2="this.data"></admin-stock-elements>
                                                         <!--<agent-sales-team-elements :data="this.AgentOrder"></agent-sales-team-elements>-->
                                                     </div>
                                                 </div>

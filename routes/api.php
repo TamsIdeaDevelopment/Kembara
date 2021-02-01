@@ -170,6 +170,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
             Route::post('{id}/products', 'UpdateProduct@update')->name('products');
             Route::post('{id}/products-stock', 'UpdateProduct@updateStock')->name('products-stock');
             Route::post('/agent-price-products', 'UpdateAgentsPrice@update')->name('agent-price-products');
+            Route::post('{user_id}/{product_id}/{quantity}/edit-stock-agent', 'UpdateProduct@editAgentStock')->name('edit-stock-agent');
+
         });
 
         Route::group(['prefix' => 'Deletes', 'as' => 'Deletes.','namespace' => 'Deletes'], function () {

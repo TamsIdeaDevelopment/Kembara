@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Product\Updates;
 
 
 use App\Product;
+use App\Stock_agent;
 use Illuminate\Http\Request;
 
 class UpdateProduct
@@ -72,6 +73,12 @@ class UpdateProduct
             return $product;
         }
 
+    }
+
+    public function editAgentStock($user_id, $product_id, $quantity)
+    {
+        $stock_agent = Stock_agent::updateOrCreate(['user_id' => $user_id,'product_id' => $product_id], ['quantity'=>$quantity]);
+        return $stock_agent;
     }
 
 

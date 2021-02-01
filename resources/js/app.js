@@ -29,6 +29,12 @@ Vue.component('state-territory-component', require('./components/StateTerritory.
 
 /********************************************* Admin ****************************************************************/
 
+/**  Product  */
+Vue.component('admin-stock-dashboard', require('./components/Admin/Stock/Dashboard/dashboard.vue').default);
+Vue.component('admin-stock-list', require('./components/Admin/Stock/List/ListsStock.vue').default);
+Vue.component('admin-stock-elements', require('./components/Admin/Stock/Elements/ElementsStock.vue').default);
+
+
 /**  Dashboard  */
 Vue.component('admin-shipping-dashboard', require('./components/Admin/Shipping/Dashboard/dashboard.vue').default);
 Vue.component('admin-shipping-list', require('./components/Admin/Shipping/Lists/ListsShipment.vue').default);

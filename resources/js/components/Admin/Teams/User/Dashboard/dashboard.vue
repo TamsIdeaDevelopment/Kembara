@@ -16,7 +16,7 @@
                                                             <div class="symbol-label" :style="'background-image:url('+ image_source+ details.avatar +')'"></div>
                                                         </div>
                                                         <h4 class="font-weight-bold my-2">{{details.name}}</h4>
-                                                        <div class="text-muted mb-2">Alpha</div>
+                                                        <!--<div class="text-muted mb-2">Alpha</div>-->
                                                         <span class="label label-light-warning label-inline font-weight-bold label-lg">Active</span>
                                                     </div>
                                                 </div>

@@ -31217,10 +31217,6 @@ var render = function() {
                                   [_vm._v(_vm._s(_vm.details.name))]
                                 ),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "text-muted mb-2" }, [
-                                  _vm._v("Alpha")
-                                ]),
-                                _vm._v(" "),
                                 _c(
                                   "span",
                                   {
@@ -42106,10 +42102,6 @@ var render = function() {
                                   { staticClass: "font-weight-bold my-2" },
                                   [_vm._v(_vm._s(_vm.details.name))]
                                 ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "text-muted mb-2" }, [
-                                  _vm._v("Alpha")
-                                ]),
                                 _vm._v(" "),
                                 _c(
                                   "span",

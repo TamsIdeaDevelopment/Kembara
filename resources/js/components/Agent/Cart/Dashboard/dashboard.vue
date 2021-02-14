@@ -76,15 +76,18 @@
 
                                     </div>
                                     <div class="row">
-                                        <div class="form-group">
-                                            <a v-if="Cart.qty" @click="decreaseQuantity(Cart.rowId,Cart.qty,Cart.id)" class="btn btn-xs btn-light-success btn-icon mr-2">
-                                                <i class="ki ki-minus icon-xs"></i>
-                                            </a>
-                                            <span class="font-weight-bold mr-2 text-dark-75 font-size-lg">{{Cart.qty}}</span>
-                                            <a @click="addQuantity(Cart.rowId,Cart.qty,Cart.id)" class="btn btn-xs btn-light-success btn-icon">
-                                                <i class="ki ki-plus icon-xs"></i>
-                                            </a>
+                                        <div class="col-12 ml-n3">
+                                            <input type="number" class="form-control" style="width: 100%" v-model="Cart.qty" @change="changeQuantity(Cart.rowId,Cart.qty,Cart.id,Cart.options.stock,Cart.name)">
                                         </div>
+                                        <!--<div class="form-group">-->
+                                            <!--<a v-if="Cart.qty" @click="decreaseQuantity(Cart.rowId,Cart.qty,Cart.id)" class="btn btn-xs btn-light-success btn-icon mr-2">-->
+                                                <!--<i class="ki ki-minus icon-xs"></i>-->
+                                            <!--</a>-->
+                                            <!--<span class="font-weight-bold mr-2 text-dark-75 font-size-lg">{{Cart.qty}}</span>-->
+                                            <!--<a @click="addQuantity(Cart.rowId,Cart.qty,Cart.id)" class="btn btn-xs btn-light-success btn-icon">-->
+                                                <!--<i class="ki ki-plus icon-xs"></i>-->
+                                            <!--</a>-->
+                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -194,6 +197,70 @@
                         EventBus.$emit('updateTotalCart');
                         EventBus.$emit('fetchProduct');
                     })
+            },
+            changeQuantity(rowId,quantity,productId,stock,product_name)
+            {
+                if(quantity > stock)
+                {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error("Please change the quantity", product_name +' \nQuantity Exceeds Stock');
+                    this.fetchCart();
+
+                }
+                else
+                {
+
+                    var quantity = parseInt(quantity);
+                    var url = '/api/v1/cart/'+ this.data +'/'+ rowId + '/' +  quantity +'/add-quantity', method = 'post';
+
+                    fetch(url, {
+                        method: method,
+                        body: JSON.stringify(),
+                        headers: {
+                            'content-type': 'application/json'
+                        }
+                    }).then(response => response.json())
+                        .then(response => {
+                            this.fetchCart();
+                            EventBus.$emit('updateElementsCart');
+                            EventBus.$emit('updateTotalCart');
+                            EventBus.$emit('fetchProduct');
+                        })
+
+                }
+//                var quantity = parseInt(quantity);
+//                var url = '/api/v1/cart/'+ this.data.id +'/'+ rowId + '/' +  quantity +'/add-quantity', method = 'post';
+//
+//                fetch(url, {
+//                    method: method,
+//                    body: JSON.stringify(),
+//                    headers: {
+//                        'content-type': 'application/json'
+//                    }
+//                }).then(response => response.json())
+//                    .then(response => {
+//                        this.fetchCart();
+//                        EventBus.$emit('updateElementsCart');
+//                        EventBus.$emit('updateTotalCart');
+//                        EventBus.$emit('fetchProduct');
+//                    })
+
             },
             addQuantity(rowId,quantity,productId)
             {

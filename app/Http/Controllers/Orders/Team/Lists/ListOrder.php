@@ -27,7 +27,7 @@ class ListOrder
 
     public function list()
     {
-        $data = $this->repository->where('HQ', 0)->latest()->get();
+        $data = $this->repository->where('HQ', 0)->where('buyer_type','=',null)->latest()->get();
 
         return OrdersResources::collection($data);
     }
@@ -35,7 +35,7 @@ class ListOrder
     public function AgentListOrder($id)
     {
         $data = $this->repository->where([
-            ['seller_id', '=', $id]])->latest()->get();
+            ['seller_id', '=', $id],['buyer_type', '=', null]])->latest()->get();
 
         return OrdersResources::collection($data);
     }
@@ -43,7 +43,7 @@ class ListOrder
     public function AgentListRestock($id)
     {
         $data = $this->repository->where([
-            ['buyer_id', '=', $id]])->latest()->get();
+            ['buyer_id', '=', $id],['buyer_type', '=', null]])->latest()->get();
 
         return OrdersResources::collection($data);
     }

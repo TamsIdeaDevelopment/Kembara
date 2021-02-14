@@ -105,4 +105,19 @@ class HomeController extends Controller
     {
         return view('pages.Admin.Shipping.index');
     }
+
+    public function ListCustomerOrder()
+    {
+        return view('pages.User.Customer.list-customer-order');
+    }
+
+    public function CustomerOrder()
+    {
+        return view('pages.User.Customer.customer-order');
+    }
+
+    public function CustomerOrderDetails($orderID)
+    {
+        return view('pages.User.Customer.customer-order-detail',['orderID' => $orderID]);
+    }
 }

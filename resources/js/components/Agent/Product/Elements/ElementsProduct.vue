@@ -39,7 +39,9 @@
                 <td>RM {{Product.price}}</td>
                 <td>
                     <a v-if="Product.quantity < Product.minimum_order" class="btn btn-sm btn-danger">Out Of Stock</a>
-                    <a v-if="Product.quantity >= Product.minimum_order" :href="'/cart-add-item/'+ $parent.$parent.data.id +'/'+ Product.product_id.id +'/' + Product.price + '/' + Product.minimum_order " class="btn btn-sm btn-primary">Add To Cart</a>
+                    <!--<a v-if="Product.quantity >= Product.minimum_order" :href="'/cart-add-item/'+ $parent.$parent.data.id +'/'+ Product.product_id.id +'/' + Product.price + '/' + Product.minimum_order " class="btn btn-sm btn-primary">Add To Cart</a>-->
+                    <a v-if="Product.quantity >= Product.minimum_order" :href="'/cart-add-item/'+ $parent.$parent.data.id +'/'+ Product.product_id.id +'/' + Product.price + '/'+ Product.minimum_order + '/' + 1 + '/' + Product.product_id.product_set" class="btn btn-sm btn-primary">Add To Cart</a>
+
                 </td>
             </tr>
             </tbody>

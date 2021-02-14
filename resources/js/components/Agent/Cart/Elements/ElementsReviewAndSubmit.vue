@@ -77,7 +77,7 @@
                             <tr v-if="$parent.delivery_type == 0 && $parent.IsSellerHQ == 1">
                                 <td colspan="2" class="border-0 pt-0"></td>
                                 <td class="border-0 pt-0 font-weight-bolder text-right">Delivery Fees</td>
-                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0">RM {{$parent.delivery_fee}}</td>
+                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0">RM {{$parent.total_delivery_fee}}</td>
                             </tr>
                             <tr>
                                 <td colspan="2" class="border-0 pt-0"></td>

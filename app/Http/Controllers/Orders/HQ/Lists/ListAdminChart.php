@@ -19,17 +19,27 @@ class ListAdminChart
             ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
             ->sum('total_paid');
 
+        $week = number_format((float)$week, 2, '.', '');
+
         $month = Order::where('status',1)
             ->whereMonth('created_at', '=', Carbon::now()->month)
             ->sum('total_paid');
+
+        $month = number_format((float)$month, 2, '.', '');
 
 
         $year = Order::where('status',1)
             ->whereYear('created_at', '=', Carbon::now()->year)
             ->sum('total_paid');
 
+        $year = number_format((float)$year, 2, '.', '');
+
+
         $total = Order::where('status',1)
             ->sum('total_paid');
+
+        $total = number_format((float)$total, 2, '.', '');
+
 
         $data = array(
             'week' => $week,

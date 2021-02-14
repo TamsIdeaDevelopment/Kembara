@@ -22,6 +22,25 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function () {
 
+
+    Route::group(['prefix' => 'Customer', 'as' => 'Customer.', 'namespace' => 'Customer'], function () {
+
+        Route::group(['prefix' => 'Lists', 'as' => 'Lists.','namespace' => 'Lists'], function () {
+            Route::get('{user_id}/agent-list-customer-order', 'ListCustomerOrder@agentListCustomerOrder')->name('agent-list-customer-order');
+        });
+
+        Route::group(['prefix' => 'Creates', 'as' => 'Creates.','namespace' => 'Creates'], function () {
+            Route::post('/create-order', 'CustomerCreateOrder@customerCreateOrder')->name('create-order');
+
+        });
+
+        Route::group(['prefix' => 'Updates', 'as' => 'Updates.','namespace' => 'Updates'], function () {
+        });
+
+        Route::group(['prefix' => 'Deletes', 'as' => 'Deletes.','namespace' => 'Deletes'], function () {
+        });
+    });
+
     Route::group(['prefix' => 'cart', 'as' => 'cart.', 'namespace' => 'Cart'], function () {
         Route::get('/list-cart', 'CartController@ListCarts')->name('cart');
         Route::get('/count-cart', 'CartController@CountCarts')->name('count-cart');
@@ -187,6 +206,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
             Route::get('{product_id}/{agent_levels_id}/agent-moq', 'ListProduct@agentMOQ')->name('agent-moq');
             Route::get('{user_id}/stock-list-leader', 'ListProduct@StockLeaderList')->name('stock-list-leader');
             Route::get('{user_id}/stock-list-agent', 'ListProduct@StockListAgent')->name('stock-list-agent');
+            Route::get('{user_id}/stock-list-agent-for-customer', 'ListProduct@StockListAgentForCustomer')->name('stock-list-agent-for-customer');
+
 
         });
     });

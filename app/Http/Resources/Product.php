@@ -19,6 +19,7 @@ class Product extends JsonResource
         return [
             'id' => $this->id,
             'product_type_id' => ProductTypeModel::where('id', $this->product_type_id)->first(['id','name']),
+            'product_set' => $this->product_set,
             'status' => $this->status,
             'name' => $this->name,
             'description' =>  $this->description,

@@ -48,6 +48,7 @@ class CreateProduct
 
         $model = $this->repository->create([
             'product_type_id' => $request->input('product_type_id'),
+            'product_set' => $request->input('product_set'),
             'status' => 'On',
             'name' => $request->input('name'),
             'description' => $request->input('description'),

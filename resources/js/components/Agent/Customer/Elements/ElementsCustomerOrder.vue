@@ -1,0 +1,82 @@
+<template>
+    <table  style="width:100%" class="table table-separate table-head-custom table-checkable responsive display nowrap" id="table-customer-order">
+        <thead>
+        <tr>
+            <th data-priority="1"></th>
+            <th data-priority="2">No</th>
+            <th>Buyer</th>
+            <th>Total</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(Order, index) in data">
+            <td>{{index+1}}</td>
+            <td>#{{String('00000' + Order.id).slice(-5)}}</td>
+            <td>
+                <div class="row" v-if="Order.HQ == 0">
+                    <div class="col-auto">
+                        <div class="row">
+                            <div class="col-sm-auto">
+                                {{Order.deliver_to}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" v-if="Order.HQ == 1">
+                    <div class="col-auto">
+                        HQ
+                    </div>
+                </div>
+            </td>
+            <td>{{Order.total}}</td>
+            <td>{{Order.created_at}}</td>
+            <td>
+                <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">Pending</span>
+                <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">Success</span>
+                <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">Decline</span>
+            </td>
+            <td>
+                <a :href="Order.id +'/customer-order-details'" class="btn btn-sm btn-primary">View</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</template>
+<script>
+    export default {
+        props: ['data'],
+        data() {
+            return {
+                image_source: 'storage/ProfilePicture/',
+                Order:[],
+                dataTable:null,
+                editing: false,
+            }
+        },
+        mounted() {
+            VueEvent.$on('updateTable', () => {
+                this.updateTable();
+            });
+        },
+        watch: {
+            data() {}
+        },
+        created(){},
+        methods: {
+//            openEditRecord(data){
+//                $(".updateState").modal('show');
+//                this.States = data;
+//            },
+//            openDeleteRecord(data){
+//                $(".deleteState").modal('show');
+//                this.States = data;
+//            },
+        }
+
+    }
+
+</script>

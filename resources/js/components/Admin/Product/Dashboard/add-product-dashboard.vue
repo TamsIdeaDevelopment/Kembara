@@ -100,6 +100,7 @@
                 let formData = new FormData();
                 formData.append("name", this.Products.name);
                 formData.append("product_type_id", this.Products.product_type_id);
+                formData.append("product_set", this.Products.product_set);
                 formData.append("description", this.Products.description);
                 formData.append("weight", this.Products.weight);
                 formData.append("stock", this.Products.stock);

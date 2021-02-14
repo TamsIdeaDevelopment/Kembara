@@ -35,6 +35,21 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
+                                                <label>Product Set</label>
+                                                <div class="row" v-if="('product_set' in errors)">
+                                                    <div class="col">
+                                                        <label class="text-danger">{{errors['product_set']}}</label>
+                                                    </div>
+                                                </div>
+                                                <select class="form-control" style="width:100%" id="select-product-set" v-model="$parent.Products.product_set">
+                                                    <option value="">Select</option>
+                                                    <option value="Normal">Normal</option>
+                                                    <option value="Special">Special</option>
+                                                    <option value="Add-On">Add-On</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
                                                 <label>Description</label>
                                                 <input type="text" class="form-control" v-model="$parent.Products.description" placeholder="Description"/>
                                             </div>
@@ -101,6 +116,15 @@
             $("#create-update-category").change(function(){
                 this.$parent.Products.product_type_id= $("#create-update-category").val();
             }.bind(this));
+
+            $('#select-product-set').select2({
+                placeholder: 'Select',
+                allowClear: true
+            });
+            $("#select-product-set").change(function(){
+                this.$parent.Products.product_set= $("#select-product-set").val();
+                console.log('set :' + this.$parent.Products.product_set)
+            }.bind(this));
         },
         created(){
             this.fetchProductCategory();
@@ -120,7 +144,7 @@
             },
             UpdateProduct() {
                 this.errors = [];
-                if((this.$parent.Products.name !== '') && (this.$parent.Products.stock !== '') && (this.$parent.Products.retail_price !== ''))
+                if((this.$parent.Products.name !== '') && (this.$parent.Products.stock !== '') && (this.$parent.Products.retail_price !== '') && (this.$parent.Products.product_set !== ''))
                 {
                     let currentObj = this;
                     const config = {
@@ -130,6 +154,7 @@
                     let formData = new FormData();
                     formData.append("name", this.$parent.Products.name);
                     formData.append("product_type_id", this.$parent.Products.product_type_id.id);
+                    formData.append("product_set", this.$parent.Products.product_set);
                     formData.append("description", this.$parent.Products.description);
                     formData.append("weight", this.$parent.Products.weight);
                     formData.append("stock", this.$parent.Products.stock);
@@ -179,6 +204,10 @@
                 if(!this.$parent.Products.retail_price)
                 {
                     this.errors['retail_price'] = "Please enter the retail price"
+                }
+                if(!this.$parent.Products.product_set)
+                {
+                    this.errors['product_set'] = "Please select the product set"
                 }
             },
 

@@ -56,7 +56,8 @@ Route::get('/test-senangpay', function () {
 Route::group(['namespace' => 'Cart'], function () {
 
     Route::get('/test/{product_id}/{price}/{minimum_order}', 'CartController@test')->name('/test');
-    Route::get('/cart-add-item/{user_id}/{product_id}/{price}/{minimum_order}', 'CartController@CartAddItems')->name('cart-add-item');
+//    Route::get('/cart-add-item/{user_id}/{product_id}/{price}/{minimum_order}', 'CartController@CartAddItems')->name('cart-add-item');
+    Route::get('/cart-add-item/{user_id}/{product_id}/{price}/{minimum_order}/{quantity}/{product_type}', 'CartController@CartAddItems')->name('cart-add-item');
     Route::get('/cart-details', 'CartController@CartDetails')->name('/cart-details');
     Route::get('/cart-count', 'CartController@CartCount')->name('/cart-count');
     Route::get('{rowID}/remove-item', 'CartController@RemoveItem')->name('/remove-item');
@@ -96,6 +97,9 @@ Route::get('/agent-details/{agentID}', function ($agentID) {
 
 Route::get('/stock', 'HomeController@Stock')->name('stock')->middleware('verified');
 
+Route::get('/list-customer-order', 'HomeController@ListCustomerOrder')->name('list.customer.order')->middleware('verified');
+Route::get('/new-customer-order', 'HomeController@CustomerOrder')->name('new.customer.order')->middleware('verified');
+Route::get('{orderId}/customer-order-details', 'HomeController@CustomerOrderDetails')->name('customer.details.order')->middleware('verified');
 
 //Route::get('/agent-details/{agentID}/{userID}', function ($agentID,$userID) {
 //    return view('pages.Admin.Teams.Team.details',['agentID' => $agentID, 'userID' => $userID]);

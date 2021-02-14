@@ -76,13 +76,11 @@
                                             <h6 class="font-weight-bolder mt-8">Order Date: <span class="text-primary">{{Order.created_at}}</span></h6>
                                         </div>
                                         <div class="col-lg-4 col-sm-4 justify-content-end">
-                                            <div class="d-flex flex-column align-items-md-end px-0">
+                                            <div class="d-flex flex-column align-items-md-end px-0 mt-n20">
                                                 <a href="#" class="mb-5">
-                                                    <!--<img src="https://www.kembarameals.com/wp-content/uploads/2018/04/kembara-logo.png" style="height:80px"  class="mr-n10"/>-->
-                                                    <img :src="'assets/img/kembaraLogo1.png'" alt=""  style="height:80px; width:200px" class="mr-n10"/>
-
+                                                    <img :src="'assets/img/kembara-logo-depan.png'" alt=""  style="height:200px; width:250px" class="mr-n15"/>
                                                 </a>
-                                                <span class="d-flex flex-column align-items-md-end opacity-70 mr-n7">
+                                                <span class="d-flex flex-column align-items-md-end opacity-70 mr-n7 mt-n20">
                                                     <span>No. CS23A, Jalan Puteri 2A/6,</span>
                                                     <span>43000 Kajang, Selangor</span>
                                                 </span>

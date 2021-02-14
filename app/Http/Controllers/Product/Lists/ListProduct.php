@@ -18,6 +18,7 @@ use App\Product_type;
 use App\Roles_price;
 use App\Stock_agent;
 use App\Http\Resources\StockAgent as StockAgentResources;
+use App\Http\Resources\StockAgentForCustomer as StockAgentForCustomerResources;
 
 class ListProduct
 {
@@ -238,5 +239,59 @@ class ListProduct
 
         $object = json_decode(json_encode($final), false);
         return StockAgentResources::collection($object);
+    }
+
+    public function StockListAgentForCustomer($user_id)
+    {
+        $agent_detail = $this->agent_details->agentDetails($user_id);
+
+        $product = $this->stockListPriceAndMOQ($user_id);
+        $stock_leader = $this->stock_leader->where('user_id',$user_id)->get();
+
+        $stock_details = array();
+        foreach($stock_leader as $key)
+        {
+            $stock_details[] = array(
+                'product_id' => $key['product_id'],
+                'stock' => $key['quantity'],
+                'quantity' => 0,
+                'total_price' => 0,
+                'item_id' => $key['product_id'],
+            );
+
+        }
+        $product_details = array();
+        foreach($product as $data)
+        {
+            $product_details[] = array(
+                'product_id' => $data['product_id'],
+                'price' => $data['price'],
+                'minimum_order' => $data['minimum_order'],
+                'stock' => 0,
+                'quantity' => 0,
+                'total_price' => 0,
+                'item_id' =>$data['product_id'],
+            );
+
+        }
+        $final =$stock_details;
+        foreach ($product_details as $value) {
+            $flag = 0;
+            foreach ($final as $key => $data) {
+                // Check for date, size and type
+                if ($data['product_id']===$value['product_id']) {
+                    $final[$key]['price'] = $value['price'];
+                    $final[$key]['minimum_order'] = $value['minimum_order'];
+                    $flag = 1;
+                    break;
+                }
+            }
+            if ($flag === 0) {
+                array_push($final, $value);
+            }
+        }
+
+        $object = json_decode(json_encode($final), false);
+        return StockAgentForCustomerResources::collection($object);
     }
 }

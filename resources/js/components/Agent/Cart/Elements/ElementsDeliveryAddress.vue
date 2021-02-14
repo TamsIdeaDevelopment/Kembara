@@ -8,7 +8,7 @@
             </div>
             <div class="card-body">
                 <h6 class="font-weight-bolder mt-n5">Setup your address</h6>
-                <div class="mt-10" v-if="$parent.IsSellerHQ == 1">
+                <div class="mt-10" v-show="$parent.IsSellerHQ == 1">
                     <div class="radio-inline">
                         <label class="radio radio-square">
                             <input type="radio" :checked="$parent.delivery_type =='0'" v-model="$parent.delivery_type" :value="'0'" @change="ifSelfPickup()"/>
@@ -21,7 +21,7 @@
                             Self Pickup
                         </label>
                     </div>
-                    <div v-if="$parent.delivery_type == 0">
+                    <div v-show="$parent.delivery_type == 0">
                         <div class="form-group mt-8">
                             <div class="checkbox-inline">
                                 <label class="checkbox checkbox-square"  @click="sameAddress">
@@ -137,7 +137,24 @@
                                                     <label class="text-danger">{{$parent.errors['state']}}</label>
                                                 </div>
                                             </div>
-                                            <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>
+                                            <select class="form-control" style="width:100%" id="select-state" v-model="$parent.DeliveryDetails.state">
+                                                <option value="">Select2</option>
+                                                <option value="Kuala Lumpur">Kuala Lumpur</option>
+                                                <option value="Selangor">Selangor</option>
+                                                <option value="Pahang">Pahang</option>
+                                                <option value="Terengganu">Terengganu</option>
+                                                <option value="Kelantan">Kelantan</option>
+                                                <option value="Negeri Sembilan">Negeri Sembilan</option>
+                                                <option value="Melaka">Melaka</option>
+                                                <option value="Johor">Johor</option>
+                                                <option value="Perlis">Perlis</option>
+                                                <option value="Perak">Perak</option>
+                                                <option value="Sabah">Sabah</option>
+                                                <option value="Sarawak">Sarawak</option>
+                                                <option value="Pulau Pinang">Pulau Pinang</option>
+                                                <option value="Kedah">Kedah</option>
+                                            </select>
+                                            <!--<input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>-->
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
@@ -272,7 +289,24 @@
                                                 <label class="text-danger">{{$parent.errors['state']}}</label>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>
+                                        <select class="form-control" style="width:100%" id="select-not-HQ-state" v-model="$parent.DeliveryDetails.state">
+                                            <option value="">Select2</option>
+                                            <option value="Kuala Lumpur">Kuala Lumpur</option>
+                                            <option value="Selangor">Selangor</option>
+                                            <option value="Pahang">Pahang</option>
+                                            <option value="Terengganu">Terengganu</option>
+                                            <option value="Kelantan">Kelantan</option>
+                                            <option value="Negeri Sembilan">Negeri Sembilan</option>
+                                            <option value="Melaka">Melaka</option>
+                                            <option value="Johor">Johor</option>
+                                            <option value="Perlis">Perlis</option>
+                                            <option value="Perak">Perak</option>
+                                            <option value="Sabah">Sabah</option>
+                                            <option value="Sarawak">Sarawak</option>
+                                            <option value="Pulau Pinang">Pulau Pinang</option>
+                                            <option value="Kedah">Kedah</option>
+                                        </select>
+                                        <!--<input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>-->
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
@@ -299,14 +333,70 @@
         props: [],
         data(){
             return{
-
+                isSeller:'',
             }
         },
         created() {
-
+            this.fetchAgentDetails();
         },
-        mounted() {},
+        mounted() {
+            $('#select-not-HQ-state').select2({
+                placeholder: 'Select',
+                allowClear: true
+            });
+
+            $("#select-not-HQ-state").change(function(){
+                this.$parent.DeliveryDetails.state= $("#select-not-HQ-state").val();
+                console.log(this.$parent.DeliveryDetails.state);
+            }.bind(this));
+
+            $('#select-state').select2({
+                placeholder: 'Select',
+                allowClear: true
+            });
+            $("#select-state").change(function(){
+                this.$parent.DeliveryDetails.state= $("#select-state").val();
+
+                this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
+                if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak')
+                {
+                    this.$parent.delivery_fee = 27;
+
+                    if(this.isSeller == 1)
+                    {
+                        this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.Count;
+                        this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
+
+                        this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
+
+                    }
+                }
+                else
+                {
+
+                    this.$parent.delivery_fee = 6.90;
+
+                    if(this.isSeller == 1)
+                    {
+                        this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.Count;
+                        this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
+                        this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
+                    }
+                }
+                console.log('Total: ' + this.$parent.Totals )
+                console.log('Shipping: ' + this.$parent.total_delivery_fee )
+            }.bind(this));
+        },
         methods: {
+            fetchAgentDetails(){
+                fetch('/api/v1/team/Lists/' + this.$parent.data +'/agent-info').then(response => response.json())
+                    .then(response => {
+                        this.isSeller = response.data.leader_id.HQ;
+                        console.log(this.isSeller);
+
+                    })
+                    .catch(error => console.log(error))
+            },
             ifSelfPickup() {
                 if(this.$parent.delivery_type == 0)
                 {

@@ -16,7 +16,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="wizard-step" data-wizard-type="step">
+                                    <div class="wizard-step" data-wizard-type="step"  v-show="CartStatus">
                                         <div class="wizard-wrapper">
                                             <div class="wizard-number">2</div>
                                             <div class="wizard-label">
@@ -27,7 +27,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="wizard-step" data-wizard-type="step">
+                                    <div class="wizard-step" v-show="!CartStatus">
+                                        <div class="wizard-wrapper">
+                                            <div class="wizard-number">2</div>
+                                            <div class="wizard-label">
+                                                <div class="wizard-title text-danger">Complete your cart</div>
+                                                <div class="wizard-desc">Setup Your Address</div>
+                                                <span class="card-label font-weight-bolder text-danger" v-if="('all' in errors)">{{errors['all']}}</span>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wizard-step" data-wizard-type="step" v-show="CartStatus">
                                         <div class="wizard-wrapper">
                                             <div class="wizard-number">3</div>
                                             <div class="wizard-label">
@@ -36,11 +47,29 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="wizard-step" data-wizard-type="step">
+                                    <div class="wizard-step" v-show="!CartStatus">
+                                        <div class="wizard-wrapper">
+                                            <div class="wizard-number">3</div>
+                                            <div class="wizard-label">
+                                                <div class="wizard-title text-danger">Complete your cart</div>
+                                                <div class="wizard-desc">Choose Payment Method</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wizard-step" data-wizard-type="step" v-show="CartStatus">
                                         <div class="wizard-wrapper">
                                             <div class="wizard-number">4</div>
                                             <div class="wizard-label">
                                                 <div class="wizard-title">Completed</div>
+                                                <div class="wizard-desc">Review and Submit</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wizard-step" v-show="!CartStatus">
+                                        <div class="wizard-wrapper">
+                                            <div class="wizard-number">4</div>
+                                            <div class="wizard-label">
+                                                <div class="wizard-title text-danger">Complete your cart</div>
                                                 <div class="wizard-desc">Review and Submit</div>
                                             </div>
                                         </div>
@@ -61,7 +90,8 @@
                                             </div>
                                             <div>
                                                 <button type="submit" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-state="action-submit" data-wizard-type="action-submit">Order</button>
-                                                <button type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">Next</button>
+                                                <button type="button" v-show="CartStatus === true" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">Next</button>
+                                                <button type="button" v-show="CartStatus === false" disabled class="btn btn-secondary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">Next</button>
                                             </div>
                                         </div>
                                     </form>
@@ -124,6 +154,15 @@
                 delivery_type:0,
                 delivery_fee: 6.90,
                 total_delivery_fee:0,
+                CartStatus: false,
+                TotalMOQNormal:0,
+                TotalMOQSpecial:0,
+                TotalMOQAddOn:0,
+                TotalItems:0,
+                CountNormal: [],
+                CountSpecial: [],
+                CountAddOn: [],
+                TotalNormal: 0,
             }
         },
         mounted() {

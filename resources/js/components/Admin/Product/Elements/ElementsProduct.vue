@@ -5,7 +5,7 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Category</th>
+                <th>Set</th>
                 <th>Price (RM)</th>
                 <th>Add Stock</th>
                 <th>Action</th>
@@ -34,7 +34,7 @@
                     </div>
 
                 </td>
-                <td>{{Product.product_type_id.name}}</td>
+                <td>{{Product.product_set}}</td>
                 <td>{{Product.stock}}</td>
                 <td>RM {{Product.retail_price}}</td>
                 <td>

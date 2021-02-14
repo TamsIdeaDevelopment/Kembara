@@ -19,6 +19,10 @@
                             <input type="text" class="form-control" v-model="Product.product_type_id.name" disabled/>
                         </div>
                         <div class="form-group">
+                            <label>Product Set</label>
+                            <input type="text" class="form-control" v-model="Product.product_set" disabled/>
+                        </div>
+                        <div class="form-group">
                             <label>Description</label>
                             <input type="text" class="form-control" v-model="Product.description" disabled/>
                         </div>

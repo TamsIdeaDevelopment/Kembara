@@ -50,6 +50,7 @@ class UpdateProduct
 
         $product->name = $request->input('name');
         $product->product_type_id = $request->input('product_type_id');
+        $product->product_set = $request->input('product_set');
         $product->description = $request->input('description');
         $product->weight = $request->input('weight');
         $product->stock = $request->input('stock');

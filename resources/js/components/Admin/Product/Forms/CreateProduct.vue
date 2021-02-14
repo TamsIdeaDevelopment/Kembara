@@ -15,6 +15,20 @@
             <label>Description</label>
             <input type="text" class="form-control" v-model="$parent.Products.description" placeholder="Description"/>
         </div>
+        <div class="form-group">
+            <label>Product Set</label>
+            <!--<div class="row" v-if="('product_set' in errors)">-->
+                <!--<div class="col">-->
+                    <!--<label class="text-danger">{{errors['product_set']}}</label>-->
+                <!--</div>-->
+            <!--</div>-->
+            <select class="form-control" style="width:100%" id="select-product-set" v-model="$parent.Products.product_set">
+                <option value="">Select</option>
+                <option value="Normal">Normal</option>
+                <option value="Special">Special</option>
+                <option value="Add-On">Add-On</option>
+            </select>
+        </div>
         <!--<div class="form-group">-->
             <!--<label>Package Item (Starter Pack)</label>-->
             <!--<input type="text" class="form-control" v-model="$parent.Products.starter" placeholder="Package Item (Starter Pack)"/>-->
@@ -79,6 +93,14 @@
             $("#create-select-category").change(function(){
                 this.$parent.Products.product_type_id= $("#create-select-category").val();
                 //console.log(this.Products)
+            }.bind(this));
+            $('#select-product-set').select2({
+                placeholder: 'Select',
+                allowClear: true
+            });
+            $("#select-product-set").change(function(){
+                this.$parent.Products.product_set= $("#select-product-set").val();
+                console.log('set :' + this.$parent.Products.product_set)
             }.bind(this));
         },
         methods: {

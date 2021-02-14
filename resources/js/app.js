@@ -146,6 +146,17 @@ Vue.component('admin-classroom-form', require('./components/Admin/Classroom/Form
 
 /********************************************* Agent ****************************************************************/
 
+/**  Customer  */
+Vue.component('agent-customer-dashboard', require('./components/Agent/Customer/Dashboard/dashboard.vue').default);
+Vue.component('agent-new-customer-dashboard', require('./components/Agent/Customer/Dashboard/dashboard-new-customer-order.vue').default);
+Vue.component('agent-customer-dashboard-order-details', require('./components/Agent/Customer/Dashboard/dashboard-customer-order-details.vue').default);
+Vue.component('agent-customer-list', require('./components/Agent/Customer/Lists/ListsCustomerOrder.vue').default);
+Vue.component('agent-customer-elements', require('./components/Agent/Customer/Elements/ElementsCustomerOrder.vue').default);
+Vue.component('agent-customer-cart-elements', require('./components/Agent/Customer/Elements/ElementsCustomerCart.vue').default);
+Vue.component('agent-customer-delivery-address-elements', require('./components/Agent/Customer/Elements/ElementsCustomerDeliveryAddress.vue').default);
+Vue.component('agent-customer-review-submit-elements', require('./components/Agent/Customer/Elements/ElementsCustomerReviewAndSubmit.vue').default);
+
+
 /**  Dashboard  */
 Vue.component('agent-dashboard', require('./components/Agent/Dashboard/Dashboard/dashboard.vue').default);
 Vue.component('agent-dashboard-chart', require('./components/Agent/Dashboard/Chart/DashboardChart.vue').default);

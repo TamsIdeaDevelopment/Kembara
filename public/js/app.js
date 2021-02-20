@@ -37522,11 +37522,7 @@ var render = function() {
                     _vm._v("Bank Transfer")
                   ]),
                   _vm._v(" "),
-                  _c("option", { attrs: { value: "3" } }, [_vm._v("Billplz")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "4" } }, [
-                    _vm._v("SenangPay (Credit Card)")
-                  ])
+                  _c("option", { attrs: { value: "3" } }, [_vm._v("Billplz")])
                 ]
               )
             ]),
@@ -43342,7 +43338,7 @@ var render = function() {
                                       attrs: {
                                         target: "_blank",
                                         href:
-                                          "https://www.billplz-sandbox.com/bills/" +
+                                          "https://www.billplz.com/bills/" +
                                           _vm.Order.billcode
                                       }
                                     },
@@ -43411,7 +43407,7 @@ var render = function() {
                                             staticClass: "btn btn-success",
                                             attrs: {
                                               href:
-                                                "https://www.billplz-sandbox.com/bills/" +
+                                                "https://www.billplz.com/bills/" +
                                                 _vm.Order.billcode
                                             }
                                           },

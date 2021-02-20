@@ -9,7 +9,6 @@
 namespace App\Http\Controllers\Orders\HQ\Creates;
 
 use App\Agent;
-use App\CartItem;
 use App\Mail\OrderEmail;
 use App\Order;
 Use App\Http\Resources\Orders as OrdersResources;
@@ -110,9 +109,6 @@ class CreateOrder
                     'weight' => $key['weight'],
                     'name' => $key['name'],
                 ]);
-
-                $cart_items = CartItem::where('rowId', $key['rowId'])->first();
-                $cart_items->delete();
             }
 
             if($input['point'] != 0)
@@ -269,9 +265,6 @@ class CreateOrder
                     'weight' => $key['weight'],
                     'name' => $key['name'],
                 ]);
-
-                $cart_items = CartItem::where('rowId', $key['rowId'])->first();
-                $cart_items->delete();
             }
 
             if($input['point'] != 0)
@@ -349,8 +342,6 @@ class CreateOrder
                     'name' => $key['name'],
                 ]);
 
-                $cart_items = CartItem::where('rowId', $key['rowId'])->first();
-                $cart_items->delete();
             }
             if($input['point'] != 0)
             {
@@ -425,9 +416,6 @@ class CreateOrder
                     'weight' => $key['weight'],
                     'name' => $key['name'],
                 ]);
-
-                $cart_items = CartItem::where('rowId', $key['rowId'])->first();
-                $cart_items->delete();
 
             }
             if($input['point'] != 0)

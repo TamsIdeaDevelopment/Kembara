@@ -16,7 +16,7 @@
                             <option value="1">Toyyibpay</option>
                             <option value="2">Bank Transfer</option>
                             <option value="3">Billplz</option>
-                            <option value="4">SenangPay (Credit Card)</option>
+                            <!--<option value="4">SenangPay (Credit Card)</option>-->
                         </select>
                     </div>
                     <div  v-if="isBankTransfer">

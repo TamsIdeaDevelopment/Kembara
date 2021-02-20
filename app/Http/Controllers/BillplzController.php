@@ -40,13 +40,16 @@ class BillplzController extends Controller
         $user = $this->buyer->where('id',$order->buyer_id)->first();
 
         $http = Discovery::client();
-        $billplz = new Client($http, 'dcc4f608-efe9-43ec-91b8-bf2527f77752', 'S-mlznwdJebvVMqgpz72fiWw');
-        $billplz->useSandbox();
+//        $billplz = new Client($http, 'dcc4f608-efe9-43ec-91b8-bf2527f77752', 'S-mlznwdJebvVMqgpz72fiWw');
+        $billplz = new Client($http, '86c8f1d4-8304-45d3-9a05-ca29b0d808c2', 'S-Gvpigk5xvQyn0dZ7AhcJpg');
+
+//        $billplz->useSandbox();
         $bill = $billplz->bill();
 
 
         $response = $bill->create(
-            'vxgpotk7',
+//            'vxgpotk7',
+            'atmf7ok0',
             $user->email,
             $user->phone_no,
             $user->name,
@@ -80,8 +83,9 @@ class BillplzController extends Controller
         $buyer = Agent::where('user_id',$order->buyer_id)->first();
 
         $http = Discovery::client();
-        $billplz = new Client($http, 'dcc4f608-efe9-43ec-91b8-bf2527f77752', 'S-mlznwdJebvVMqgpz72fiWw');
-        $billplz->useSandbox();
+        $billplz = new Client($http, '86c8f1d4-8304-45d3-9a05-ca29b0d808c2', 'S-Gvpigk5xvQyn0dZ7AhcJpg');
+//        $billplz = new Client($http, 'dcc4f608-efe9-43ec-91b8-bf2527f77752', 'S-mlznwdJebvVMqgpz72fiWw');
+//        $billplz->useSandbox();
         $bill = $billplz->bill();
 
         $bill_details = $bill->get($response['billplz']['id']);

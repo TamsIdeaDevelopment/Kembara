@@ -26,12 +26,16 @@ class Kernel extends ConsoleKernel
     {
 //         $schedule->command('Cancel:Order')->everyMinute();
 //         $schedule->command('Cancel:Order')->daily();
-         $schedule->command('Cancel:Order')->everySixHours();
+
 //         $schedule->command('Cancel:Order')->twiceDaily(1, 13);
 //         $schedule->command('Cancel:Order')->everyTwoMinutes();
 //
-        $schedule->command('monthly:membership')
-            ->monthlyOn(1, '00:00');
+
+
+        $schedule->command('Clear:Cart')->everyMinute();
+//        $schedule->command('Cancel:Order')->everySixHours();
+//        $schedule->command('monthly:membership')
+//            ->monthlyOn(1, '00:00');
 //         $schedule->command('monthly:membership')->everyMinute();
     }
 

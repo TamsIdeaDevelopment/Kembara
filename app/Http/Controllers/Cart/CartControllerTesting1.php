@@ -9,7 +9,6 @@
 namespace App\Http\Controllers\Cart;
 
 
-use App\CartItem;
 use App\Http\Controllers\Team\Lists\ListTeam;
 use App\Product;
 use App\Stock_agent;
@@ -90,14 +89,12 @@ class CartController
         $leader_id = $agent_detail['leader_id']['user_id'];
 
         $stock = 0;
-        $HQ = 0;
 
         if($agent_detail['leader_id']['HQ'] == 1)
         {
             $data->stock = $data->stock -$quantity;
             $data->save();
             $stock = $data->stock;
-            $HQ = 1;
         }
         if($agent_detail['leader_id']['HQ'] == 0)
         {
@@ -107,21 +104,10 @@ class CartController
 
             $stock_leader->save();
             $stock = $stock_leader->quantity;
-            $HQ = 0;
-
 
         }
 
-        $cart = Cart::add($data->id, $data->name, $quantity, $price, $data->weight, ['size' => $data->featured_image , 'stock' => $stock, 'MOQ' => $minimum_order, 'stock' => $stock, 'product_type' => $product_type]);
-
-        $cart_items = CartItem::create([
-            'rowId' =>  $cart->rowId,
-            'product_id' =>  $product_id,
-            'seller_id' =>  $leader_id,
-            'HQ' =>  $HQ,
-            'quantity' =>  $quantity,
-            'status' =>  0,
-        ]);
+        Cart::add($data->id, $data->name, $quantity, $price, $data->weight, ['size' => $data->featured_image , 'stock' => $stock, 'MOQ' => $minimum_order, 'stock' => $stock, 'product_type' => $product_type]);
         return redirect()->back();
         //return redirect('/cart-details');
     }
@@ -147,11 +133,8 @@ class CartController
         }
 
 
-        $cart_items = CartItem::where('rowId', $cart->rowId)->first();
-        $cart_items->delete();
 
         Cart::remove($rowId);
-
         $data = Cart::content();
         return response()->json($data);
 
@@ -217,10 +200,6 @@ class CartController
             $stock_leader->save();
         }
 
-        $cart_items = CartItem::where('rowId', $cart->rowId)->first();
-        $cart_items->quantity = $quantity;
-        $cart_items->save();
-
         Cart::update($rowId, $quantity);
         $data = Cart::content();
         return $data;
@@ -249,10 +228,6 @@ class CartController
 
             $stock_leader->save();
         }
-
-        $cart_items = CartItem::where('rowId', $cart->rowId)->first();
-        $cart_items->quantity = $quantity;
-        $cart_items->save();
 
         Cart::update($rowId, $quantity);
         $data = Cart::content();

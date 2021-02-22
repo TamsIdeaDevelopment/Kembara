@@ -42,8 +42,8 @@ class ClearCart extends Command
     public function handle()
     {
         $order = CartItem::where('status', 0)
-            ->where('created_at', '<=', now()->subHours(5)->toDateTimeString())
-//            ->where('created_at', '<=', now()->subMinutes(5)->toDateTimeString())
+//            ->where('created_at', '<=', now()->subHours(24)->toDateTimeString())
+            ->where('created_at', '<=', now()->subMinutes(5)->toDateTimeString())
             ->get();
 
         foreach($order as $key)

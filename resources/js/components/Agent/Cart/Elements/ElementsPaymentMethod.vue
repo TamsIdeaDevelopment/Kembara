@@ -13,7 +13,7 @@
                         <label>Choose Payment</label>
                         <select class="form-control" style="width:100%" id="select-payment-methods" v-model="$parent.payment_selected">
                             <option value="">Select</option>
-                            <option value="1">Toyyibpay</option>
+                            <!--<option value="1">Toyyibpay</option>-->
                             <option value="2">Bank Transfer</option>
                             <option value="3">Billplz</option>
                             <!--<option value="4">SenangPay (Credit Card)</option>-->

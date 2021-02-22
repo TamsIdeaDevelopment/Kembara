@@ -26784,7 +26784,9 @@ var render = function() {
                         "a",
                         {
                           staticClass: "btn btn-sm btn-primary",
-                          attrs: { href: "/agent-details/" + NewApplication.id }
+                          attrs: {
+                            href: "/agent-details/" + NewApplication.user_id.id
+                          }
                         },
                         [_vm._v("Edit")]
                       )
@@ -37513,10 +37515,6 @@ var render = function() {
                 },
                 [
                   _c("option", { attrs: { value: "" } }, [_vm._v("Select")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "1" } }, [
-                    _vm._v("Toyyibpay")
-                  ]),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "2" } }, [
                     _vm._v("Bank Transfer")

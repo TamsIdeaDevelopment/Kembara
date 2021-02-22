@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
 //
 
 
-        $schedule->command('Clear:Cart')->everyFiveMinutes();
+        $schedule->command('Clear:Cart')->everyTwoMinutes();
 //        $schedule->command('Cancel:Order')->everySixHours();
 //        $schedule->command('monthly:membership')
 //            ->monthlyOn(1, '00:00');

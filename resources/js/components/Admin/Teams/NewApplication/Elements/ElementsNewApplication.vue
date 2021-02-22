@@ -54,7 +54,7 @@
                 <td>
                     <div class="row mb-1">
                         <div class="col-12">
-                            <a :href="'/agent-details/'+NewApplication.id" class="btn btn-sm btn-primary">Edit</a>
+                            <a :href="'/agent-details/'+NewApplication.user_id.id" class="btn btn-sm btn-primary">Edit</a>
                         </div>
                     </div>
                     <div class="row mb-1">

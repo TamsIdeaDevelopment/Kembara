@@ -17,6 +17,7 @@ class ListChart
     public function listChart($user_id)
     {
         $week = Order::where('seller_id',$user_id)
+            ->where('buyer_type',null)
             ->where('HQ',0)
             ->where('status',1)
             ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
@@ -25,6 +26,7 @@ class ListChart
         $week = number_format((float)$week, 2, '.', '');
 
         $month = Order::where('seller_id',$user_id)
+            ->where('buyer_type',null)
             ->where('status',1)
             ->whereMonth('created_at', '=', Carbon::now()->month)
             ->sum('total_paid');
@@ -32,6 +34,7 @@ class ListChart
         $month = number_format((float)$month, 2, '.', '');
 
         $year = Order::where('seller_id',$user_id)
+            ->where('buyer_type',null)
             ->where('status',1)
             ->whereYear('created_at', '=', Carbon::now()->year)
             ->sum('total_paid');
@@ -39,6 +42,7 @@ class ListChart
         $year = number_format((float)$year, 2, '.', '');
 
         $total = Order::where('seller_id',$user_id)
+            ->where('buyer_type',null)
             ->where('status',1)
             ->sum('total_paid');
 

@@ -36,6 +36,7 @@ class CreateProduct
 
             $filenameWithExt = $request->featured_image->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $filename = str_replace(' ', '_', $filename);
             $extension = $request->featured_image->getClientOriginalExtension();
             $fileNameToStore= $filename.'_'.time().'.'.$extension;
             $path = $request->featured_image->storeAs('public/Product', $fileNameToStore);

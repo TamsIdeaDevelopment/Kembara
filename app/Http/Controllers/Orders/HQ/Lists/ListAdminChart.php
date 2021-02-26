@@ -16,12 +16,14 @@ class ListAdminChart
     public function listChart()
     {
         $week = Order::where('status',1)
+            ->where('buyer_type',null)
             ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
             ->sum('total_paid');
 
         $week = number_format((float)$week, 2, '.', '');
 
         $month = Order::where('status',1)
+            ->where('buyer_type',null)
             ->whereMonth('created_at', '=', Carbon::now()->month)
             ->sum('total_paid');
 
@@ -29,6 +31,7 @@ class ListAdminChart
 
 
         $year = Order::where('status',1)
+            ->where('buyer_type',null)
             ->whereYear('created_at', '=', Carbon::now()->year)
             ->sum('total_paid');
 
@@ -36,6 +39,7 @@ class ListAdminChart
 
 
         $total = Order::where('status',1)
+            ->where('buyer_type',null)
             ->sum('total_paid');
 
         $total = number_format((float)$total, 2, '.', '');

@@ -36,6 +36,8 @@ class ProfileSettings
         $user->name = $request->input('name');
         $user->nric = $request->input('nric');
         $user->email = $request->input('email');
+        $user->company_name = $request->input('company_name');
+        $user->ssm = $request->input('ssm');
         $user->facebook = $request->input('facebook');
         $user->instagram = $request->input('instagram');
         $user->Shopee = $request->input('Shopee');

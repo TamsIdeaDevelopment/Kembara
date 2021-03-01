@@ -334,6 +334,7 @@
         data(){
             return{
                 isSeller:'',
+                tempCount:0,
             }
         },
         created() {
@@ -356,6 +357,11 @@
             });
             $("#select-state").change(function(){
                 this.$parent.DeliveryDetails.state= $("#select-state").val();
+                this.tempCount = 0;
+                this.tempCount = this.$parent.Count / 10;
+                this.tempCount = parseInt(this.tempCount);
+
+//                console.log(this.tempCount);
 
                 this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
                 if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak')
@@ -364,7 +370,7 @@
 
                     if(this.isSeller == 1)
                     {
-                        this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.Count;
+                        this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.tempCount;
                         this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
 
                         this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
@@ -378,7 +384,7 @@
 
                     if(this.isSeller == 1)
                     {
-                        this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.Count;
+                        this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.tempCount;
                         this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
                         this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
                     }

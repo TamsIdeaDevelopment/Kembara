@@ -10367,6 +10367,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
   data: function data() {
@@ -10388,6 +10396,8 @@ __webpack_require__.r(__webpack_exports__);
             name: this.$parent.details.name,
             nric: this.$parent.details.nric,
             email: this.$parent.details.email,
+            company_name: this.$parent.details.company_name,
+            ssm: this.$parent.details.ssm,
             facebook: this.$parent.details.facebook,
             instagram: this.$parent.details.instagram,
             Shopee: this.$parent.details.Shopee,
@@ -12003,7 +12013,8 @@ __webpack_require__.r(__webpack_exports__);
   props: [],
   data: function data() {
     return {
-      isSeller: ''
+      isSeller: '',
+      tempCount: 0
     };
   },
   created: function created() {
@@ -12024,13 +12035,17 @@ __webpack_require__.r(__webpack_exports__);
     });
     $("#select-state").change(function () {
       this.$parent.DeliveryDetails.state = $("#select-state").val();
+      this.tempCount = 0;
+      this.tempCount = this.$parent.Count / 10;
+      this.tempCount = parseInt(this.tempCount); //                console.log(this.tempCount);
+
       this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
 
       if (this.$parent.DeliveryDetails.state == 'Sabah' || this.$parent.DeliveryDetails.state == 'Sarawak') {
         this.$parent.delivery_fee = 27;
 
         if (this.isSeller == 1) {
-          this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.Count;
+          this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.tempCount;
           this.$parent.total_delivery_fee = parseFloat(this.$parent.total_delivery_fee.toFixed(2));
           this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
         }
@@ -12038,7 +12053,7 @@ __webpack_require__.r(__webpack_exports__);
         this.$parent.delivery_fee = 6.90;
 
         if (this.isSeller == 1) {
-          this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.Count;
+          this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.tempCount;
           this.$parent.total_delivery_fee = parseFloat(this.$parent.total_delivery_fee.toFixed(2));
           this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
         }
@@ -12778,6 +12793,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -14236,6 +14253,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -34064,6 +34084,66 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group mt-n5" }, [
+                  _c("label", [_vm._v("Company Name")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.$parent.details.company_name,
+                        expression: "$parent.details.company_name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.$parent.details.company_name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.$parent.details,
+                          "company_name",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group mt-n5" }, [
+                  _c("label", [_vm._v("SSM No")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.$parent.details.ssm,
+                        expression: "$parent.details.ssm"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.$parent.details.ssm },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.$parent.details,
+                          "ssm",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group mt-n5" }, [
                   _c("label", [_vm._v("Facebook")]),
                   _vm._v(" "),
                   _c("input", {
@@ -39582,6 +39662,22 @@ var render = function() {
                                   ),
                                   _vm._v(" "),
                                   _c(
+                                    "h3",
+                                    {
+                                      staticClass:
+                                        "font-weight-bolder text-primary"
+                                    },
+                                    [
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            _vm.Order.seller_id.company_name
+                                          )
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
                                     "h5",
                                     { staticClass: "font-weight-bolder" },
                                     [_vm._v(" Kembara Meals HQ")]
@@ -39600,6 +39696,25 @@ var render = function() {
                                     { staticClass: "font-weight-bolder mb-5" },
                                     [_vm._v("BILL FROM :")]
                                   ),
+                                  _vm._v(" "),
+                                  _vm.Order.seller_id.company_name !== null &&
+                                  _vm.Order.seller_id.company_name !== "-"
+                                    ? _c(
+                                        "h3",
+                                        {
+                                          staticClass:
+                                            "font-weight-bolder text-primary"
+                                        },
+                                        [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(
+                                                _vm.Order.seller_id.company_name
+                                              )
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e(),
                                   _vm._v(" "),
                                   _c(
                                     "h5",
@@ -42533,6 +42648,22 @@ var render = function() {
                                   ),
                                   _vm._v(" "),
                                   _c(
+                                    "h3",
+                                    {
+                                      staticClass:
+                                        "font-weight-bolder text-primary"
+                                    },
+                                    [
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            _vm.Order.seller_id.company_name
+                                          )
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
                                     "h5",
                                     { staticClass: "font-weight-bolder" },
                                     [_vm._v(" Kembara Meals HQ")]
@@ -42551,6 +42682,25 @@ var render = function() {
                                     { staticClass: "font-weight-bolder mb-5" },
                                     [_vm._v("BILL FROM :")]
                                   ),
+                                  _vm._v(" "),
+                                  _vm.Order.seller_id.company_name !== null &&
+                                  _vm.Order.seller_id.company_name !== "-"
+                                    ? _c(
+                                        "h3",
+                                        {
+                                          staticClass:
+                                            "font-weight-bolder text-primary"
+                                        },
+                                        [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(
+                                                _vm.Order.seller_id.company_name
+                                              )
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e(),
                                   _vm._v(" "),
                                   _c(
                                     "h5",
@@ -43776,9 +43926,11 @@ var staticRenderFns = [
           "d-flex flex-column align-items-md-end opacity-70 mr-n7 mt-n20"
       },
       [
-        _c("span", [_vm._v("No. CS23A, Jalan Puteri 2A/6,")]),
+        _c("span", [_vm._v("NO CS23A, JALAN PUTERI 2A/6,")]),
         _vm._v(" "),
-        _c("span", [_vm._v("43000 Kajang, Selangor")])
+        _c("span", [_vm._v("BANDAR PUTERI BANGI")]),
+        _vm._v(" "),
+        _c("span", [_vm._v("43000 KAJANG, SELANGOR")])
       ]
     )
   },
@@ -43788,14 +43940,18 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "opacity-70" }, [
       _vm._v(
-        "\n                                            No. CS23A, Jalan Puteri 2A/6,\n                                            "
+        "\n                                            NO CS23A, JALAN PUTERI 2A/6,\n                                            "
       ),
       _c("br"),
       _vm._v(
-        "43000 Kajang, Selangor\n                                            "
+        "BANDAR PUTERI BANGI\n                                            "
       ),
       _c("br"),
-      _vm._v("Malaysia\n                                        ")
+      _vm._v(
+        "43000 KAJANG, SELANGOR,\n                                            "
+      ),
+      _c("br"),
+      _vm._v("MALAYSIA\n                                        ")
     ])
   },
   function() {
@@ -43805,7 +43961,7 @@ var staticRenderFns = [
     return _c("span", { staticClass: "opacity-70" }, [
       _c("br"),
       _vm._v(
-        "\n                                            03-8727 8287\n                                        "
+        "\n                                            6017-6070648\n                                        "
       )
     ])
   },

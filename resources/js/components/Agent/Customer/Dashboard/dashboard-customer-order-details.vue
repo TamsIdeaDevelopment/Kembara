@@ -39,6 +39,7 @@
                                     <div class="row">
                                         <div class="col-lg-12"  v-if="Order.HQ == 1">
                                             <h3 class="font-weight-bolder mt-8">BILL FROM :</h3>
+                                            <h3 class="font-weight-bolder text-primary"> {{Order.seller_id.company_name}}</h3>
                                             <h5 class="font-weight-bolder"> Kembara Meals HQ</h5>
                                             <span class="opacity-70">
                                                 No. CS23A, Jalan Puteri 2A/6,
@@ -52,6 +53,7 @@
                                         </div>
                                         <div class="col-lg-12"  v-if="Order.HQ == 0">
                                             <h3 class="font-weight-bolder mb-5">BILL FROM :</h3>
+                                            <h3 class="font-weight-bolder text-primary" v-if="Order.seller_id.company_name !== null && Order.seller_id.company_name !== '-'"> {{Order.seller_id.company_name}}</h3>
                                             <h5 class="font-weight-bolder"> {{Order.seller_id.name}}</h5>
                                             <span class="opacity-70">
                                                 {{Order.seller_id.address_1}}

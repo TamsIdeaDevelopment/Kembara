@@ -81,10 +81,10 @@
                                                     <img :src="'assets/img/kembara-logo-depan.png'" alt=""  style="height:200px; width:250px" class="mr-n15"/>
                                                 </a>
                                                 <span class="d-flex flex-column align-items-md-end opacity-70 mr-n7 mt-n20">
-                                                    <span>No. CS23A, Jalan Puteri 2A/6,</span>
-                                                    <span>43000 Kajang, Selangor</span>
+                                                    <span>NO CS23A, JALAN PUTERI 2A/6,</span>
+                                                    <span>BANDAR PUTERI BANGI</span>
+                                                    <span>43000 KAJANG, SELANGOR</span>
                                                 </span>
-
                                             </div>
 
                                         </div>
@@ -92,19 +92,22 @@
                                     <div class="row">
                                         <div class="col-lg-12"  v-if="Order.HQ == 1">
                                             <h3 class="font-weight-bolder mt-8">BILL FROM :</h3>
+                                            <h3 class="font-weight-bolder text-primary"> {{Order.seller_id.company_name}}</h3>
                                             <h5 class="font-weight-bolder"> Kembara Meals HQ</h5>
                                             <span class="opacity-70">
-                                                No. CS23A, Jalan Puteri 2A/6,
-                                                <br />43000 Kajang, Selangor
-                                                <br/>Malaysia
+                                                NO CS23A, JALAN PUTERI 2A/6,
+                                                <br />BANDAR PUTERI BANGI
+                                                <br />43000 KAJANG, SELANGOR,
+                                                <br/>MALAYSIA
                                             </span>
                                             <span class="opacity-70">
                                             <br />
-                                                03-8727 8287
+                                                6017-6070648
                                             </span>
                                         </div>
                                         <div class="col-lg-12"  v-if="Order.HQ == 0">
                                             <h3 class="font-weight-bolder mb-5">BILL FROM :</h3>
+                                            <h3 class="font-weight-bolder text-primary" v-if="Order.seller_id.company_name !== null && Order.seller_id.company_name !== '-'"> {{Order.seller_id.company_name}}</h3>
                                             <h5 class="font-weight-bolder"> {{Order.seller_id.name}}</h5>
                                             <span class="opacity-70">
                                                 {{Order.seller_id.address_1}}

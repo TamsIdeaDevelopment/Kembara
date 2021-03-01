@@ -43,6 +43,14 @@
                                 <input type="email" class="form-control"  v-model="$parent.details.email"/>
                             </div>
                             <div class="form-group mt-n5">
+                                <label>Company Name</label>
+                                <input type="text" class="form-control"  v-model="$parent.details.company_name"/>
+                            </div>
+                            <div class="form-group mt-n5">
+                                <label>SSM No</label>
+                                <input type="text" class="form-control"  v-model="$parent.details.ssm"/>
+                            </div>
+                            <div class="form-group mt-n5">
                                 <label>Facebook</label>
                                 <input type="text" class="form-control"  v-model="$parent.details.facebook"/>
                             </div>
@@ -126,6 +134,8 @@
                                 name: this.$parent.details.name,
                                 nric:this.$parent.details.nric,
                                 email: this.$parent.details.email,
+                                company_name: this.$parent.details.company_name,
+                                ssm: this.$parent.details.ssm,
                                 facebook: this.$parent.details.facebook,
                                 instagram: this.$parent.details.instagram,
                                 Shopee: this.$parent.details.Shopee,

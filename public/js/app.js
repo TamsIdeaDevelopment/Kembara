@@ -24136,9 +24136,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Set")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Price (RM)")]),
+        _c("th", [_vm._v("Stock")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Add Stock")]),
+        _c("th", [_vm._v("Price")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])

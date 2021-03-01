@@ -6,8 +6,8 @@
                 <th>#</th>
                 <th>Name</th>
                 <th>Set</th>
-                <th>Price (RM)</th>
-                <th>Add Stock</th>
+                <th>Stock</th>
+                <th>Price</th>
                 <th>Action</th>
             </tr>
             </thead>

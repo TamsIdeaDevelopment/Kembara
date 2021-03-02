@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     @if(Auth::user()->role_id == 1)
-                        <order-team-dashboard></order-team-dashboard>
+                        <order-team-dashboard :data="{{Auth::user()}}"></order-team-dashboard>
                     @endif
                     @if(Auth::user()->role_id == 3)
                         <agent-order-team-dashboard :data="{{Auth::user()}}"></agent-order-team-dashboard>

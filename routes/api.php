@@ -237,7 +237,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
 
                 Route::get('/check-last-order', 'ListOrder@checkLastOrder')->name('check-last-order');
 
-                Route::get('/admin-chart', 'ListAdminChart@listChart')->name('admin-chart');
+                Route::get('{user_id}/admin-chart', 'ListAdminChart@listChart')->name('admin-chart');
 
 
                 Route::get('/list-shipment', 'ListShipment@listShipment')->name('list-shipment');

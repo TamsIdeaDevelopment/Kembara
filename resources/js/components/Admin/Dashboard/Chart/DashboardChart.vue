@@ -122,7 +122,8 @@
         },
         methods:{
             fetchChart(){
-                fetch('/api/v1/orders/HQ/Lists/admin-chart').then(response => response.json())
+                console.log(this.data.id)
+                fetch('/api/v1/orders/HQ/Lists/' + this.data.id +'/admin-chart').then(response => response.json())
                     .then(response => {
                         this.chart = response;
                         console.log(this.chart.week)

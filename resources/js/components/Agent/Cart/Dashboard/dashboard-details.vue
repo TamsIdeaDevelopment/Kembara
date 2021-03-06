@@ -275,6 +275,7 @@
                     this.Orders.details.total_paid = this.total_paid;
                 }
                 this.Orders.delivery_type=this.delivery_type;
+                this.Orders.delivery_fees=this.total_delivery_fee;
                 this.Orders.payment_methods=this.payment_selected;
                 this.Orders.proof_of_payment=this.proof_of_payment_image;
                 this.Orders.point=this.point;

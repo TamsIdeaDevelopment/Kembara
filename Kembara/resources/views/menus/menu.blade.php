@@ -448,7 +448,7 @@
                                             </g>
                                         </svg>
                                     </span>
-                                    <span class="menu-text">Restock & Inventory</span>
+                                    <span class="menu-text">Product & Stock</span>
                                     <i class="menu-arrow"></i>
                                 </a>
                                 <div class="menu-submenu">
@@ -464,7 +464,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text">Restock</span>
+                                                <span class="menu-text">List Product</span>
                                             </a>
                                         </li>
                                         <li class="{{ (request()->routeIs('stock')) ? 'menu-item-active' : '' }} menu-item" aria-haspopup="true">
@@ -472,7 +472,7 @@
                                                 <i class="menu-bullet menu-bullet-dot">
                                                     <span></span>
                                                 </i>
-                                                <span class="menu-text">Inventory</span>
+                                                <span class="menu-text">Stock</span>
                                             </a>
                                         </li>
                                     </ul>

@@ -63,19 +63,18 @@
                         {
 
                             'No' : i+1,
-                            'Category' : 'Bags & Luggages',
-                            'Parcel Content*' : 'Foods',
-                            'Parcel Value(RM)*' :'7.90',
-                            'Weight (kg)*' : '0.98',
-                            'Pick Up Date*' : '',
-                            'Sender Name*' : 'Kembara Meals',
-                            'Sender Company' : 'Kembara Meals Sdn Bhd',
-                            'Sender Contact*' : '019-868 6297',
+                            'Parcel Content*' : 'RATION',
+                            'Parcel Value(RM)*' :this.shipment_selected[i].delivery_fees,
+                            'Weight (kg)*' : '5',
+                            'Pick Up Date*' : '01/03/2021',
+                            'Sender Name*' : 'KEMBARA MEALS',
+                            'Sender Company' : 'SAUDAGAR KITCHEN SDN BHD',
+                            'Sender Contact*' : '0198686297',
                             'Sender Alt Contact' : '',
-                            'Sender Email' : '',
-                            'Sender Address' : 'No. CS23A, Jalan Puteri 2A/6, 43000 Kajang, Selangor',
+                            'Sender Email' : 'sales@kembarameals.com',
+                            'Sender Address' : 'NO CS 25, JALAN PUTERI 2A/6, CUBICA SQUARE, BANDAR PUTERI BANGI',
                             'Sender Postcode*' : '43000',
-                            'Sender City*' : 'Kajang',
+                            'Sender City*' : 'KAJANG',
                             'receiver_name': this.shipment_selected[i].deliver_to,
                             'receiver_company': "",
                             'receiver_contact': this.shipment_selected[i].deliver_to_phone_no,
@@ -84,11 +83,11 @@
                             'receiver_address': this.shipment_selected[i].shipping_address,
                             'receiver_postcode': this.shipment_selected[i].postcode,
                             'receiver_city': this.shipment_selected[i].city,
-                            'courier_company': "",
-                            'alt_courier_company': "",
-                            'tracking_sms': "",
-                            'drop_off': "",
-                            'reference': '# '+String('000000' + this.shipment_selected[i].id).slice(-6),
+                            'courier_company': "Poslaju",
+//                            'alt_courier_company': "",
+                            'tracking_sms': "No",
+                            'drop_off': "No",
+                            'Reference': '# '+String('000000' + this.shipment_selected[i].id).slice(-6),
                         }
                     );
                 }
@@ -98,6 +97,7 @@
                 fetch('/api/v1/orders/HQ/Lists/list-shipment').then(response => response.json())
                     .then(response => {
                         this.Shipment = response.data;
+                        console.log(this.Shipment)
 //                        for(let i = 0; i < this.Shipment.length; i++){
 //                            this.shipment_details.push(
 //                                {
@@ -146,10 +146,10 @@
                                         { "width": "10px", "targets": 0 },
                                         { "width": "50px", "targets": 1 },
                                         { "width": "50px", "targets": 2 },
-                                        { "width": "50px", "targets": 3 },
+                                        { "width": "100px", "targets": 3 },
                                         { "width": "50px", "targets": 4 },
-                                        { "width": "250px", "targets": 5 },
-                                        { "width": "250px", "targets": 6 },
+                                        { "width": "50px", "targets": 5 },
+                                        { "width": "300px", "targets": 6 },
                                         {
                                             //targets: 3,
                                             width: '150px',

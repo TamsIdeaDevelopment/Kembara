@@ -120,6 +120,12 @@
                                             </span>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-12"  v-if="Order.tracking_no !== null">
+                                            <h3 class="font-weight-bolder mt-8">Tracking Number:</h3>
+                                            <span class="text-primary">{{Order.tracking_no.split(';').join(' ; ')}}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="border-bottom w-100"></div>
@@ -178,6 +184,11 @@
                                         <td colspan="2"></td>
                                         <td class="font-weight-bolder font-size-h6 text-right">Coupon</td>
                                         <td class="font-weight-bolder pr-0 text-right text-danger font-size-h6 text-right">RM {{Order.point}}</td>
+                                    </tr>
+                                    <tr v-if="Order.delivery_type =='0'">
+                                        <td colspan="2"></td>
+                                        <td class="font-weight-bolder font-size-h6 text-right">Delivery Fees</td>
+                                        <td class="font-weight-bolder pr-0 text-right text-primary font-size-h6 text-right">RM {{Order.delivery_fees}}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2"></td>
@@ -355,6 +366,7 @@
                 },
                 OrderItems:{},
                 SellerDetails:[],
+                TrackingNo:'',
             }
         },
         mounted() {

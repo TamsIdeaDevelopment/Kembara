@@ -24,6 +24,7 @@ class Orders extends JsonResource
             'seller_id' => UserModel::where('id', $this->seller_id)->first(),
             'buyer_type' =>  $this->buyer_type,
             'delivery_type' =>  $this->delivery_type,
+            'delivery_fees' =>  $this->delivery_fees,
             'status' =>  $this->status,
             'paid' =>  $this->paid,
             'payment_methods' =>  $this->payment_methods,

@@ -6,9 +6,9 @@
                 <th></th>
                 <th>No</th>
                 <th>Status</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Address</th>
+                <th>Buyer</th>
+                <th>Date</th>
+                <th>Total</th>
                 <th>Tracking</th>
             </tr>
             </thead>
@@ -38,15 +38,16 @@
                     <span v-if="Shipment.delivery_status == 0" class="label label-warning label-pill label-inline mr-2">Processing</span>
                     <span v-if="Shipment.delivery_status == 1" class="label label-success label-pill label-inline mr-2">Shipped</span>
                 </td>
-                <td>{{Shipment.city}}</td>
-                <td>{{Shipment.state}}</td>
-                <td>{{Shipment.shipping_address}}</td>
+                <td>{{Shipment.buyer_id.name}}</td>
+                <td>{{Shipment.created_at}}</td>
+                <td>RM {{Shipment.total}}</td>
                 <td>
                     <div class="row">
-                        <div class="col-lg-8">
-                            <input class="form-control" style="width: 100%" type="text" v-model="Shipment.tracking_no">
+                        <div class="col-lg-9">
+                            <!--<input class="form-control" style="width: 100%" type="text" v-model="Shipment.tracking_no">-->
+                            <textarea class="form-control" style="" type="text" v-model="Shipment.tracking_no"></textarea>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <a @click="updateTracking(Shipment.id,Shipment.tracking_no)" class="btn btn-primary">Save</a>
                         </div>
                     </div>

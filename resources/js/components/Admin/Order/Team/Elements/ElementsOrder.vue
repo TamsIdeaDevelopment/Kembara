@@ -3,7 +3,8 @@
         <thead>
         <tr>
             <th data-priority="1">No</th>
-            <th data-priority="2">Buyer</th>
+            <th data-priority="2">#</th>
+            <th>Buyer</th>
             <th>Seller</th>
             <th>Date</th>
             <th>Status</th>
@@ -14,6 +15,7 @@
         <tbody>
         <tr v-for="(Order, index) in data">
             <td>{{index+1}}</td>
+            <td><a :href="Order.id +'/order-details'"># {{String('00000' + Order.id).slice(-6)}}</a></td>
             <td>
                 <div class="row">
                     <div class="col-auto">

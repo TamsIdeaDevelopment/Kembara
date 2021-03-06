@@ -83,7 +83,7 @@
                                                                 <span class="nav-icon">
                                                                     <i class="flaticon-price-tag"></i>
                                                                 </span>
-                                                                <span class="nav-text">Sales</span>
+                                                                <span class="nav-text">Sales Team</span>
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
@@ -91,7 +91,7 @@
                                                                 <span class="nav-icon">
                                                                     <i class="fas fa-tags"></i>
                                                                 </span>
-                                                                <span class="nav-text">Customer</span>
+                                                                <span class="nav-text">Sales Personal</span>
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
@@ -161,7 +161,7 @@
                                                                     <span class="nav-icon mr-3">
                                                                         <i class="flaticon-price-tag text-primary"></i>
                                                                     </span>
-                                                                    Sales
+                                                                    Sales Team
                                                                 </h3>
                                                             </div>
                                                         </div>
@@ -174,7 +174,7 @@
                                                                     <span class="nav-icon mr-3">
                                                                         <i class="fas fa-tags text-primary"></i>
                                                                     </span>
-                                                                    Customer
+                                                                    Sales Personal
                                                                 </h3>
                                                             </div>
                                                         </div>

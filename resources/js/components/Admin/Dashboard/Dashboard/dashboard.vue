@@ -17,12 +17,160 @@
                 </div>
             </div>
         </div>
-        <agent-dashboard-chart :data="data"></agent-dashboard-chart>
-        <div class="row mt-5">
-            <div class="col-lg-12 order-2 order-xxl-12">
-                <order-hq-list></order-hq-list>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-custom" data-card="true">
+                            <div class="card-header flex-wrap py-5">
+                                <div class="card-title">
+                                    <h3 class="card-label">Total Restock</h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
+                                        <i class="ki ki-arrow-down icon-nm"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <agent-dashboard-chart :data="data"></agent-dashboard-chart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="card card-custom" data-card="true">
+                            <div class="card-header flex-wrap py-5">
+                                <div class="card-title">
+                                    <h3 class="card-label">Total Sales Team</h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
+                                        <i class="ki ki-arrow-down icon-nm"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <admin-dashboard-chart  :data="data"></admin-dashboard-chart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-12  d-flex justify-content-end">
+                        <div class="card card-custom">
+                            <div class=" ribbon ribbon-right">
+                                <div class="ribbon-target bg-success" style="top: 10px; right: -2px;">
+                                    <i class="text-white fas fa-trophy"></i>
+                                </div>
+                            </div>
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h3 class="card-label text-success text-center">Hall Of Fame</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="card card-custom card-collapsed" data-card="true">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h3 class="card-label">Master Stokis</h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
+                                        <i class="ki ki-arrow-down icon-nm"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-icon btn-sm btn-light-success mr-1" data-card-tool="reload">
+                                        <i class="ki ki-reload icon-nm"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!--<order-hq-list></order-hq-list>-->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="card card-custom card-collapsed" data-card="true">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h3 class="card-label">Stokis</h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
+                                        <i class="ki ki-arrow-down icon-nm"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-icon btn-sm btn-light-success mr-1" data-card-tool="reload">
+                                        <i class="ki ki-reload icon-nm"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="card card-custom card-collapsed" data-card="true">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h3 class="card-label">Agent</h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
+                                        <i class="ki ki-arrow-down icon-nm"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-icon btn-sm btn-light-success mr-1" data-card-tool="reload">
+                                        <i class="ki ki-reload icon-nm"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-12">
+                        <div class="card card-custom card-collapsed" data-card="true">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h3 class="card-label">Mini Agent</h3>
+                                </div>
+                                <div class="card-toolbar">
+                                    <a href="#" class="btn btn-icon btn-sm btn-light-primary mr-1" data-card-tool="toggle">
+                                        <i class="ki ki-arrow-down icon-nm"></i>
+                                    </a>
+                                    <a href="#" class="btn btn-icon btn-sm btn-light-success mr-1" data-card-tool="reload">
+                                        <i class="ki ki-reload icon-nm"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <!--<div class="row mt-5">-->
+            <!--<div class="col-lg-12 order-2 order-xxl-12">-->
+                <!--<order-hq-list></order-hq-list>-->
+            <!--</div>-->
+        <!--</div>-->
         <!--<div class="row mt-10 h-auto">-->
             <!--<div class="col-lg-12 col-xxl-12">-->
                 <!--<new-application-list></new-application-list>-->

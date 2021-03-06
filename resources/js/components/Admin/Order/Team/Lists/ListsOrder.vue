@@ -43,7 +43,7 @@
                                     pagingType: 'full_numbers',
                                     columnDefs: [
                                         { "responsivePriority": 1, "targets": 0 },
-                                        { "responsivePriority": 2, "targets": 2 },
+                                        { "responsivePriority": 2, "targets": 4 },
                                         { "width": "50px", "targets": 0 },
                                         { "width": "350px", "targets": 1 },
                                         { "width": "300px", "targets": 2 },

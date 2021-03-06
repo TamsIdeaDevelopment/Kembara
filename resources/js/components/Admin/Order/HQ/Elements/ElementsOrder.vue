@@ -2,7 +2,8 @@
     <table class="table table-separate table-head-custom table-checkable responsive display nowrap" id="kt_datatable">
         <thead>
         <tr>
-            <th data-priority="1">No</th>
+            <th>No/th>
+            <th data-priority="1">#</th>
             <th >Buyer</th>
             <th>Seller</th>
             <th data-priority="2">Date</th>
@@ -15,6 +16,7 @@
         <tbody>
         <tr v-for="(Order, index) in data">
             <td>{{index+1}}</td>
+            <td><a :href="Order.id +'/order-details'"># {{String('00000' + Order.id).slice(-6)}}</a></td>
             <td>
                 <div class="row">
                     <div class="col-auto">

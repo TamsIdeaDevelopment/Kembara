@@ -21,6 +21,6 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'point', 'HQ','seller_id', 'buyer_id', 'buyer_type', 'delivery_type', 'status', 'paid', 'payment_methods', 'billcode','ref_no','total_paid','paid_at','total', 'deliver_to','deliver_to_phone_no', 'shipping_address', 'city', 'state', 'country','postcode', 'delivery_status', 'tracking_no', 'deleted_at','remarks',
+        'point', 'HQ','seller_id', 'buyer_id', 'buyer_type', 'delivery_type','delivery_fees', 'status', 'paid', 'payment_methods', 'billcode','ref_no','total_paid','paid_at','total', 'deliver_to','deliver_to_phone_no', 'shipping_address', 'city', 'state', 'country','postcode', 'delivery_status', 'tracking_no', 'deleted_at','remarks',
     ];
 }

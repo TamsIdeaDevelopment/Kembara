@@ -21,12 +21,22 @@ class ListAdminChart
 
         if($user->HQ == 0)
         {
+            $daily = Order::where('seller_id',$user_id)
+                ->where('status',1)
+                ->where('HQ',0)
+                ->where('buyer_type',null)
+                ->where('created_at','>=', Carbon::today()->toDateString())
+                ->sum('total');
+
+            $daily = number_format((float)$daily, 2, '.', '');
+
             $week = Order::where('seller_id',$user_id)
                 ->where('status',1)
                 ->where('HQ',0)
                 ->where('buyer_type',null)
-                ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
-                ->sum('total_paid');
+//                ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
+                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->sum('total');
 
             $week = number_format((float)$week, 2, '.', '');
 
@@ -35,7 +45,7 @@ class ListAdminChart
                 ->where('HQ',0)
                 ->where('buyer_type',null)
                 ->whereMonth('created_at', '=', Carbon::now()->month)
-                ->sum('total_paid');
+                ->sum('total');
 
             $month = number_format((float)$month, 2, '.', '');
 
@@ -45,7 +55,7 @@ class ListAdminChart
                 ->where('HQ',0)
                 ->where('buyer_type',null)
                 ->whereYear('created_at', '=', Carbon::now()->year)
-                ->sum('total_paid');
+                ->sum('total');
 
             $year = number_format((float)$year, 2, '.', '');
 
@@ -54,17 +64,26 @@ class ListAdminChart
                 ->where('status',1)
                 ->where('HQ',0)
                 ->where('buyer_type',null)
-                ->sum('total_paid');
+                ->sum('total');
 
             $total = number_format((float)$total, 2, '.', '');
         }
+
         if($user->HQ == 1)
         {
+            $daily = Order::where('status',1)
+                ->where('HQ',0)
+                ->where('buyer_type',null)
+                ->where('created_at','>=', Carbon::today()->toDateString())
+                ->sum('total');
+
+            $daily = number_format((float)$daily, 2, '.', '');
+
             $week = Order::where('status',1)
                 ->where('HQ',0)
                 ->where('buyer_type',null)
                 ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
-                ->sum('total_paid');
+                ->sum('total');
 
             $week = number_format((float)$week, 2, '.', '');
 
@@ -72,7 +91,7 @@ class ListAdminChart
                 ->where('HQ',0)
                 ->where('buyer_type',null)
                 ->whereMonth('created_at', '=', Carbon::now()->month)
-                ->sum('total_paid');
+                ->sum('total');
 
             $month = number_format((float)$month, 2, '.', '');
 
@@ -81,7 +100,7 @@ class ListAdminChart
                 ->where('HQ',0)
                 ->where('buyer_type',null)
                 ->whereYear('created_at', '=', Carbon::now()->year)
-                ->sum('total_paid');
+                ->sum('total');
 
             $year = number_format((float)$year, 2, '.', '');
 
@@ -89,7 +108,7 @@ class ListAdminChart
             $total = Order::where('status',1)
                 ->where('HQ',0)
                 ->where('buyer_type',null)
-                ->sum('total_paid');
+                ->sum('total');
 
             $total = number_format((float)$total, 2, '.', '');
         }
@@ -97,6 +116,7 @@ class ListAdminChart
 
 
         $data = array(
+            'daily' => $daily,
             'week' => $week,
             'month' => $month,
             'year' => $year,

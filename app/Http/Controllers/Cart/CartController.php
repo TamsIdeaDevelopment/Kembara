@@ -88,28 +88,37 @@ class CartController
         $agent_detail = $this->agent_details->agentInformation($user_id);
         $agent_detail = json_decode(json_encode($agent_detail), true);
         $leader_id = $agent_detail['leader_id']['user_id'];
-
+        $paid = $agent_detail['paid'];
         $stock = 0;
         $HQ = 0;
 
-        if($agent_detail['leader_id']['HQ'] == 1)
+
+        if($paid == 0)
         {
             $data->stock = $data->stock -$quantity;
             $data->save();
             $stock = $data->stock;
             $HQ = 1;
         }
-        if($agent_detail['leader_id']['HQ'] == 0)
+        else
         {
-            $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$product_id]])->first();
+            if($agent_detail['leader_id']['HQ'] == 1)
+            {
+                $data->stock = $data->stock -$quantity;
+                $data->save();
+                $stock = $data->stock;
+                $HQ = 1;
+            }
+            if($agent_detail['leader_id']['HQ'] == 0)
+            {
+                $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$product_id]])->first();
 
-            $stock_leader->quantity = $stock_leader->quantity-$quantity;
+                $stock_leader->quantity = $stock_leader->quantity-$quantity;
 
-            $stock_leader->save();
-            $stock = $stock_leader->quantity;
-            $HQ = 0;
-
-
+                $stock_leader->save();
+                $stock = $stock_leader->quantity;
+                $HQ = 0;
+            }
         }
 
         $cart = Cart::add($data->id, $data->name, $quantity, $price, $data->weight, ['size' => $data->featured_image , 'stock' => $stock, 'MOQ' => $minimum_order, 'stock' => $stock, 'product_type' => $product_type]);
@@ -133,19 +142,26 @@ class CartController
         $agent_detail = $this->agent_details->agentInformation($user_id);
         $agent_detail = json_decode(json_encode($agent_detail), true);
         $leader_id = $agent_detail['leader_id']['user_id'];
-
-        if($agent_detail['leader_id']['HQ'] == 1)
+        $paid = $agent_detail['paid'];
+        if($paid == 0)
         {
             $product->stock = $product->stock +$cart->qty;
             $product->save();
         }
-        if($agent_detail['leader_id']['HQ'] == 0)
+        else
         {
-            $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$cart->id]])->first();
-            $stock_leader->quantity = $stock_leader->quantity+$cart->qty;
-            $stock_leader->save();
+            if($agent_detail['leader_id']['HQ'] == 1)
+            {
+                $product->stock = $product->stock +$cart->qty;
+                $product->save();
+            }
+            if($agent_detail['leader_id']['HQ'] == 0)
+            {
+                $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$cart->id]])->first();
+                $stock_leader->quantity = $stock_leader->quantity+$cart->qty;
+                $stock_leader->save();
+            }
         }
-
 
         $cart_items = CartItem::where('rowId', $cart->rowId)->first();
         $cart_items->delete();
@@ -188,34 +204,45 @@ class CartController
         $agent_detail = $this->agent_details->agentInformation($user_id);
         $agent_detail = json_decode(json_encode($agent_detail), true);
         $leader_id = $agent_detail['leader_id']['user_id'];
-
-        if($agent_detail['leader_id']['HQ'] == 1)
+        $paid = $agent_detail['paid'];
+        if($paid == 0)
         {
             $product->stock = $product->stock + $cart->qty;
             $product->save();
-        }
-        if($agent_detail['leader_id']['HQ'] == 0)
-        {
-            $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$cart->id]])->first();
-
-            $stock_leader->quantity = $stock_leader->quantity + $cart->qty;
-
-            $stock_leader->save();
-        }
-
-        if($agent_detail['leader_id']['HQ'] == 1)
-        {
             $product->stock = $product->stock - $quantity;
             $product->save();
         }
-        if($agent_detail['leader_id']['HQ'] == 0)
+        else
         {
-            $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$cart->id]])->first();
+            if($agent_detail['leader_id']['HQ'] == 1)
+            {
+                $product->stock = $product->stock + $cart->qty;
+                $product->save();
+            }
+            if($agent_detail['leader_id']['HQ'] == 0)
+            {
+                $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$cart->id]])->first();
 
-            $stock_leader->quantity = $stock_leader->quantity - $quantity;
+                $stock_leader->quantity = $stock_leader->quantity + $cart->qty;
 
-            $stock_leader->save();
+                $stock_leader->save();
+            }
+            if($agent_detail['leader_id']['HQ'] == 1)
+            {
+                $product->stock = $product->stock - $quantity;
+                $product->save();
+            }
+            if($agent_detail['leader_id']['HQ'] == 0)
+            {
+                $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$cart->id]])->first();
+
+                $stock_leader->quantity = $stock_leader->quantity - $quantity;
+
+                $stock_leader->save();
+            }
         }
+
+
 
         $cart_items = CartItem::where('rowId', $cart->rowId)->first();
         $cart_items->quantity = $quantity;
@@ -235,20 +262,29 @@ class CartController
         $agent_detail = $this->agent_details->agentInformation($user_id);
         $agent_detail = json_decode(json_encode($agent_detail), true);
         $leader_id = $agent_detail['leader_id']['user_id'];
-
-        if($agent_detail['leader_id']['HQ'] == 1)
+        $paid = $agent_detail['paid'];
+        if($paid == 0)
         {
             $product->stock = $product->stock + 1;
             $product->save();
         }
-        if($agent_detail['leader_id']['HQ'] == 0)
+        else
         {
-            $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$cart->id]])->first();
+            if($agent_detail['leader_id']['HQ'] == 1)
+            {
+                $product->stock = $product->stock + 1;
+                $product->save();
+            }
+            if($agent_detail['leader_id']['HQ'] == 0)
+            {
+                $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$cart->id]])->first();
 
-            $stock_leader->quantity = $stock_leader->quantity+1;
+                $stock_leader->quantity = $stock_leader->quantity+1;
 
-            $stock_leader->save();
+                $stock_leader->save();
+            }
         }
+
 
         $cart_items = CartItem::where('rowId', $cart->rowId)->first();
         $cart_items->quantity = $quantity;
@@ -263,6 +299,11 @@ class CartController
     public function CartDetails()
     {
         return view('pages.Cart.details');
+    }
+
+    public function CartFirstPurchase()
+    {
+        return view('pages.Cart.cartFirstPurchase');
     }
 
 }

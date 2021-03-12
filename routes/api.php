@@ -27,6 +27,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
 
         Route::group(['prefix' => 'Lists', 'as' => 'Lists.','namespace' => 'Lists'], function () {
             Route::get('{user_id}/agent-list-customer-order', 'ListCustomerOrder@agentListCustomerOrder')->name('agent-list-customer-order');
+
+            Route::get('{user_id}/customer-chart', 'ListCustomerChart@listChart')->name('customer-chart');
         });
 
         Route::group(['prefix' => 'Creates', 'as' => 'Creates.','namespace' => 'Creates'], function () {
@@ -208,6 +210,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
             Route::get('{user_id}/stock-list-agent', 'ListProduct@StockListAgent')->name('stock-list-agent');
             Route::get('{user_id}/stock-list-agent-for-customer', 'ListProduct@StockListAgentForCustomer')->name('stock-list-agent-for-customer');
 
+            Route::get('{user_id}/stock-first-purchase', 'ListFirstPurchaseProduct@StockFirstPurchase')->name('stock-first-purchase');
+
 
         });
     });
@@ -219,11 +223,13 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
 
             Route::group(['prefix' => 'Creates', 'as' => 'Creates.','namespace' => 'Creates'], function () {
                 Route::post('/create-order', 'CreateOrder@createOrder')->name('create-order');
+                Route::post('/create-first-purchase', 'CreateFirstPurchase@createFirstPurchase')->name('create-first-purchase');
                 Route::post('/create-test-order', 'CreateOrder@createTestOrder')->name('create-test-order');
             });
 
             Route::group(['prefix' => 'Updates', 'as' => 'Updates.','namespace' => 'Updates'], function () {
                 Route::post('{order_id}/{tracking_no}/update-shipment', 'UpdateShipment@updateShipment')->name('update-shipment');
+                Route::post('{order_id}/{buyer_id}/complete-order', 'CompleteOrder@CompleteOrder')->name('admin-complete-order');
             });
 
             Route::group(['prefix' => 'Deletes', 'as' => 'Deletes.','namespace' => 'Deletes'], function () {
@@ -239,8 +245,15 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
 
                 Route::get('{user_id}/admin-chart', 'ListAdminChart@listChart')->name('admin-chart');
 
-
                 Route::get('/list-shipment', 'ListShipment@listShipment')->name('list-shipment');
+
+                Route::get('{user_id}/list-hall-of-fame-master-stokis', 'ListHallOfFame@adminlistMasterStokis')->name('admin-list-hall-of-fame-master-stokis');
+                Route::get('{user_id}/list-hall-of-fame-stokis', 'ListHallOfFame@adminlistStokis')->name('admin-list-hall-of-fame-stokis');
+                Route::get('{user_id}/list-hall-of-fame-agent', 'ListHallOfFame@adminlistAgent')->name('admin-list-hall-of-fame-agent');
+                Route::get('{user_id}/list-hall-of-fame-mini-agent', 'ListHallOfFame@adminlistMiniAgent')->name('admin-list-hall-of-fame-mini-agent');
+
+
+                Route::get('{status}/{HQ}/{customer}/admin-filter-order', 'FilterOrder@adminFilter')->name('admin-filter-order');
 
             });
 
@@ -264,6 +277,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
                 Route::get('{agentID}/agent-orders', 'ListOrder@AgentListOrder')->name('agent.orders');
                 Route::get('{agentID}/agent-restock', 'ListOrder@AgentListRestock')->name('agent.restock');
                 Route::get('{user_id}/agent-chart', 'ListChart@listChart')->name('agent-chart');
+
+                Route::get('{user_id}/{leader_id}/{agent_levels_id}/list-hall-of-fame-restock', 'ListHallOfFameRestock@HallOfFameRestock')->name('agent-list-hall-of-fame-restock');
+
 
             });
 

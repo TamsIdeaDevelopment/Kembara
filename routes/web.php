@@ -59,6 +59,7 @@ Route::group(['namespace' => 'Cart'], function () {
 //    Route::get('/cart-add-item/{user_id}/{product_id}/{price}/{minimum_order}', 'CartController@CartAddItems')->name('cart-add-item');
     Route::get('/cart-add-item/{user_id}/{product_id}/{price}/{minimum_order}/{quantity}/{product_type}', 'CartController@CartAddItems')->name('cart-add-item');
     Route::get('/cart-details', 'CartController@CartDetails')->name('/cart-details');
+    Route::get('/cart-first-purchase', 'CartController@CartFirstPurchase')->name('/cart-first-purchase');
     Route::get('/cart-count', 'CartController@CartCount')->name('/cart-count');
     Route::get('{rowID}/remove-item', 'CartController@RemoveItem')->name('/remove-item');
 });

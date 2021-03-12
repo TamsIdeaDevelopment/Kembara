@@ -226,6 +226,7 @@
                                             <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">PROCESSING</span>
                                             <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">SUCCESS</span>
                                             <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">REJECTED</span>
+                                            <span v-if="Order.status =='4'" class="label label-warning label-pill label-inline mr-2">PENDING PAYMENT</span>
                                         </td>
                                         <td>{{Order.ref_no}}</td>
                                         <td class="text-primary font-size-h3 font-weight-boldest text-right">RM {{Order.total_paid}}</td>
@@ -261,6 +262,8 @@
                                             <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">PROCESSING</span>
                                             <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">SUCCESS</span>
                                             <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">REJECTED</span>
+                                            <span v-if="Order.status =='4'" class="label label-warning label-pill label-inline mr-2">PENDING PAYMENT</span>
+
                                         </td>
                                         <td>{{Order.paid_at}}</td>
                                         <td class="text-primary font-size-h3 font-weight-boldest text-right">RM {{Order.total_paid}}</td>
@@ -294,16 +297,20 @@
                                     <tbody>
                                     <tr class="font-weight-bolder">
                                         <td>BILLPLZ</td>
-                                        <td><a class="" target="_blank" :href="'https://www.billplz.com/bills/'+ Order.billcode">{{Order.billcode}}</a></td>
+<!--                                        <td><a class="" target="_blank" :href="'https://www.billplz.com/bills/'+ Order.billcode">{{Order.billcode}}</a></td>-->
+                                        <td><a class="" target="_blank" :href="'https://www.billplz-sandbox.com/bills/'+ Order.billcode">{{Order.billcode}}</a></td>
                                         <td>
                                             <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">PROCESSING</span>
                                             <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">SUCCESS</span>
                                             <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">REJECTED</span>
+                                            <span v-if="Order.status =='4'" class="label label-warning label-pill label-inline mr-2">PENDING PAYMENT</span>
                                         </td>
                                         <td>{{Order.paid_at}}</td>
                                         <td class="text-primary font-size-h3 font-weight-boldest text-right">RM {{Order.total_paid}}</td>
-                                        <td class="text-primary font-size-h3 font-weight-boldest text-right" v-if="Order.paid =='0'  && (Order.buyer_id.id == user)"><a class="btn btn-success" :href="'https://www.billplz.com/bills/'+ Order.billcode">Pay</a></td>
-                                        <td class="text-primary font-size-h3 font-weight-boldest text-right" v-if="Order.status =='2'  && Order.seller_id.id == user"><a class="btn btn-primary" @click="ApproveOrder">Approve</a></td>
+                                        <td class="text-primary font-size-h3 font-weight-boldest text-right" v-if="Order.paid =='0'  && (Order.buyer_id.id == user)"><a class="btn btn-success" :href="'https://www.billplz-sandbox.com/bills/'+ Order.billcode">Pay</a></td>
+<!--                                        <td class="text-primary font-size-h3 font-weight-boldest text-right" v-if="Order.paid =='0'  && (Order.buyer_id.id == user)"><a class="btn btn-success" :href="'https://www.billplz.com/bills/'+ Order.billcode">Pay</a></td>-->
+                                        <td class="text-primary font-size-h3 font-weight-boldest text-right" v-if="Order.status =='2'  && Order.seller_id.id == user && Order.HQ !=='1' "><a class="btn btn-primary" @click="ApproveOrder">Approve</a></td>
+                                        <td class="text-primary font-size-h3 font-weight-boldest text-right" v-if="Order.status =='2'  && Order.seller_id.id == user && Order.HQ == '1' "><a class="btn btn-primary" @click="ApproveOrder">Approve123</a></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -331,8 +338,9 @@
                                         <td><a class="" target="_blank" :href="'https://sandbox.senangpay.my/payment/receipt/'+ Order.ref_no">{{Order.ref_no}}</a></td>
                                         <td>
                                             <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">PROCESSING</span>
-                                            <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">SUCCESS</span>
+                                            <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">SUCC2ESS</span>
                                             <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">REJECTED</span>
+                                            <span v-if="Order.status =='4'" class="label label-warning label-pill label-inline mr-2">PENDING PAYMENT</span>
                                         </td>
                                         <td>{{Order.paid_at}}</td>
                                         <td class="text-primary font-size-h3 font-weight-boldest text-right">RM {{Order.total_paid}}</td>

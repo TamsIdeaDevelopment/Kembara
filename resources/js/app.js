@@ -35,7 +35,7 @@ Vue.component('admin-stock-list', require('./components/Admin/Stock/List/ListsSt
 Vue.component('admin-stock-elements', require('./components/Admin/Stock/Elements/ElementsStock.vue').default);
 
 
-/**  Dashboard  */
+/**  Shipping  */
 Vue.component('admin-shipping-dashboard', require('./components/Admin/Shipping/Dashboard/dashboard.vue').default);
 Vue.component('admin-shipping-list', require('./components/Admin/Shipping/Lists/ListsShipment.vue').default);
 Vue.component('admin-shipping-element', require('./components/Admin/Shipping/Elements/ElementsShipment.vue').default);
@@ -43,6 +43,7 @@ Vue.component('admin-shipping-element', require('./components/Admin/Shipping/Ele
 
 /**  Dashboard  */
 Vue.component('admin-dashboard', require('./components/Admin/Dashboard/Dashboard/dashboard.vue').default);
+Vue.component('admin-hall-of-fame', require('./components/Admin/Dashboard/Dashboard/HallOfFame.vue').default);
 Vue.component('admin-dashboard-chart', require('./components/Admin/Dashboard/Chart/DashboardChart.vue').default);
 
 /**  User Profile  */
@@ -148,6 +149,7 @@ Vue.component('admin-classroom-form', require('./components/Admin/Classroom/Form
 
 /**  Customer  */
 Vue.component('agent-customer-dashboard', require('./components/Agent/Customer/Dashboard/dashboard.vue').default);
+Vue.component('agent-customer-dashboard-chart', require('./components/Agent/Customer/Dashboard/Chart/DashboardChart').default);
 Vue.component('agent-new-customer-dashboard', require('./components/Agent/Customer/Dashboard/dashboard-new-customer-order.vue').default);
 Vue.component('agent-customer-dashboard-order-details', require('./components/Agent/Customer/Dashboard/dashboard-customer-order-details.vue').default);
 Vue.component('agent-customer-list', require('./components/Agent/Customer/Lists/ListsCustomerOrder.vue').default);
@@ -159,6 +161,7 @@ Vue.component('agent-customer-review-submit-elements', require('./components/Age
 
 /**  Dashboard  */
 Vue.component('agent-dashboard', require('./components/Agent/Dashboard/Dashboard/dashboard.vue').default);
+Vue.component('agent-hall-of-fame-restock', require('./components/Agent/Dashboard/Dashboard/HallOfFameRestock').default);
 Vue.component('agent-dashboard-chart', require('./components/Agent/Dashboard/Chart/DashboardChart.vue').default);
 
 /**  User Profile  */
@@ -184,10 +187,16 @@ Vue.component('agent-restock-team-elements', require('./components/Agent/Order/T
 Vue.component('agent-sales-team-elements', require('./components/Agent/Order/Team/Elements/ElementsSales.vue').default);
 
 /**  Product  */
+Vue.component('agent-verify-first-purchase', require('./components/Agent/Product/VerifyFirstPurchase').default);
+
 Vue.component('agent-product-dashboard', require('./components/Agent/Product/Dashboard/dashboard.vue').default);
 Vue.component('agent-product-list', require('./components/Agent/Product/Lists/ListsProduct.vue').default);
 Vue.component('agent-product-elements', require('./components/Agent/Product/Elements/ElementsProduct.vue').default);
 
+
+Vue.component('agent-product-first-purchase-dashboard', require('./components/Agent/Product/Dashboard/dashboard-first-purchase').default);
+Vue.component('agent-product-first-purchase-list', require('./components/Agent/Product/Lists/ListsFirstPurchaseProduct').default);
+Vue.component('agent-product-first-purchase-elements', require('./components/Agent/Product/Elements/ElementsFirstPurchaseProduct').default);
 
 /**  Team  */
 Vue.component('agent-team-dashboard', require('./components/Agent/Teams/Team/Dashboard/dashboard.vue').default);
@@ -209,6 +218,18 @@ Vue.component('agent-cart-elements', require('./components/Agent/Cart/Elements/E
 Vue.component('agent-cart-delivery-address-elements', require('./components/Agent/Cart/Elements/ElementsDeliveryAddress.vue').default);
 Vue.component('agent-cart-payment-method-elements', require('./components/Agent/Cart/Elements/ElementsPaymentMethod.vue').default);
 Vue.component('agent-cart-review-submit-elements', require('./components/Agent/Cart/Elements/ElementsReviewAndSubmit.vue').default);
+
+
+
+/**  First Purchase  */
+
+Vue.component('agent-first-purchase-details-dashboard', require('./components/Agent/FirstPurchase/Dashboard/dashboard-details.vue').default);
+
+
+Vue.component('agent-first-purchase-elements', require('./components/Agent/FirstPurchase/Elements/ElementsCart.vue').default);
+Vue.component('agent-first-purchase-delivery-address-elements', require('./components/Agent/FirstPurchase/Elements/ElementsDeliveryAddress.vue').default);
+Vue.component('agent-first-purchase-payment-method-elements', require('./components/Agent/FirstPurchase/Elements/ElementsPaymentMethod.vue').default);
+Vue.component('agent-first-purchase-review-submit-elements', require('./components/Agent/FirstPurchase/Elements/ElementsReviewAndSubmit.vue').default);
 
 
 /**  Product  */

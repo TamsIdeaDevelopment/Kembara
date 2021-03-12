@@ -6,6 +6,22 @@
                     <span class="d-block text-muted pt-2 font-size-sm">List of Order (HQ)</span>
                 </h3>
             </div>
+            <div class="card-toolbar">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <select class="form-control select2" style="width:100%" id="select-filter-order"    v-model="filterOrder">
+                            <option value="4">All</option>
+                            <option value="0">Pending</option>
+                            <option value="2">Processing</option>
+                            <option value="3">Decline</option>
+                            <option value="1">Completed</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <button class="btn btn-sm btn-primary" @click="filterValidation"> Search</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <order-hq-elements :data="this.Orders"></order-hq-elements>
@@ -17,6 +33,7 @@
         data() {
             return {
                 Orders:[],
+                filterOrder:4,
                 dataTable:null,
             }
         },
@@ -24,17 +41,79 @@
             this.fetchOrder();
         },
         mounted() {
-            VueEvent.$on('fetchProduct', () => {
+            VueEvent.$on('fetchOrder', () => {
                 this.fetchOrder();
             });
+
+            VueEvent.$on('searchOrder', () => {
+                this.searchOrder();
+            });
+
+            $('#select-filter-order').select2({
+                placeholder: "Filter By Status",
+                allowClear: true
+            });
+            $("#select-filter-order").change(function(){
+                this.filterOrder = $("#select-filter-order").val();
+            }.bind(this));
         },
 
         methods : {
+            filterValidation(){
+                if(this.filterOrder == 4)
+                {
+                    this.fetchOrder();
+                }
+                else
+                {
+                    this.searchOrder();
+                }
+            },
+            searchOrder()
+            {
+                fetch('/api/v1/orders/HQ/Lists/'+ this.filterOrder +'/1/No/admin-filter-order').then(response => response.json())
+                    .then(response => {
+                        this.Orders = response.data;
+                        $('#kt_datatable').DataTable().destroy();
+                        this.$nextTick(() =>
+                        {
+                            $('#kt_datatable').DataTable(
+                                {
+                                    responsive: true,
+                                    pagingType: 'full_numbers',
+                                    columnDefs: [
+                                        { "responsivePriority": 1, "targets": 0 },
+                                        { "responsivePriority": 2, "targets": 4 },
+                                        { "width": "50px", "targets": 0 },
+                                        { "width": "50px", "targets": 1 },
+                                        { "width": "450px", "targets": 2 },
+                                        { "width": "50px", "targets": 3 },
+                                        { "width": "100px", "targets": 4 },
+                                        { "width": "50px", "targets": 5 },
+                                        { "width": "50px", "targets": 6 },
+                                        { "width": "50px", "targets": 7 },
+                                        {
+                                            //targets: 3,
+                                            width: '50px',
+                                            title: 'Actions',
+                                            orderable: false,
+                                            render: function(data, type, full, meta) {
+
+                                            },
+                                        },
+                                    ],
+                                }
+                            );
+                        });
+
+                    })
+                    .catch(error => console.log(error))
+            },
             fetchOrder(){
                 fetch('/api/v1/orders/HQ/Lists/orders').then(response => response.json())
                     .then(response => {
                         this.Orders = response.data;
-                        console.log(this.Orders)
+                        console.log(this.Orders);
                         $('#kt_datatable').DataTable().destroy();
                         this.$nextTick(() =>
                         {

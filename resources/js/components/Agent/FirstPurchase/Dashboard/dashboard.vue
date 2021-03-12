@@ -113,9 +113,9 @@
                     <span class="font-weight-bold text-muted font-size-sm mr-2">Sub total</span>
                     <span class="font-weight-bolder text-primary text-right">RM {{Totals}}</span>
                 </div>
-                <div class="text-right" >
-                    <a href="/cart-details" v-if="AgentDetails.paid === '1'" class="btn btn-primary text-weight-bold mt-n5">Proceed To Place Order</a>
-                    <a href="/cart-first-purchase"  v-if="AgentDetails.paid === '0'" class="btn btn-primary text-weight-bold mt-n5">Proceed To Place Order</a>
+                {{data}}
+                <div class="text-right">
+                    <a href="/cart-details" class="btn btn-primary text-weight-bold">Proceed To Place Order</a>
                 </div>
             </div>
         </div>
@@ -127,7 +127,6 @@
         props: ['data'],
         data() {
             return {
-                AgentDetails:[],
                 errors:[],
                 Carts: [],
                 Count: [],
@@ -156,7 +155,6 @@
                 fetch('/api/v1/team/Lists/' + this.data +'/agent-info').then(response => response.json())
                     .then(response => {
                         this.AgentDetails = response.data;
-                        console.log(this.AgentDetails.paid)
 
                     })
                     .catch(error => console.log(error))

@@ -36,6 +36,7 @@ class UpdatePayment
         $order->total_paid= $request->input('total_paid');
         $order->ref_no= $fileNameToStore;
         $order->paid= 1;
+        $order->status= 2;
         $order->save();
 
         return $order;

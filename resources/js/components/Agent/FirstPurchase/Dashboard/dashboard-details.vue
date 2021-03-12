@@ -78,12 +78,11 @@
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-xl-12 col-xxl-12">
-                                    <!--<form class="form" id="kt_form" @submit.prevent="CreateTestOrder"  enctype="multipart/form-data">-->
                                     <form class="form" id="kt_form" @submit.prevent="checkValidation"  enctype="multipart/form-data">
-                                        <agent-cart-elements :data="IsSellerHQ"></agent-cart-elements>
-                                        <agent-cart-delivery-address-elements></agent-cart-delivery-address-elements>
-                                        <agent-cart-payment-method-elements></agent-cart-payment-method-elements>
-                                        <agent-cart-review-submit-elements></agent-cart-review-submit-elements>
+                                        <agent-first-purchase-elements :data="IsSellerHQ"></agent-first-purchase-elements>
+                                        <agent-first-purchase-delivery-address-elements></agent-first-purchase-delivery-address-elements>
+                                        <agent-first-purchase-payment-method-elements></agent-first-purchase-payment-method-elements>
+                                        <agent-first-purchase-review-submit-elements></agent-first-purchase-review-submit-elements>
                                         <div class="d-flex justify-content-between border-top mt-3 pt-3">
                                             <div class="mr-2">
                                                 <button type="button" class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-prev">Previous</button>
@@ -118,8 +117,8 @@
                 AgentDetails:[],
                 BillingDetails:[],
                 DeliveryDetails:[],
-                seller_id:'',
-                IsSellerHQ:'',
+                seller_id:1,
+                IsSellerHQ:1,
                 remarks:'',
                 payment_selected:'',
                 proof_of_payment_image:'',
@@ -181,18 +180,9 @@
                     .then(response => {
                         this.AgentDetails = response.data;
                         this.BillingDetails = response.data.user_id;
-                        this.seller_id = response.data.leader_id.user_id;
-                        this.fetchSellerDetails();
+                        // this.seller_id = response.data.leader_id.user_id;
+                        // this.fetchSellerDetails();
 
-                    })
-                    .catch(error => console.log(error))
-            },
-            fetchSellerDetails(){
-                fetch('/api/v1/team/Lists/' + this.seller_id +'/agent-info').then(response => response.json())
-                    .then(response => {
-                        this.IsSellerHQ = response.data.HQ;
-                        this.SellerDetails = response.data.user_id;
-//                        console.log(this.IsSellerHQ);
                     })
                     .catch(error => console.log(error))
             },
@@ -304,7 +294,7 @@
                 formData.append("order", JSON.stringify(this.Orders));
                 formData.append("proof_of_payment", this.proof_of_payment_image);
                 let vm= this;
-                axios.post('/api/v1/orders/HQ/Creates/create-order', formData, config)
+                axios.post('/api/v1/orders/HQ/Creates/create-first-purchase', formData, config)
                     .then(function (data) {
                         console.log(data.data.redirect);
                         window.location = data.data.redirect;

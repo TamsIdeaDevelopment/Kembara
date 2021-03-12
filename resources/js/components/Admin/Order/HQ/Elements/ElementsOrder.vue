@@ -2,11 +2,12 @@
     <table class="table table-separate table-head-custom table-checkable responsive display nowrap" id="kt_datatable">
         <thead>
         <tr>
-            <th>No/th>
+            <th>No</th>
             <th data-priority="1">#</th>
             <th >Buyer</th>
             <th>Seller</th>
             <th data-priority="2">Date</th>
+            <th>Paid Status</th>
             <th>Status</th>
             <th>Total</th>
             <th>View</th>
@@ -33,6 +34,7 @@
                         <div class="row">
                             <div class="col-sm-auto">
                                 {{Order.buyer_id.name}}
+                                <span class="text-success" v-if="Order.buyer_id.paid"></span>
                             </div>
                         </div>
                     </div>
@@ -43,15 +45,33 @@
              </td>
             <td>{{Order.created_at}}</td>
             <td>
-                <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">Pending</span>
-                <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">Success</span>
-                <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">Decline</span>
+                <span v-if="Order.paid =='0'" class="label label-warning label-pill label-inline mr-2">Pending</span>
+                <span v-if="Order.paid =='1'" class="label label-success label-pill label-inline mr-2">Success</span>
+                <span v-if="Order.paid =='2'" class="label label-danger label-pill label-inline mr-2">Decline</span>
+            </td>
+            <td>
+                <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">PROCESSING</span>
+                <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">SUCCESS</span>
+                <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">REJECTED</span>
+                <span v-if="Order.status =='4'" class="label label-warning label-pill label-inline mr-2">PENDING PAYMENT</span>
             </td>
             <td>
                 RM {{Order.total}}
             </td>
-            <td>
-                <a :href="Order.id +'/order-details'" class="btn btn-sm btn-primary">View</a>
+            <td  v-if="Order.status =='2'">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <a :href="Order.id +'/order-details'" class="btn btn-sm btn-secondary">View</a>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-lg-12">
+                        <a href="javascript:;" @click="completeOrder(Order.id,Order.buyer_id.id)" class="btn btn-sm btn-primary">Mark as Complete</a>
+                    </div>
+                </div>
+            </td>
+            <td  v-if="Order.status =='1' || Order.status =='3' || Order.status =='4'">
+                <a :href="Order.id +'/order-details'" class="btn btn-sm btn-secondary">View</a>
             </td>
             <!--<td>-->
                 <!--<button class="btn btn-sm btn-danger">Delete</button>-->
@@ -89,14 +109,44 @@
         },
         created(){},
         methods: {
-//            openEditRecord(data){
-//                $(".updateState").modal('show');
-//                this.States = data;
-//            },
-//            openDeleteRecord(data){
-//                $(".deleteState").modal('show');
-//                this.States = data;
-//            },
+           completeOrder(order_id,buyer_id){
+               var url = '/api/v1/orders/HQ/Updates/'+ order_id + '/'+ buyer_id +'/complete-order', method = 'post';
+
+               fetch(url, {
+                   method: method,
+                   body: JSON.stringify(),
+                   headers: {
+                       'content-type': 'application/json'
+                   }
+               }).then((response) => {
+                   if(this.$parent.filterOrder =='4')
+                   {
+                       VueEvent.$emit('fetchOrder');
+                   }
+                   else
+                   {
+                       VueEvent.$emit('searchOrder');
+                   }
+                   toastr.options = {
+                       "closeButton": true,
+                       "debug": false,
+                       "newestOnTop": false,
+                       "progressBar": false,
+                       "positionClass": "toast-top-right",
+                       "preventDuplicates": false,
+                       "onclick": null,
+                       "showDuration": "300",
+                       "hideDuration": "1000",
+                       "timeOut": "5000",
+                       "extendedTimeOut": "1000",
+                       "showEasing": "swing",
+                       "hideEasing": "linear",
+                       "showMethod": "fadeIn",
+                       "hideMethod": "fadeOut"
+                   };
+                   toastr.success("Successfully Complete Order.", "Order Completed");
+               })
+           },
         }
 
     }

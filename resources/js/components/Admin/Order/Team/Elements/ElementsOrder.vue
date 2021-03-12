@@ -7,7 +7,9 @@
             <th>Buyer</th>
             <th>Seller</th>
             <th>Date</th>
+            <th>Paid Status</th>
             <th>Status</th>
+            <th>Total</th>
             <th>View</th>
             <!--<th>Actions</th>-->
         </tr>
@@ -60,10 +62,17 @@
              </td>
             <td>{{Order.created_at}}</td>
             <td>
-                <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">Pending</span>
-                <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">Success</span>
-                <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">Decline</span>
+                <span v-if="Order.paid =='0'" class="label label-warning label-pill label-inline mr-2">PENDING</span>
+                <span v-if="Order.paid =='1'" class="label label-success label-pill label-inline mr-2">SUCCESS</span>
+                <span v-if="Order.paid =='2'" class="label label-danger label-pill label-inline mr-2">FAILED</span>
             </td>
+            <td>
+                <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">PROCESSING</span>
+                <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">SUCCESS</span>
+                <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">REJECTED</span>
+                <span v-if="Order.status =='4'" class="label label-warning label-pill label-inline mr-2">PENDING PAYMENT</span>
+            </td>
+            <td>{{Order.total}}</td>
             <td>
                 <a :href="Order.id +'/order-details'" class="btn btn-sm btn-primary">View</a>
             </td>

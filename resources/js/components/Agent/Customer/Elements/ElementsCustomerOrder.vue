@@ -13,7 +13,15 @@
         </thead>
         <tbody>
         <tr v-for="(Order, index) in data">
-            <td>{{index+1}}</td>
+<!--            <td>{{index+1}}</td>-->
+            <td>
+                <div class="checkbox-inline">
+                    <label class="checkbox  checkbox-sm">
+                        <input type="checkbox"  v-model="$parent.order_selected" :value="Order" @change="$parent.selectOrder()"/>
+                        <span></span>
+                    </label>
+                </div>
+            </td>
             <td>#{{String('00000' + Order.id).slice(-5)}}</td>
             <td>
                 <div class="row" v-if="Order.HQ == 0">

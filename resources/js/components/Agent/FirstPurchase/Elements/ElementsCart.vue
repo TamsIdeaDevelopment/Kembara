@@ -225,7 +225,6 @@
                 axios.get('/api/v1/cart/list-cart')
                     .then(function (response) {
                         this.$parent.Carts = response.data;
-                        console.log(this.$parent.Carts)
                         this.isSeller = this.$parent.IsSellerHQ;
                         this.$parent.TotalNormal = 0;
                         for (var key in this.$parent.Carts) {

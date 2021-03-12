@@ -12,19 +12,12 @@
                     <div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
                         <div class="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                             <div class="d-flex align-items-center flex-wrap mr-2">
-                                <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">List Product</h5>
+                                <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">Shopping Cart</h5>
                                 <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
                             </div>
                         </div>
                     </div>
-                    @if(Auth::user()->role_id == 1)
-                        <product-dashboard></product-dashboard>
-                    @endif
-                    @if(Auth::user()->role_id == 3)
-                        <agent-verify-first-purchase :data="{{Auth::user()}}"></agent-verify-first-purchase>
-{{--                        <agent-product-dashboard :data="{{Auth::user()}}"></agent-product-dashboard>--}}
-                    @endif
-
+                    <agent-first-purchase-details-dashboard data="{{Auth::user()->id}}"></agent-first-purchase-details-dashboard>
                 </div>
             </div>
         </div>

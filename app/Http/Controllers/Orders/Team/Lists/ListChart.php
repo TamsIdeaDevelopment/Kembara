@@ -18,15 +18,31 @@ class ListChart
     public function listChart($user_id)
     {
         $user = Agent::where('user_id',$user_id)->first();
-
+//        $week = Order::where('seller_id',$user_id)
+//            ->where('buyer_type',null)
+//            ->where('HQ',1)
+//            ->where('status',1)
+//            ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
+////                ->sum('total_paid');
+//            ->get();
+//
+//        return $week;
         if($user->HQ == 0)
         {
+            $daily = Order::where('buyer_id',$user_id)
+                ->where('buyer_type',null)
+                ->where('status',1)
+                ->where('created_at','>=', Carbon::today()->toDateString())
+                ->sum('total');
+
+            $daily = number_format((float)$daily, 2, '.', '');
+
             $week = Order::where('buyer_id',$user_id)
                 ->where('buyer_type',null)
-                ->where('HQ',0)
                 ->where('status',1)
-                ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
-                ->sum('total_paid');
+//                ->whereBetween('created_at', [Carbon::now()->startOfWeek()->format("Y-m-d H:i:s"),Carbon::now()->endOfWeek()->format("Y-m-d H:i:s")])
+                ->whereBetween('created_at', [Carbon::today()->subWeek()->format("Y-m-d H:i:s"), Carbon::today()])
+                ->sum('total');
 
             $week = number_format((float)$week, 2, '.', '');
 
@@ -34,7 +50,7 @@ class ListChart
                 ->where('buyer_type',null)
                 ->where('status',1)
                 ->whereMonth('created_at', '=', Carbon::now()->month)
-                ->sum('total_paid');
+                ->sum('total');
 
             $month = number_format((float)$month, 2, '.', '');
 
@@ -42,53 +58,66 @@ class ListChart
                 ->where('buyer_type',null)
                 ->where('status',1)
                 ->whereYear('created_at', '=', Carbon::now()->year)
-                ->sum('total_paid');
+                ->sum('total');
 
             $year = number_format((float)$year, 2, '.', '');
 
             $total = Order::where('buyer_id',$user_id)
                 ->where('buyer_type',null)
                 ->where('status',1)
-                ->sum('total_paid');
+                ->sum('total');
 
             $total = number_format((float)$total, 2, '.', '');
         }
         if($user->HQ == 1)
         {
+            $daily = Order::where('seller_id',$user_id)
+                ->where('buyer_type',null)
+                ->where('HQ',1)
+                ->where('status',1)
+                ->where('created_at','>=', Carbon::today()->toDateString())
+                ->sum('total');
+
+            $daily = number_format((float)$daily, 2, '.', '');
+
             $week = Order::where('seller_id',$user_id)
                 ->where('buyer_type',null)
-                ->where('HQ',0)
+                ->where('HQ',1)
                 ->where('status',1)
                 ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
-                ->sum('total_paid');
+                ->sum('total');
 
             $week = number_format((float)$week, 2, '.', '');
 
             $month = Order::where('seller_id',$user_id)
                 ->where('buyer_type',null)
+                ->where('HQ',1)
                 ->where('status',1)
                 ->whereMonth('created_at', '=', Carbon::now()->month)
-                ->sum('total_paid');
+                ->sum('total');
 
             $month = number_format((float)$month, 2, '.', '');
 
             $year = Order::where('seller_id',$user_id)
                 ->where('buyer_type',null)
+                ->where('HQ',1)
                 ->where('status',1)
                 ->whereYear('created_at', '=', Carbon::now()->year)
-                ->sum('total_paid');
+                ->sum('total');
 
             $year = number_format((float)$year, 2, '.', '');
 
             $total = Order::where('seller_id',$user_id)
                 ->where('buyer_type',null)
+                ->where('HQ',1)
                 ->where('status',1)
-                ->sum('total_paid');
+                ->sum('total');
 
             $total = number_format((float)$total, 2, '.', '');
         }
 
         $data = array(
+            'daily' => $daily,
             'week' => $week,
             'month' => $month,
             'year' => $year,

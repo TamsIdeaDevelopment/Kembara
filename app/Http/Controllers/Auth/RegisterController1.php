@@ -89,16 +89,19 @@ class RegisterController extends Controller
              'role_id' => 3,
              'password' => Hash::make($data['password']),
          ]);
+//        $user = User::create($data);
+//        $data['user_id'] = $user->id;
         $HQ = Agent::where('HQ', 1)->first();
-        $leader = Agent::where('user_id', $data['leader'])->first();
 
-        if($data['level'] === '5')
-        {
+
+
+
+        if($data['level'] === $data['leader_level']){
             $agent = Agent::create([
                 'user_id' => $user->id,
                 'HQ' => 0,
                 'agent_levels_id' => $data['level'],
-                'leader_id' => $leader->leader_id,
+                'leader_id' => $HQ->user_id,
                 'referral_id' => $data['leader'],
                 'territory_id' => $data['territory'],
                 'state_id' => $data['state'],
@@ -108,35 +111,56 @@ class RegisterController extends Controller
             ]);
         }
         else{
-            if($data['level'] === $data['leader_level']){
-                $agent = Agent::create([
-                    'user_id' => $user->id,
-                    'HQ' => 0,
-                    'agent_levels_id' => $data['level'],
-                    'leader_id' => $HQ->user_id,
-                    'referral_id' => $data['leader'],
-                    'territory_id' => $data['territory'],
-                    'state_id' => $data['state'],
-                    'paid' => '0',
-                    'status' => '0',
-                    'city' => $data['city'],
-                ]);
-            }
-            else{
-                $agent = Agent::create([
-                    'user_id' => $user->id,
-                    'HQ' => 0,
-                    'agent_levels_id' => $data['level'],
-                    'leader_id' => $data['leader'],
-                    'territory_id' => $data['territory'],
-                    'state_id' => $data['state'],
-                    'paid' => '0',
-                    'status' => '0',
-                    'city' => $data['city'],
-                ]);
-            }
+            $agent = Agent::create([
+                'user_id' => $user->id,
+                'HQ' => 0,
+                'agent_levels_id' => $data['level'],
+                'leader_id' => $data['leader'],
+                'territory_id' => $data['territory'],
+                'state_id' => $data['state'],
+                'paid' => '0',
+                'status' => '0',
+                'city' => $data['city'],
+            ]);
         }
+
+//        $agent = Agent::create($data);
+
+        //$data['level'] = $agent->Level->name;
+
         return $user;
 
+
+
+
+//        $user = User::create([
+//            'name' => $data['name'],
+//            'email' => $data['email'],
+//            'role_id' => '1',
+//            'password' => Hash::make($data['password']),
+//        ]);
+//
+//        $data['user_id'] = $user->id;
+//
+//        // $agent = Agent::create([
+//        //     'user_id' => $user->id,
+//        //     // 'member_id' => $data['member_id'],
+//        //     'level' => $data['level'],
+//        //     'city' => $data['city'],
+//        //     'state' => $data['state'],
+//        //     'territory' => $data['territory'],
+//        //     'leader' => $data['leader'],
+//        //     // 'existing_member' => isset($data['existing_member']) ? $data['existing_member'] : 0,
+//        // ]);
+//        $agent = Agent::create($data);
+//
+//        $data['level'] = $agent->Level->name;
+
+//        return User::create([
+//            'name' => $data['name'],
+//            'email' => $data['email'],
+//            'role_id' => '1',
+//            'password' => Hash::make($data['password']),
+//        ]);
     }
 }

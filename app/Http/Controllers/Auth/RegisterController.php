@@ -109,7 +109,7 @@ class RegisterController extends Controller
                     'city' => $data['city'],
                 ]);
             }
-            else if ($data['level'] >= $data['leader_level'])
+            else if ($data['leader_level'] >= $data['level'])
             {
                 $agent = Agent::create([
                     'user_id' => $user->id,

@@ -139,6 +139,29 @@
                             <span class="font-weight-bolder font-size-h6 text-right">{{$parent.Count}}</span>
                         </div>
                     </div>
+                    <div class="row mt-3 mb-3">
+                        <div class="col-lg-4 text-right font-weight-bolder"></div>
+                        <div class="col-lg-4 text-right font-weight-bolder"></div>
+                        <div class="col-lg-2 text-right font-weight-bolder">
+                            <span class="font-weight-bolder font-size-h6 text-right">Coupon</span>
+                        </div>
+                        <div class="col-lg-2 text-right font-weight-bolder">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                        <span class="switch switch-sm switch-outline switch-icon switch-success">
+                                            <label>
+                                             <input type="checkbox" name="select" @change="coupon"/>
+                                             <span></span>
+                                        </label>
+                                       </span>
+                                </div>
+                                <div class="col-lg-6">
+                                    RM {{$parent.AgentDetails.point}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="row border-bottom">
 
                     </div>

@@ -272,7 +272,7 @@
                                                 Pay
                                             </a>
                                         </td>
-                                        <td class="text-primary font-size-h3 font-weight-boldest text-right" v-if="Order.status =='2' && Order.seller_id.id == user"><a class="btn btn-primary" @click="ApproveOrder">Approve</a></td>
+                                        <td class="text-primary font-size-h3 font-weight-boldest text-right" v-if="Order.status =='2' && Order.seller_id.id == user && Order.HQ !=='1' "><a class="btn btn-primary" @click="ApproveOrder">Approve</a></td>
                                     </tr>
                                     </tbody>
                                 </table>

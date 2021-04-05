@@ -159,7 +159,7 @@ class CreateOrder
                         'delivery_type' => $input['delivery_type'],
                         'delivery_fees' => $input['delivery_fees'],
                         'payment_methods' => $input['payment_methods'],
-                        'status' => 4,
+                        'status' => 2,
                         'paid' => 1,
                         'ref_no' => $fileNameToStore,
                         'total_paid' => $details['total_paid'],

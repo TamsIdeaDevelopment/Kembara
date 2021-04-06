@@ -95,6 +95,9 @@ Route::get('/agent-details/{agentID}', function ($agentID) {
     return view('pages.Admin.Teams.Team.details',['agentID' => $agentID]);
 })->middleware('verified');
 
+Route::get('/chart-detail/{option}', function ($option) {
+    return view('pages.Admin.Orders.ListChartOrderHQ',['option' => $option]);
+})->middleware('verified');
 
 Route::get('/stock', 'HomeController@Stock')->name('stock')->middleware('verified');
 

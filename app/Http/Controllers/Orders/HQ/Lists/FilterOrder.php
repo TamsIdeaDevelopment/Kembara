@@ -56,4 +56,50 @@ class FilterOrder
         return OrdersResources::collection($data);
     }
 
+    public function ListChartOrderHQ($option,$seller_id)
+    {
+        if($option === 'Daily'){
+            $data = Order::where('seller_id',$seller_id)
+                ->where('paid',1)
+                ->where('created_at','>=', Carbon::today()->toDateString())
+                ->latest()->get();
+        }
+        if($option === 'Week'){
+            $data = Order::where('seller_id',$seller_id)
+                ->where('paid',1)
+                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->latest()->get();
+
+        }
+        if($option === 'Month'){
+            $data = Order::where('seller_id',$seller_id)
+                ->where('paid',1)
+                ->whereMonth('created_at', '=', Carbon::now()->month)
+                ->latest()->get();
+
+        }
+        if($option === 'Year'){
+            $data = Order::where('seller_id',$seller_id)
+                ->where('paid',1)
+                ->whereYear('created_at', '=', Carbon::now()->year)
+                ->latest()->get();
+        }
+        return OrdersResources::collection($data);
+//        if($customer === 'Customer')
+//        {
+//            $data = $this->repository->where('status', $status)
+//                ->where('HQ', $HQ)
+//                ->where('buyer_type', $customer)
+//                ->latest()->get();
+//        }
+//        else
+//        {
+//            $data = $this->repository->where('status', $status)
+//                ->where('HQ', $HQ)
+//                ->where('buyer_type', null)
+//                ->latest()->get();
+//        }
+//        return OrdersResources::collection($data);
+    }
+
 }

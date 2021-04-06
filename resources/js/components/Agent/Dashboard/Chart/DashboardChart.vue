@@ -17,7 +17,7 @@
                                         <!--</span>-->
                                 <!--</div>-->
                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h3 mb-0">
+                                    <a href="chart-detail/Daily" class="text-dark text-hover-primary font-weight-bold font-size-h3 mb-0">
                                         RM {{chart.daily}}
                                     </a>
                                 </div>
@@ -40,7 +40,7 @@
                                 <!--</span>-->
                                 <!--</div>-->
                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h3 mb-0">
+                                    <a href="chart-detail/Week" class="text-dark text-hover-primary font-weight-bold font-size-h3 mb-0">
                                         RM {{chart.week}}
                                     </a>
                                 </div>
@@ -65,7 +65,7 @@
                                 <!--</span>-->
                                 <!--</div>-->
                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h3 mb-3">
+                                    <a href="chart-detail/Month" class="text-dark text-hover-primary font-weight-bold font-size-h3 mb-3">
                                         RM {{chart.month}}
                                     </a>
                                     <div class="text-dark-75">
@@ -91,7 +91,7 @@
                                         <!--</span>-->
                                 <!--</div>-->
                                 <div class="d-flex flex-column">
-                                    <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h3 mb-3">
+                                    <a href="chart-detail/Year" class="text-dark text-hover-primary font-weight-bold font-size-h3 mb-3">
                                         RM {{chart.year}}
                                     </a>
                                     <div class="text-dark-75">

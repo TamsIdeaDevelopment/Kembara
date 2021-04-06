@@ -2902,6 +2902,101 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['data', 'option'],
+  data: function data() {
+    return {
+      image_source: 'storage/ProfilePicture/',
+      Orders: []
+    };
+  },
+  mounted: function mounted() {},
+  watch: {
+    data: function data() {}
+  },
+  created: function created() {
+    this.fetchHQOrder();
+  },
+  methods: {
+    fetchHQOrder: function fetchHQOrder() {
+      var _this = this;
+
+      fetch('/api/v1/orders/HQ/Lists/' + this.option + '/' + this.data.id + '/admin-list-chart-order').then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        _this.Orders = response.data;
+        console.log(_this.Orders);
+        $('#table-hq-order').DataTable().destroy();
+
+        _this.$nextTick(function () {
+          $('#table-hq-order').DataTable({
+            scrollX: false,
+            scrollCollapse: true,
+            responsive: true,
+            pagingType: 'full_numbers',
+            columnDefs: [{
+              "width": "50px",
+              "targets": 0
+            }, {
+              "width": "50px",
+              "targets": 1
+            }, {
+              "width": "100px",
+              "targets": 3
+            }, {
+              "width": "50px",
+              "targets": 4
+            }, {
+              //targets: 3,
+              width: '50px',
+              title: 'Actions',
+              orderable: false,
+              render: function render(data, type, full, meta) {}
+            }]
+          });
+        });
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/Dashboard/Dashboard/HallOfFame.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Admin/Dashboard/Dashboard/HallOfFame.vue?vue&type=script&lang=js& ***!
@@ -11273,6 +11368,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
   data: function data() {
@@ -11329,7 +11431,8 @@ __webpack_require__.r(__webpack_exports__);
       CountNormal: [],
       CountSpecial: [],
       CountAddOn: [],
-      TotalNormal: 0
+      TotalNormal: 0,
+      isSpinner: false
     };
   },
   mounted: function mounted() {},
@@ -11370,8 +11473,16 @@ __webpack_require__.r(__webpack_exports__);
     checkValidation: function checkValidation() {
       this.errors = [];
 
+      if (this.IsSellerHQ == 0) {
+        this.payment_selected = 2;
+      }
+
       if (this.delivery_type == 0) {
-        if (this.DeliveryDetails.name && this.DeliveryDetails.phone_no && this.DeliveryDetails.address_1 && this.DeliveryDetails.postcode && this.DeliveryDetails.city && this.DeliveryDetails.state && this.DeliveryDetails.country && this.DeliveryDetails.country) {
+        if (this.DeliveryDetails.name && this.DeliveryDetails.phone_no && this.DeliveryDetails.address_1 && this.DeliveryDetails.postcode && this.DeliveryDetails.city && this.DeliveryDetails.state && this.DeliveryDetails.country && this.DeliveryDetails.country && this.payment_selected) {
+          // if(this.payment_selected)
+          // {
+          //     this.CreateOrder();
+          // }
           this.CreateOrder();
         }
 
@@ -11403,6 +11514,29 @@ __webpack_require__.r(__webpack_exports__);
           this.errors['country'] = "Please insert the country";
         }
 
+        if (!this.payment_selected) {
+          this.errors['payment'] = "Please select the payment";
+          this.errors['payment_error'] = "Please select the payment";
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          toastr.error("Please choose the payment", "Failed");
+        }
+
         if (!this.DeliveryDetails.name || !this.DeliveryDetails.phone_no || !this.DeliveryDetails.address_1 || !this.DeliveryDetails.postcode || !this.DeliveryDetails.city || !this.DeliveryDetails.state || !this.DeliveryDetails.country || !this.DeliveryDetails.country) {
           this.errors['all'] = "Please complete the form";
           toastr.options = {
@@ -11422,58 +11556,86 @@ __webpack_require__.r(__webpack_exports__);
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut"
           };
-          toastr.error("Please complete the delivery details", "Failed");
+          toastr.error("Please complete the details", "Failed");
         }
       }
 
       if (this.delivery_type == 1) {
-        this.CreateOrder();
+        if (this.payment_selected) {
+          this.CreateOrder();
+        }
+
+        if (!this.payment_selected) {
+          this.errors['payment'] = "Please select the payment";
+          this.errors['payment_error'] = "Please choose the payment";
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          toastr.error("Please choose the payment", "Failed");
+        }
       }
     },
     CreateOrder: function CreateOrder() {
-      if (!this.payment_selected) {
-        this.payment_selected = 2;
-      }
-
-      if (this.payment_selected == 2) {
-        this.Orders.details.paid_at = this.paid_at;
-        this.Orders.details.total_paid = this.total_paid;
-      }
-
-      this.Orders.delivery_type = this.delivery_type;
-      this.Orders.delivery_fees = this.total_delivery_fee;
-      this.Orders.payment_methods = this.payment_selected;
-      this.Orders.proof_of_payment = this.proof_of_payment_image;
-      this.Orders.point = this.point;
-      this.Orders.Carts = this.Carts;
-      this.Orders.details.HQ = this.IsSellerHQ;
-      this.Orders.details.seller_id = this.seller_id;
-      this.Orders.details.buyer_id = this.BillingDetails.id;
-      this.Orders.details.total = this.Totals;
-      this.Orders.details.deliver_to = this.DeliveryDetails.name;
-      this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
-      this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
-      this.Orders.details.city = this.DeliveryDetails.city;
-      this.Orders.details.state = this.DeliveryDetails.state;
-      this.Orders.details.country = this.DeliveryDetails.country;
-      this.Orders.details.postcode = this.DeliveryDetails.postcode;
-      this.Orders.details.remarks = this.remarks;
-      var currentObj = this;
-      var config = {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      };
-      var formData = new FormData();
-      formData.append("order", JSON.stringify(this.Orders));
-      formData.append("proof_of_payment", this.proof_of_payment_image);
-      var vm = this;
-      axios.post('/api/v1/orders/HQ/Creates/create-order', formData, config).then(function (data) {
-        console.log(data.data.redirect);
-        window.location = data.data.redirect;
-      })["catch"](function (error) {
-        currentObj.output = error;
-      }); //                var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
+      this.isSpinner = !this.isSpinner;
+      alert(this.payment_selected); // if(this.payment_selected == 2)
+      // {
+      //     this.Orders.details.paid_at = this.paid_at;
+      //     this.Orders.details.total_paid = this.total_paid;
+      // }
+      // this.Orders.delivery_type=this.delivery_type;
+      // this.Orders.delivery_fees=this.total_delivery_fee;
+      // this.Orders.payment_methods=this.payment_selected;
+      // this.Orders.proof_of_payment=this.proof_of_payment_image;
+      // this.Orders.point=this.point;
+      //
+      // this.Orders.Carts = this.Carts;
+      // this.Orders.details.HQ = this.IsSellerHQ;
+      // this.Orders.details.seller_id = this.seller_id;
+      // this.Orders.details.buyer_id = this.BillingDetails.id;
+      // this.Orders.details.total = this.Totals;
+      // this.Orders.details.deliver_to = this.DeliveryDetails.name;
+      // this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
+      // this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
+      // this.Orders.details.city = this.DeliveryDetails.city;
+      // this.Orders.details.state = this.DeliveryDetails.state;
+      // this.Orders.details.country = this.DeliveryDetails.country;
+      // this.Orders.details.postcode = this.DeliveryDetails.postcode;
+      // this.Orders.details.remarks = this.remarks;
+      //
+      //
+      // let currentObj = this;
+      // const config = {
+      //     headers: { 'content-type': 'multipart/form-data' }
+      // }
+      //
+      // let formData = new FormData();
+      // formData.append("order", JSON.stringify(this.Orders));
+      // formData.append("proof_of_payment", this.proof_of_payment_image);
+      // let vm= this;
+      // axios.post('/api/v1/orders/HQ/Creates/create-order', formData, config)
+      //     .then(function (data) {
+      //         this.isSpinner = !this.isSpinner;
+      //         console.log(data.data.redirect);
+      //         window.location = data.data.redirect;
+      //     })
+      //     .catch(function (error) {
+      //         currentObj.output = error;
+      //     });
+      //                var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
       //
       //                fetch(url, {
       //                    method: method,
@@ -11847,6 +12009,28 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../app */ "./resources/js/app.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -12710,6 +12894,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -15475,6 +15664,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
   data: function data() {
@@ -15531,7 +15727,8 @@ __webpack_require__.r(__webpack_exports__);
       CountNormal: [],
       CountSpecial: [],
       CountAddOn: [],
-      TotalNormal: 0
+      TotalNormal: 0,
+      isSpinner: false
     };
   },
   mounted: function mounted() {},
@@ -15559,7 +15756,7 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = [];
 
       if (this.delivery_type == 0) {
-        if (this.DeliveryDetails.name && this.DeliveryDetails.phone_no && this.DeliveryDetails.address_1 && this.DeliveryDetails.postcode && this.DeliveryDetails.city && this.DeliveryDetails.state && this.DeliveryDetails.country && this.DeliveryDetails.country) {
+        if (this.DeliveryDetails.name && this.DeliveryDetails.phone_no && this.DeliveryDetails.address_1 && this.DeliveryDetails.postcode && this.DeliveryDetails.city && this.DeliveryDetails.state && this.DeliveryDetails.country && this.DeliveryDetails.country && this.payment_selected) {
           this.CreateOrder();
         }
 
@@ -15591,6 +15788,29 @@ __webpack_require__.r(__webpack_exports__);
           this.errors['country'] = "Please insert the country";
         }
 
+        if (!this.payment_selected) {
+          this.errors['payment'] = "Please select the payment";
+          this.errors['payment_error'] = "Please select the payment";
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          toastr.error("Please choose the payment", "Failed");
+        }
+
         if (!this.DeliveryDetails.name || !this.DeliveryDetails.phone_no || !this.DeliveryDetails.address_1 || !this.DeliveryDetails.postcode || !this.DeliveryDetails.city || !this.DeliveryDetails.state || !this.DeliveryDetails.country || !this.DeliveryDetails.country) {
           this.errors['all'] = "Please complete the form";
           toastr.options = {
@@ -15615,53 +15835,85 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.delivery_type == 1) {
-        this.CreateOrder();
+        if (this.payment_selected) {
+          this.CreateOrder();
+        }
+
+        if (!this.payment_selected) {
+          this.errors['payment'] = "Please select the payment";
+          this.errors['payment_error'] = "Please choose the payment";
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          toastr.error("Please choose the payment", "Failed");
+        }
       }
     },
     CreateOrder: function CreateOrder() {
-      if (!this.payment_selected) {
-        this.payment_selected = 2;
-      }
-
-      if (this.payment_selected == 2) {
-        this.Orders.details.paid_at = this.paid_at;
-        this.Orders.details.total_paid = this.total_paid;
-      }
-
-      this.Orders.delivery_type = this.delivery_type;
-      this.Orders.delivery_fees = this.total_delivery_fee;
-      this.Orders.payment_methods = this.payment_selected;
-      this.Orders.proof_of_payment = this.proof_of_payment_image;
-      this.Orders.point = this.point;
-      this.Orders.Carts = this.Carts;
-      this.Orders.details.HQ = this.IsSellerHQ;
-      this.Orders.details.seller_id = this.seller_id;
-      this.Orders.details.buyer_id = this.BillingDetails.id;
-      this.Orders.details.total = this.Totals;
-      this.Orders.details.deliver_to = this.DeliveryDetails.name;
-      this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
-      this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
-      this.Orders.details.city = this.DeliveryDetails.city;
-      this.Orders.details.state = this.DeliveryDetails.state;
-      this.Orders.details.country = this.DeliveryDetails.country;
-      this.Orders.details.postcode = this.DeliveryDetails.postcode;
-      this.Orders.details.remarks = this.remarks;
-      var currentObj = this;
-      var config = {
-        headers: {
-          'content-type': 'multipart/form-data'
-        }
-      };
-      var formData = new FormData();
-      formData.append("order", JSON.stringify(this.Orders));
-      formData.append("proof_of_payment", this.proof_of_payment_image);
-      var vm = this;
-      axios.post('/api/v1/orders/HQ/Creates/create-first-purchase', formData, config).then(function (data) {
-        console.log(data.data.redirect);
-        window.location = data.data.redirect;
-      })["catch"](function (error) {
-        currentObj.output = error;
-      }); //                var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
+      this.isSpinner = !this.isSpinner;
+      alert(this.payment_selected); // if(!this.payment_selected)
+      // {
+      //     this.payment_selected = 2;
+      // }
+      // if(this.payment_selected == 2)
+      // {
+      //     this.Orders.details.paid_at = this.paid_at;
+      //     this.Orders.details.total_paid = this.total_paid;
+      // }
+      // this.Orders.delivery_type=this.delivery_type;
+      // this.Orders.delivery_fees=this.total_delivery_fee;
+      // this.Orders.payment_methods=this.payment_selected;
+      // this.Orders.proof_of_payment=this.proof_of_payment_image;
+      // this.Orders.point=this.point;
+      //
+      // this.Orders.Carts = this.Carts;
+      // this.Orders.details.HQ = this.IsSellerHQ;
+      // this.Orders.details.seller_id = this.seller_id;
+      // this.Orders.details.buyer_id = this.BillingDetails.id;
+      // this.Orders.details.total = this.Totals;
+      // this.Orders.details.deliver_to = this.DeliveryDetails.name;
+      // this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
+      // this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
+      // this.Orders.details.city = this.DeliveryDetails.city;
+      // this.Orders.details.state = this.DeliveryDetails.state;
+      // this.Orders.details.country = this.DeliveryDetails.country;
+      // this.Orders.details.postcode = this.DeliveryDetails.postcode;
+      // this.Orders.details.remarks = this.remarks;
+      //
+      //
+      // let currentObj = this;
+      // const config = {
+      //     headers: { 'content-type': 'multipart/form-data' }
+      // }
+      //
+      // let formData = new FormData();
+      // formData.append("order", JSON.stringify(this.Orders));
+      // formData.append("proof_of_payment", this.proof_of_payment_image);
+      // let vm= this;
+      // axios.post('/api/v1/orders/HQ/Creates/create-first-purchase', formData, config)
+      //     .then(function (data) {
+      //         this.isSpinner = !this.isSpinner;
+      //         console.log(data.data.redirect);
+      //         window.location = data.data.redirect;
+      //     })
+      //     .catch(function (error) {
+      //         currentObj.output = error;
+      //     });
+      //                var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
       //
       //                fetch(url, {
       //                    method: method,
@@ -16420,6 +16672,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -25125,6 +25382,73 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=template&id=0b2e8e8e&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=template&id=0b2e8e8e& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "d-flex flex-column-fluid" }, [
+    _c(
+      "div",
+      { staticClass: "container-fluid" },
+      [
+        _c("agent-dashboard-chart", { attrs: { data: _vm.data } }),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mt-5" }, [
+          _c("div", { staticClass: "col-lg-12 col-xxl-12" }, [
+            _c("div", { staticClass: "card card-custom" }, [
+              _c("div", { staticClass: "card-header flex-wrap py-5" }, [
+                _c("div", { staticClass: "card-title" }, [
+                  _c("h3", { staticClass: "card-label" }, [
+                    _vm._v(
+                      "List " +
+                        _vm._s(_vm.option) +
+                        " Order\n                                    "
+                    ),
+                    _c(
+                      "span",
+                      { staticClass: "d-block text-muted pt-2 font-size-sm" },
+                      [_vm._v("List of Order (Restock)")]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [
+                  _c("agent-order-hq-elements", {
+                    attrs: { data: this.Orders }
+                  })
+                ],
+                1
+              )
+            ])
+          ])
+        ])
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -38043,292 +38367,341 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "d-flex flex-column-fluid" }, [
     _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-12" }, [
-          _c("div", { staticClass: "flex-row-fluid ml-lg-8" }, [
-            _c(
-              "div",
-              {
-                staticClass: "wizard wizard-4",
-                attrs: {
-                  id: "kt_wizard_v3",
-                  "data-wizard-state": "step-first",
-                  "data-wizard-clickable": "true"
-                }
-              },
-              [
-                _c("div", { staticClass: "wizard-nav" }, [
-                  _c("div", { staticClass: "wizard-steps" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.CartStatus,
-                            expression: "CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step",
-                        attrs: { "data-wizard-type": "step" }
-                      },
-                      [
-                        _c("div", { staticClass: "wizard-wrapper" }, [
-                          _c("div", { staticClass: "wizard-number" }, [
-                            _vm._v("2")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "wizard-label" }, [
-                            _c("div", { staticClass: "wizard-title" }, [
-                              _vm._v("Delivery Address")
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "wizard-desc" }, [
-                              _vm._v("Setup Your Address")
-                            ]),
-                            _vm._v(" "),
-                            "all" in _vm.errors
-                              ? _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "card-label font-weight-bolder text-danger"
-                                  },
-                                  [_vm._v(_vm._s(_vm.errors["all"]))]
-                                )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.CartStatus,
-                            expression: "!CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step"
-                      },
-                      [
-                        _c("div", { staticClass: "wizard-wrapper" }, [
-                          _c("div", { staticClass: "wizard-number" }, [
-                            _vm._v("2")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "wizard-label" }, [
-                            _c(
-                              "div",
-                              { staticClass: "wizard-title text-danger" },
-                              [_vm._v("Complete your cart")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "wizard-desc" }, [
-                              _vm._v("Setup Your Address")
-                            ]),
-                            _vm._v(" "),
-                            "all" in _vm.errors
-                              ? _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "card-label font-weight-bolder text-danger"
-                                  },
-                                  [_vm._v(_vm._s(_vm.errors["all"]))]
-                                )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.CartStatus,
-                            expression: "CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step",
-                        attrs: { "data-wizard-type": "step" }
-                      },
-                      [_vm._m(1)]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.CartStatus,
-                            expression: "!CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step"
-                      },
-                      [_vm._m(2)]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.CartStatus,
-                            expression: "CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step",
-                        attrs: { "data-wizard-type": "step" }
-                      },
-                      [_vm._m(3)]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.CartStatus,
-                            expression: "!CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step"
-                      },
-                      [_vm._m(4)]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row justify-content-center" }, [
-                  _c("div", { staticClass: "col-xl-12 col-xxl-12" }, [
-                    _c(
-                      "form",
-                      {
-                        staticClass: "form",
-                        attrs: {
-                          id: "kt_form",
-                          enctype: "multipart/form-data"
-                        },
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.checkValidation($event)
-                          }
-                        }
-                      },
-                      [
-                        _c("agent-cart-elements", {
-                          attrs: { data: _vm.IsSellerHQ }
-                        }),
-                        _vm._v(" "),
-                        _c("agent-cart-delivery-address-elements"),
-                        _vm._v(" "),
-                        _c("agent-cart-payment-method-elements"),
-                        _vm._v(" "),
-                        _c("agent-cart-review-submit-elements"),
+      _vm.isSpinner ? _c("div", { staticClass: "row" }, [_vm._m(0)]) : _vm._e(),
+      _vm._v(" "),
+      !_vm.isSpinner
+        ? _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "flex-row-fluid ml-lg-8" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "wizard wizard-4",
+                    attrs: {
+                      id: "kt_wizard_v3",
+                      "data-wizard-state": "step-first",
+                      "data-wizard-clickable": "true"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "wizard-nav" }, [
+                      _c("div", { staticClass: "wizard-steps" }, [
+                        _vm._m(1),
                         _vm._v(" "),
                         _c(
                           "div",
                           {
-                            staticClass:
-                              "d-flex justify-content-between border-top mt-3 pt-3"
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.CartStatus,
+                                expression: "CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step",
+                            attrs: { "data-wizard-type": "step" }
                           },
                           [
-                            _vm._m(5),
-                            _vm._v(" "),
-                            _c("div", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
-                                  attrs: {
-                                    type: "submit",
-                                    "data-wizard-state": "action-submit",
-                                    "data-wizard-type": "action-submit"
-                                  }
-                                },
-                                [_vm._v("Order")]
-                              ),
+                            _c("div", { staticClass: "wizard-wrapper" }, [
+                              _c("div", { staticClass: "wizard-number" }, [
+                                _vm._v("2")
+                              ]),
                               _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.CartStatus === true,
-                                      expression: "CartStatus === true"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "btn btn-primary font-weight-bolder text-uppercase px-9 py-4",
-                                  attrs: {
-                                    type: "button",
-                                    "data-wizard-type": "action-next"
-                                  }
-                                },
-                                [_vm._v("Next")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.CartStatus === false,
-                                      expression: "CartStatus === false"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "btn btn-secondary font-weight-bolder text-uppercase px-9 py-4",
-                                  attrs: {
-                                    type: "button",
-                                    disabled: "",
-                                    "data-wizard-type": "action-next"
-                                  }
-                                },
-                                [_vm._v("Next")]
-                              )
+                              _c("div", { staticClass: "wizard-label" }, [
+                                _c("div", { staticClass: "wizard-title" }, [
+                                  _vm._v("Delivery Address")
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "wizard-desc" }, [
+                                  _vm._v("Setup Your Address")
+                                ]),
+                                _vm._v(" "),
+                                "all" in _vm.errors
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "card-label font-weight-bolder text-danger"
+                                      },
+                                      [_vm._v(_vm._s(_vm.errors["all"]))]
+                                    )
+                                  : _vm._e()
+                              ])
                             ])
                           ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.CartStatus,
+                                expression: "!CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step"
+                          },
+                          [
+                            _c("div", { staticClass: "wizard-wrapper" }, [
+                              _c("div", { staticClass: "wizard-number" }, [
+                                _vm._v("2")
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "wizard-label" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "wizard-title text-danger" },
+                                  [_vm._v("Complete your cart")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "wizard-desc" }, [
+                                  _vm._v("Setup Your Address")
+                                ]),
+                                _vm._v(" "),
+                                "all" in _vm.errors
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "card-label font-weight-bolder text-danger"
+                                      },
+                                      [_vm._v(_vm._s(_vm.errors["all"]))]
+                                    )
+                                  : _vm._e()
+                              ])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.CartStatus,
+                                expression: "CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step",
+                            attrs: { "data-wizard-type": "step" }
+                          },
+                          [
+                            _c("div", { staticClass: "wizard-wrapper" }, [
+                              _c("div", { staticClass: "wizard-number" }, [
+                                _vm._v("3")
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "wizard-label" }, [
+                                _c("div", { staticClass: "wizard-title" }, [
+                                  _vm._v("Setup Payment")
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "wizard-desc" }, [
+                                  _vm._v("Choose Payment Method")
+                                ]),
+                                _vm._v(" "),
+                                "payment_error" in _vm.errors
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "card-label font-weight-bolder text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors["payment_error"])
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.CartStatus,
+                                expression: "!CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step"
+                          },
+                          [_vm._m(2)]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.CartStatus,
+                                expression: "CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step",
+                            attrs: { "data-wizard-type": "step" }
+                          },
+                          [_vm._m(3)]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.CartStatus,
+                                expression: "!CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step"
+                          },
+                          [_vm._m(4)]
                         )
-                      ],
-                      1
-                    )
-                  ])
-                ])
-              ]
-            )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row justify-content-center" }, [
+                      _c("div", { staticClass: "col-xl-12 col-xxl-12" }, [
+                        _c(
+                          "form",
+                          {
+                            staticClass: "form",
+                            attrs: {
+                              id: "kt_form",
+                              enctype: "multipart/form-data"
+                            },
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.checkValidation($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("agent-cart-elements", {
+                              attrs: { data: _vm.IsSellerHQ }
+                            }),
+                            _vm._v(" "),
+                            _c("agent-cart-delivery-address-elements"),
+                            _vm._v(" "),
+                            _c("agent-cart-payment-method-elements"),
+                            _vm._v(" "),
+                            _c("agent-cart-review-submit-elements"),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "d-flex justify-content-between border-top mt-3 pt-3"
+                              },
+                              [
+                                _vm._m(5),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
+                                      attrs: {
+                                        type: "submit",
+                                        "data-wizard-state": "action-submit",
+                                        "data-wizard-type": "action-submit"
+                                      }
+                                    },
+                                    [_vm._v("Order")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: _vm.CartStatus === true,
+                                          expression: "CartStatus === true"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "btn btn-primary font-weight-bolder text-uppercase px-9 py-4",
+                                      attrs: {
+                                        type: "button",
+                                        "data-wizard-type": "action-next"
+                                      }
+                                    },
+                                    [_vm._v("Next")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: _vm.CartStatus === false,
+                                          expression: "CartStatus === false"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "btn btn-secondary font-weight-bolder text-uppercase px-9 py-4",
+                                      attrs: {
+                                        type: "button",
+                                        disabled: "",
+                                        "data-wizard-type": "action-next"
+                                      }
+                                    },
+                                    [_vm._v("Next")]
+                                  )
+                                ])
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
           ])
-        ])
-      ])
+        : _vm._e()
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-12 d-flex justify-content-center" },
+      [
+        _c("div", {
+          staticClass: "spinner spinner-success d-flex align-items-center"
+        })
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -38355,22 +38728,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "wizard-wrapper" }, [
-      _c("div", { staticClass: "wizard-number" }, [_vm._v("3")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wizard-label" }, [
-        _c("div", { staticClass: "wizard-title" }, [_vm._v("Setup Payment")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "wizard-desc" }, [
-          _vm._v("Choose Payment Method")
-        ])
-      ])
-    ])
   },
   function() {
     var _vm = this
@@ -39179,6 +39536,54 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
+              _c("div", { staticClass: "row mt-3 mb-3" }, [
+                _c("div", {
+                  staticClass: "col-lg-4 text-right font-weight-bolder"
+                }),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "col-lg-4 text-right font-weight-bolder"
+                }),
+                _vm._v(" "),
+                _vm._m(4),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-lg-2 text-right font-weight-bolder" },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-lg-6" }, [
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "switch switch-sm switch-outline switch-icon switch-success"
+                          },
+                          [
+                            _c("label", [
+                              _c("input", {
+                                attrs: { type: "checkbox", name: "select" },
+                                on: { change: _vm.coupon }
+                              }),
+                              _vm._v(" "),
+                              _c("span")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-6" }, [
+                        _vm._v(
+                          "\n                                RM " +
+                            _vm._s(_vm.$parent.AgentDetails.point) +
+                            "\n                            "
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "row border-bottom" }),
               _vm._v(" "),
               _c("div", { staticClass: "row  mt-3 mb-3" }, [
@@ -39190,7 +39595,7 @@ var render = function() {
                   staticClass: "col-lg-4 text-right font-weight-bolder"
                 }),
                 _vm._v(" "),
-                _vm._m(4),
+                _vm._m(5),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -39216,7 +39621,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "row border-bottom" }),
               _vm._v(" "),
-              _vm._m(5)
+              _vm._m(6)
             ],
             2
           )
@@ -39328,6 +39733,22 @@ var staticRenderFns = [
           "span",
           { staticClass: "font-weight-bolder font-size-h6 text-right" },
           [_vm._v("Total Item")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-2 text-right font-weight-bolder" },
+      [
+        _c(
+          "span",
+          { staticClass: "font-weight-bolder font-size-h6 text-right" },
+          [_vm._v("Coupon")]
         )
       ]
     )
@@ -40926,6 +41347,16 @@ var render = function() {
             _c("div", { staticClass: "form-group mt-8" }, [
               _c("label", [_vm._v("Choose Payment")]),
               _vm._v(" "),
+              "payment" in _vm.$parent.errors
+                ? _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col" }, [
+                      _c("label", { staticClass: "text-danger" }, [
+                        _vm._v(_vm._s(_vm.$parent.errors["payment"]))
+                      ])
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "select",
                 {
@@ -40963,7 +41394,9 @@ var render = function() {
                 [
                   _c("option", { attrs: { value: "" } }, [_vm._v("Select")]),
                   _vm._v(" "),
-                  _c("option", { attrs: { value: "3" } }, [_vm._v("Billplz")])
+                  _c("option", { attrs: { value: "3", selected: "" } }, [
+                    _vm._v("Billplz")
+                  ])
                 ]
               )
             ]),
@@ -45777,7 +46210,7 @@ var render = function() {
                       {
                         staticClass:
                           "text-dark text-hover-primary font-weight-bold font-size-h3 mb-0",
-                        attrs: { href: "#" }
+                        attrs: { href: "chart-detail/Daily" }
                       },
                       [
                         _vm._v(
@@ -45812,7 +46245,7 @@ var render = function() {
                       {
                         staticClass:
                           "text-dark text-hover-primary font-weight-bold font-size-h3 mb-0",
-                        attrs: { href: "#" }
+                        attrs: { href: "chart-detail/Week" }
                       },
                       [
                         _vm._v(
@@ -45849,7 +46282,7 @@ var render = function() {
                       {
                         staticClass:
                           "text-dark text-hover-primary font-weight-bold font-size-h3 mb-3",
-                        attrs: { href: "#" }
+                        attrs: { href: "chart-detail/Month" }
                       },
                       [
                         _vm._v(
@@ -45886,7 +46319,7 @@ var render = function() {
                       {
                         staticClass:
                           "text-dark text-hover-primary font-weight-bold font-size-h3 mb-3",
-                        attrs: { href: "#" }
+                        attrs: { href: "chart-detail/Year" }
                       },
                       [
                         _vm._v(
@@ -46837,292 +47270,343 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "d-flex flex-column-fluid" }, [
     _c("div", { staticClass: "container-fluid" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-12" }, [
-          _c("div", { staticClass: "flex-row-fluid ml-lg-8" }, [
-            _c(
-              "div",
-              {
-                staticClass: "wizard wizard-4",
-                attrs: {
-                  id: "kt_wizard_v3",
-                  "data-wizard-state": "step-first",
-                  "data-wizard-clickable": "true"
-                }
-              },
-              [
-                _c("div", { staticClass: "wizard-nav" }, [
-                  _c("div", { staticClass: "wizard-steps" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.CartStatus,
-                            expression: "CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step",
-                        attrs: { "data-wizard-type": "step" }
-                      },
-                      [
-                        _c("div", { staticClass: "wizard-wrapper" }, [
-                          _c("div", { staticClass: "wizard-number" }, [
-                            _vm._v("2")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "wizard-label" }, [
-                            _c("div", { staticClass: "wizard-title" }, [
-                              _vm._v("Delivery Address")
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "wizard-desc" }, [
-                              _vm._v("Setup Your Address")
-                            ]),
-                            _vm._v(" "),
-                            "all" in _vm.errors
-                              ? _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "card-label font-weight-bolder text-danger"
-                                  },
-                                  [_vm._v(_vm._s(_vm.errors["all"]))]
-                                )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.CartStatus,
-                            expression: "!CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step"
-                      },
-                      [
-                        _c("div", { staticClass: "wizard-wrapper" }, [
-                          _c("div", { staticClass: "wizard-number" }, [
-                            _vm._v("2")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "wizard-label" }, [
-                            _c(
-                              "div",
-                              { staticClass: "wizard-title text-danger" },
-                              [_vm._v("Complete your cart")]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "wizard-desc" }, [
-                              _vm._v("Setup Your Address")
-                            ]),
-                            _vm._v(" "),
-                            "all" in _vm.errors
-                              ? _c(
-                                  "span",
-                                  {
-                                    staticClass:
-                                      "card-label font-weight-bolder text-danger"
-                                  },
-                                  [_vm._v(_vm._s(_vm.errors["all"]))]
-                                )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.CartStatus,
-                            expression: "CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step",
-                        attrs: { "data-wizard-type": "step" }
-                      },
-                      [_vm._m(1)]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.CartStatus,
-                            expression: "!CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step"
-                      },
-                      [_vm._m(2)]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.CartStatus,
-                            expression: "CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step",
-                        attrs: { "data-wizard-type": "step" }
-                      },
-                      [_vm._m(3)]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: !_vm.CartStatus,
-                            expression: "!CartStatus"
-                          }
-                        ],
-                        staticClass: "wizard-step"
-                      },
-                      [_vm._m(4)]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row justify-content-center" }, [
-                  _c("div", { staticClass: "col-xl-12 col-xxl-12" }, [
-                    _c(
-                      "form",
-                      {
-                        staticClass: "form",
-                        attrs: {
-                          id: "kt_form",
-                          enctype: "multipart/form-data"
-                        },
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.checkValidation($event)
-                          }
-                        }
-                      },
-                      [
-                        _c("agent-first-purchase-elements", {
-                          attrs: { data: _vm.IsSellerHQ }
-                        }),
-                        _vm._v(" "),
-                        _c("agent-first-purchase-delivery-address-elements"),
-                        _vm._v(" "),
-                        _c("agent-first-purchase-payment-method-elements"),
-                        _vm._v(" "),
-                        _c("agent-first-purchase-review-submit-elements"),
+      _vm.isSpinner ? _c("div", { staticClass: "row" }, [_vm._m(0)]) : _vm._e(),
+      _vm._v(" "),
+      !_vm.isSpinner
+        ? _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "flex-row-fluid ml-lg-8" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "wizard wizard-4",
+                    attrs: {
+                      id: "kt_wizard_v3",
+                      "data-wizard-state": "step-first",
+                      "data-wizard-clickable": "true"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "wizard-nav" }, [
+                      _c("div", { staticClass: "wizard-steps" }, [
+                        _vm._m(1),
                         _vm._v(" "),
                         _c(
                           "div",
                           {
-                            staticClass:
-                              "d-flex justify-content-between border-top mt-3 pt-3"
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.CartStatus,
+                                expression: "CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step",
+                            attrs: { "data-wizard-type": "step" }
                           },
                           [
-                            _vm._m(5),
-                            _vm._v(" "),
-                            _c("div", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
-                                  attrs: {
-                                    type: "submit",
-                                    "data-wizard-state": "action-submit",
-                                    "data-wizard-type": "action-submit"
-                                  }
-                                },
-                                [_vm._v("Order")]
-                              ),
+                            _c("div", { staticClass: "wizard-wrapper" }, [
+                              _c("div", { staticClass: "wizard-number" }, [
+                                _vm._v("2")
+                              ]),
                               _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.CartStatus === true,
-                                      expression: "CartStatus === true"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "btn btn-primary font-weight-bolder text-uppercase px-9 py-4",
-                                  attrs: {
-                                    type: "button",
-                                    "data-wizard-type": "action-next"
-                                  }
-                                },
-                                [_vm._v("Next")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  directives: [
-                                    {
-                                      name: "show",
-                                      rawName: "v-show",
-                                      value: _vm.CartStatus === false,
-                                      expression: "CartStatus === false"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "btn btn-secondary font-weight-bolder text-uppercase px-9 py-4",
-                                  attrs: {
-                                    type: "button",
-                                    disabled: "",
-                                    "data-wizard-type": "action-next"
-                                  }
-                                },
-                                [_vm._v("Next")]
-                              )
+                              _c("div", { staticClass: "wizard-label" }, [
+                                _c("div", { staticClass: "wizard-title" }, [
+                                  _vm._v("Delivery Address")
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "wizard-desc" }, [
+                                  _vm._v("Setup Your Address")
+                                ]),
+                                _vm._v(" "),
+                                "all" in _vm.errors
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "card-label font-weight-bolder text-danger"
+                                      },
+                                      [_vm._v(_vm._s(_vm.errors["all"]))]
+                                    )
+                                  : _vm._e()
+                              ])
                             ])
                           ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.CartStatus,
+                                expression: "!CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step"
+                          },
+                          [
+                            _c("div", { staticClass: "wizard-wrapper" }, [
+                              _c("div", { staticClass: "wizard-number" }, [
+                                _vm._v("2")
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "wizard-label" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "wizard-title text-danger" },
+                                  [_vm._v("Complete your cart")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "wizard-desc" }, [
+                                  _vm._v("Setup Your Address")
+                                ]),
+                                _vm._v(" "),
+                                "all" in _vm.errors
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "card-label font-weight-bolder text-danger"
+                                      },
+                                      [_vm._v(_vm._s(_vm.errors["all"]))]
+                                    )
+                                  : _vm._e()
+                              ])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.CartStatus,
+                                expression: "CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step",
+                            attrs: { "data-wizard-type": "step" }
+                          },
+                          [
+                            _c("div", { staticClass: "wizard-wrapper" }, [
+                              _c("div", { staticClass: "wizard-number" }, [
+                                _vm._v("3")
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "wizard-label" }, [
+                                _c("div", { staticClass: "wizard-title" }, [
+                                  _vm._v("Setup Payment")
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "wizard-desc" }, [
+                                  _vm._v("Choose Payment Method")
+                                ]),
+                                _vm._v(" "),
+                                "payment_error" in _vm.errors
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "card-label font-weight-bolder text-danger"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.errors["payment_error"])
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.CartStatus,
+                                expression: "!CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step"
+                          },
+                          [_vm._m(2)]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.CartStatus,
+                                expression: "CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step",
+                            attrs: { "data-wizard-type": "step" }
+                          },
+                          [_vm._m(3)]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.CartStatus,
+                                expression: "!CartStatus"
+                              }
+                            ],
+                            staticClass: "wizard-step"
+                          },
+                          [_vm._m(4)]
                         )
-                      ],
-                      1
-                    )
-                  ])
-                ])
-              ]
-            )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row justify-content-center" }, [
+                      _c("div", { staticClass: "col-xl-12 col-xxl-12" }, [
+                        _c(
+                          "form",
+                          {
+                            staticClass: "form",
+                            attrs: {
+                              id: "kt_form",
+                              enctype: "multipart/form-data"
+                            },
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.checkValidation($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("agent-first-purchase-elements", {
+                              attrs: { data: _vm.IsSellerHQ }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "agent-first-purchase-delivery-address-elements"
+                            ),
+                            _vm._v(" "),
+                            _c("agent-first-purchase-payment-method-elements"),
+                            _vm._v(" "),
+                            _c("agent-first-purchase-review-submit-elements"),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "d-flex justify-content-between border-top mt-3 pt-3"
+                              },
+                              [
+                                _vm._m(5),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
+                                      attrs: {
+                                        type: "submit",
+                                        "data-wizard-state": "action-submit",
+                                        "data-wizard-type": "action-submit"
+                                      }
+                                    },
+                                    [_vm._v("Order")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: _vm.CartStatus === true,
+                                          expression: "CartStatus === true"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "btn btn-primary font-weight-bolder text-uppercase px-9 py-4",
+                                      attrs: {
+                                        type: "button",
+                                        "data-wizard-type": "action-next"
+                                      }
+                                    },
+                                    [_vm._v("Next")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: _vm.CartStatus === false,
+                                          expression: "CartStatus === false"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "btn btn-secondary font-weight-bolder text-uppercase px-9 py-4",
+                                      attrs: {
+                                        type: "button",
+                                        disabled: "",
+                                        "data-wizard-type": "action-next"
+                                      }
+                                    },
+                                    [_vm._v("Next")]
+                                  )
+                                ])
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
           ])
-        ])
-      ])
+        : _vm._e()
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-12 d-flex justify-content-center" },
+      [
+        _c("div", {
+          staticClass: "spinner spinner-success d-flex align-items-center"
+        })
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -47149,22 +47633,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "wizard-wrapper" }, [
-      _c("div", { staticClass: "wizard-number" }, [_vm._v("3")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "wizard-label" }, [
-        _c("div", { staticClass: "wizard-title" }, [_vm._v("Setup Payment")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "wizard-desc" }, [
-          _vm._v("Choose Payment Method")
-        ])
-      ])
-    ])
   },
   function() {
     var _vm = this
@@ -48686,6 +49154,16 @@ var render = function() {
           [
             _c("div", { staticClass: "form-group mt-8" }, [
               _c("label", [_vm._v("Choose Payment")]),
+              _vm._v(" "),
+              "payment" in _vm.$parent.errors
+                ? _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col" }, [
+                      _c("label", { staticClass: "text-danger" }, [
+                        _vm._v(_vm._s(_vm.$parent.errors["payment"]))
+                      ])
+                    ])
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "select",
@@ -50512,7 +50990,8 @@ var render = function() {
                                   : _vm._e(),
                                 _vm._v(" "),
                                 _vm.Order.status == "2" &&
-                                _vm.Order.seller_id.id == _vm.user
+                                _vm.Order.seller_id.id == _vm.user &&
+                                _vm.Order.HQ !== "1"
                                   ? _c(
                                       "td",
                                       {
@@ -68893,6 +69372,7 @@ Vue.component('admin-shipping-element', __webpack_require__(/*! ./components/Adm
 Vue.component('admin-dashboard', __webpack_require__(/*! ./components/Admin/Dashboard/Dashboard/dashboard.vue */ "./resources/js/components/Admin/Dashboard/Dashboard/dashboard.vue")["default"]);
 Vue.component('admin-hall-of-fame', __webpack_require__(/*! ./components/Admin/Dashboard/Dashboard/HallOfFame.vue */ "./resources/js/components/Admin/Dashboard/Dashboard/HallOfFame.vue")["default"]);
 Vue.component('admin-dashboard-chart', __webpack_require__(/*! ./components/Admin/Dashboard/Chart/DashboardChart.vue */ "./resources/js/components/Admin/Dashboard/Chart/DashboardChart.vue")["default"]);
+Vue.component('admin-chart-list-order-hq', __webpack_require__(/*! ./components/Admin/Dashboard/Chart/ListChartOrderHQ */ "./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue")["default"]);
 /**  User Profile  */
 
 Vue.component('admin-user-dashboard', __webpack_require__(/*! ./components/Admin/Teams/User/Dashboard/dashboard.vue */ "./resources/js/components/Admin/Teams/User/Dashboard/dashboard.vue")["default"]);
@@ -69352,6 +69832,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardChart_vue_vue_type_template_id_c72d88be___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DashboardChart_vue_vue_type_template_id_c72d88be___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ListChartOrderHQ_vue_vue_type_template_id_0b2e8e8e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ListChartOrderHQ.vue?vue&type=template&id=0b2e8e8e& */ "./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=template&id=0b2e8e8e&");
+/* harmony import */ var _ListChartOrderHQ_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ListChartOrderHQ.vue?vue&type=script&lang=js& */ "./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ListChartOrderHQ_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ListChartOrderHQ_vue_vue_type_template_id_0b2e8e8e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ListChartOrderHQ_vue_vue_type_template_id_0b2e8e8e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListChartOrderHQ_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListChartOrderHQ.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ListChartOrderHQ_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=template&id=0b2e8e8e&":
+/*!***********************************************************************************************************!*\
+  !*** ./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=template&id=0b2e8e8e& ***!
+  \***********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListChartOrderHQ_vue_vue_type_template_id_0b2e8e8e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./ListChartOrderHQ.vue?vue&type=template&id=0b2e8e8e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/Dashboard/Chart/ListChartOrderHQ.vue?vue&type=template&id=0b2e8e8e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListChartOrderHQ_vue_vue_type_template_id_0b2e8e8e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ListChartOrderHQ_vue_vue_type_template_id_0b2e8e8e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -78051,8 +78600,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/kembarameals/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/html/kembarameals/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/Kembara/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/XAMPP/xamppfiles/htdocs/Kembara/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

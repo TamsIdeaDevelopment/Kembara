@@ -11,6 +11,11 @@
                 <div v-show="$parent.IsSellerHQ ==1">
                     <div class="form-group mt-8">
                         <label>Choose Payment</label>
+                        <div class="row" v-if="('payment' in $parent.errors)">
+                            <div class="col">
+                                <label class="text-danger">{{$parent.errors['payment']}}</label>
+                            </div>
+                        </div>
                         <select class="form-control" style="width:100%" id="select-payment-methods" v-model="$parent.payment_selected">
                             <option value="">Select</option>
                             <!--<option value="1">Toyyibpay</option>-->

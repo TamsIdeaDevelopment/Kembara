@@ -45,6 +45,7 @@ Vue.component('admin-shipping-element', require('./components/Admin/Shipping/Ele
 Vue.component('admin-dashboard', require('./components/Admin/Dashboard/Dashboard/dashboard.vue').default);
 Vue.component('admin-hall-of-fame', require('./components/Admin/Dashboard/Dashboard/HallOfFame.vue').default);
 Vue.component('admin-dashboard-chart', require('./components/Admin/Dashboard/Chart/DashboardChart.vue').default);
+Vue.component('admin-chart-list-order-hq', require('./components/Admin/Dashboard/Chart/ListChartOrderHQ').default);
 
 /**  User Profile  */
 Vue.component('admin-user-dashboard', require('./components/Admin/Teams/User/Dashboard/dashboard.vue').default);

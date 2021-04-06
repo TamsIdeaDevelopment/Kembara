@@ -254,6 +254,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
 
 
                 Route::get('{status}/{HQ}/{customer}/admin-filter-order', 'FilterOrder@adminFilter')->name('admin-filter-order');
+                Route::get('{option}/{seller_id}/admin-list-chart-order', 'FilterOrder@ListChartOrderHQ')->name('admin-filter-order');
 
             });
 

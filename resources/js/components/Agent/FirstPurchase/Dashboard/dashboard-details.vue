@@ -359,7 +359,7 @@
                 let vm= this;
                 axios.post('/api/v1/orders/HQ/Creates/create-first-purchase', formData, config)
                     .then(function (data) {
-                        this.isSpinner = !this.isSpinner;
+                        // this.isSpinner = !this.isSpinner;
                         console.log(data.data.redirect);
                         window.location = data.data.redirect;
                     })

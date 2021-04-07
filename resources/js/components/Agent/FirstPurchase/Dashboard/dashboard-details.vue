@@ -1,14 +1,14 @@
 <template>
     <div class="d-flex flex-column-fluid">
         <div class="container-fluid">
-<!--            <div class="row" v-if="isSpinner">-->
-<!--                <div class="col-lg-12 d-flex justify-content-center">-->
-<!--                    <div class="spinner spinner-success d-flex align-items-center">-->
-<!--                    </div>-->
-<!--                </div>-->
+            <div class="row" v-if="isSpinner">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <div class="spinner spinner-success d-flex align-items-center">
+                    </div>
+                </div>
 
-<!--            </div>-->
-<!--            <div class="row"  v-if="!isSpinner">-->
+            </div>
+            <div class="row"  v-if="!isSpinner">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="flex-row-fluid ml-lg-8">
@@ -316,7 +316,7 @@
             },
             CreateOrder()
             {
-                // this.isSpinner = !this.isSpinner;
+                this.isSpinner = !this.isSpinner;
 
                 // alert(this.payment_selected);
                 if(!this.payment_selected)
@@ -360,7 +360,7 @@
                 let vm= this;
                 axios.post('/api/v1/orders/HQ/Creates/create-first-purchase', formData, config)
                     .then(function (data) {
-                        // this.isSpinner = !this.isSpinner;
+                        this.isSpinner = !this.isSpinner;
                         console.log(data.data.redirect);
                         window.location = data.data.redirect;
                     })

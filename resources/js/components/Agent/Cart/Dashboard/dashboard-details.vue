@@ -7,7 +7,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
             <div class="row" v-if="!isSpinner">
                 <div class="col-lg-12">
                     <div class="flex-row-fluid ml-lg-8">
@@ -107,7 +106,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

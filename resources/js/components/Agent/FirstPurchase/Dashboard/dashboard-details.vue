@@ -9,7 +9,6 @@
 
             </div>
             <div class="row"  v-if="!isSpinner">
-            <div class="row">
                 <div class="col-lg-12">
                     <div class="flex-row-fluid ml-lg-8">
                         <div class="wizard wizard-4" id="kt_wizard_v3" data-wizard-state="step-first" data-wizard-clickable="true">

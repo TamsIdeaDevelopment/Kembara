@@ -1,14 +1,15 @@
 <template>
     <div class="d-flex flex-column-fluid">
         <div class="container-fluid">
-            <div class="row" v-if="isSpinner">
-                <div class="col-lg-12 d-flex justify-content-center">
-                    <div class="spinner spinner-success d-flex align-items-center">
-                    </div>
-                </div>
+<!--            <div class="row" v-if="isSpinner">-->
+<!--                <div class="col-lg-12 d-flex justify-content-center">-->
+<!--                    <div class="spinner spinner-success d-flex align-items-center">-->
+<!--                    </div>-->
+<!--                </div>-->
 
-            </div>
-            <div class="row"  v-if="!isSpinner">
+<!--            </div>-->
+<!--            <div class="row"  v-if="!isSpinner">-->
+            <div class="row">
                 <div class="col-lg-12">
                     <div class="flex-row-fluid ml-lg-8">
                         <div class="wizard wizard-4" id="kt_wizard_v3" data-wizard-state="step-first" data-wizard-clickable="true">
@@ -315,57 +316,57 @@
             },
             CreateOrder()
             {
-                this.isSpinner = !this.isSpinner;
+                // this.isSpinner = !this.isSpinner;
 
-                alert(this.payment_selected);
-                // if(!this.payment_selected)
-                // {
-                //     this.payment_selected = 2;
-                // }
-                // if(this.payment_selected == 2)
-                // {
-                //     this.Orders.details.paid_at = this.paid_at;
-                //     this.Orders.details.total_paid = this.total_paid;
-                // }
-                // this.Orders.delivery_type=this.delivery_type;
-                // this.Orders.delivery_fees=this.total_delivery_fee;
-                // this.Orders.payment_methods=this.payment_selected;
-                // this.Orders.proof_of_payment=this.proof_of_payment_image;
-                // this.Orders.point=this.point;
-                //
-                // this.Orders.Carts = this.Carts;
-                // this.Orders.details.HQ = this.IsSellerHQ;
-                // this.Orders.details.seller_id = this.seller_id;
-                // this.Orders.details.buyer_id = this.BillingDetails.id;
-                // this.Orders.details.total = this.Totals;
-                // this.Orders.details.deliver_to = this.DeliveryDetails.name;
-                // this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
-                // this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
-                // this.Orders.details.city = this.DeliveryDetails.city;
-                // this.Orders.details.state = this.DeliveryDetails.state;
-                // this.Orders.details.country = this.DeliveryDetails.country;
-                // this.Orders.details.postcode = this.DeliveryDetails.postcode;
-                // this.Orders.details.remarks = this.remarks;
-                //
-                //
-                // let currentObj = this;
-                // const config = {
-                //     headers: { 'content-type': 'multipart/form-data' }
-                // }
-                //
-                // let formData = new FormData();
-                // formData.append("order", JSON.stringify(this.Orders));
-                // formData.append("proof_of_payment", this.proof_of_payment_image);
-                // let vm= this;
-                // axios.post('/api/v1/orders/HQ/Creates/create-first-purchase', formData, config)
-                //     .then(function (data) {
-                //         this.isSpinner = !this.isSpinner;
-                //         console.log(data.data.redirect);
-                //         window.location = data.data.redirect;
-                //     })
-                //     .catch(function (error) {
-                //         currentObj.output = error;
-                //     });
+                // alert(this.payment_selected);
+                if(!this.payment_selected)
+                {
+                    this.payment_selected = 2;
+                }
+                if(this.payment_selected == 2)
+                {
+                    this.Orders.details.paid_at = this.paid_at;
+                    this.Orders.details.total_paid = this.total_paid;
+                }
+                this.Orders.delivery_type=this.delivery_type;
+                this.Orders.delivery_fees=this.total_delivery_fee;
+                this.Orders.payment_methods=this.payment_selected;
+                this.Orders.proof_of_payment=this.proof_of_payment_image;
+                this.Orders.point=this.point;
+
+                this.Orders.Carts = this.Carts;
+                this.Orders.details.HQ = this.IsSellerHQ;
+                this.Orders.details.seller_id = this.seller_id;
+                this.Orders.details.buyer_id = this.BillingDetails.id;
+                this.Orders.details.total = this.Totals;
+                this.Orders.details.deliver_to = this.DeliveryDetails.name;
+                this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
+                this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
+                this.Orders.details.city = this.DeliveryDetails.city;
+                this.Orders.details.state = this.DeliveryDetails.state;
+                this.Orders.details.country = this.DeliveryDetails.country;
+                this.Orders.details.postcode = this.DeliveryDetails.postcode;
+                this.Orders.details.remarks = this.remarks;
+
+
+                let currentObj = this;
+                const config = {
+                    headers: { 'content-type': 'multipart/form-data' }
+                }
+
+                let formData = new FormData();
+                formData.append("order", JSON.stringify(this.Orders));
+                formData.append("proof_of_payment", this.proof_of_payment_image);
+                let vm= this;
+                axios.post('/api/v1/orders/HQ/Creates/create-first-purchase', formData, config)
+                    .then(function (data) {
+                        // this.isSpinner = !this.isSpinner;
+                        console.log(data.data.redirect);
+                        window.location = data.data.redirect;
+                    })
+                    .catch(function (error) {
+                        currentObj.output = error;
+                    });
 
 //                var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
 //

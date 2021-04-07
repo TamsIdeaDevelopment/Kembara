@@ -335,87 +335,84 @@
             {
                 this.isSpinner = !this.isSpinner;
 
+                // alert(this.payment_selected);
+                if(this.payment_selected == 2)
+                {
+                    this.Orders.details.paid_at = this.paid_at;
+                    this.Orders.details.total_paid = this.total_paid;
+                }
+                this.Orders.delivery_type=this.delivery_type;
+                this.Orders.delivery_fees=this.total_delivery_fee;
+                this.Orders.payment_methods=this.payment_selected;
+                this.Orders.proof_of_payment=this.proof_of_payment_image;
+                this.Orders.point=this.point;
+
+                this.Orders.Carts = this.Carts;
+                this.Orders.details.HQ = this.IsSellerHQ;
+                this.Orders.details.seller_id = this.seller_id;
+                this.Orders.details.buyer_id = this.BillingDetails.id;
+                this.Orders.details.total = this.Totals;
+                this.Orders.details.deliver_to = this.DeliveryDetails.name;
+                this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
+                this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
+                this.Orders.details.city = this.DeliveryDetails.city;
+                this.Orders.details.state = this.DeliveryDetails.state;
+                this.Orders.details.country = this.DeliveryDetails.country;
+                this.Orders.details.postcode = this.DeliveryDetails.postcode;
+                this.Orders.details.remarks = this.remarks;
 
 
+                let currentObj = this;
+                const config = {
+                    headers: { 'content-type': 'multipart/form-data' }
+                }
 
-                alert(this.payment_selected);
-                // if(this.payment_selected == 2)
-                // {
-                //     this.Orders.details.paid_at = this.paid_at;
-                //     this.Orders.details.total_paid = this.total_paid;
-                // }
-                // this.Orders.delivery_type=this.delivery_type;
-                // this.Orders.delivery_fees=this.total_delivery_fee;
-                // this.Orders.payment_methods=this.payment_selected;
-                // this.Orders.proof_of_payment=this.proof_of_payment_image;
-                // this.Orders.point=this.point;
-                //
-                // this.Orders.Carts = this.Carts;
-                // this.Orders.details.HQ = this.IsSellerHQ;
-                // this.Orders.details.seller_id = this.seller_id;
-                // this.Orders.details.buyer_id = this.BillingDetails.id;
-                // this.Orders.details.total = this.Totals;
-                // this.Orders.details.deliver_to = this.DeliveryDetails.name;
-                // this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
-                // this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
-                // this.Orders.details.city = this.DeliveryDetails.city;
-                // this.Orders.details.state = this.DeliveryDetails.state;
-                // this.Orders.details.country = this.DeliveryDetails.country;
-                // this.Orders.details.postcode = this.DeliveryDetails.postcode;
-                // this.Orders.details.remarks = this.remarks;
-                //
-                //
-                // let currentObj = this;
-                // const config = {
-                //     headers: { 'content-type': 'multipart/form-data' }
-                // }
-                //
-                // let formData = new FormData();
-                // formData.append("order", JSON.stringify(this.Orders));
-                // formData.append("proof_of_payment", this.proof_of_payment_image);
-                // let vm= this;
-                // axios.post('/api/v1/orders/HQ/Creates/create-order', formData, config)
-                //     .then(function (data) {
-                //         this.isSpinner = !this.isSpinner;
-                //         console.log(data.data.redirect);
-                //         window.location = data.data.redirect;
-                //     })
-                //     .catch(function (error) {
-                //         currentObj.output = error;
-                //     });
+                let formData = new FormData();
+                formData.append("order", JSON.stringify(this.Orders));
+                formData.append("proof_of_payment", this.proof_of_payment_image);
+                let vm= this;
+                axios.post('/api/v1/orders/HQ/Creates/create-order', formData, config)
+                    .then(function (data) {
+                        this.isSpinner = !this.isSpinner;
+                        console.log(data.data.redirect);
+                        window.location = data.data.redirect;
+                    })
+                    .catch(function (error) {
+                        currentObj.output = error;
+                    });
 
-//                var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
+               // var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
+               //
+               // fetch(url, {
+               //     method: method,
+               //     body: JSON.stringify(this.Orders),
+               //     headers: {
+               //         'content-type': 'application/json'
+               //     }
+               // }).then(async response => {
+//                    const data = await response.json();
+//                    window.location = data.redirect;
+//                    toastr.options = {
+//                        "closeButton": true,
+//                        "debug": false,
+//                        "newestOnTop": false,
+//                        "progressBar": false,
+//                        "positionClass": "toast-top-right",
+//                        "preventDuplicates": false,
+//                        "onclick": null,
+//                        "showDuration": "300",
+//                        "hideDuration": "1000",
+//                        "timeOut": "5000",
+//                        "extendedTimeOut": "1000",
+//                        "showEasing": "swing",
+//                        "hideEasing": "linear",
+//                        "showMethod": "fadeIn",
+//                        "hideMethod": "fadeOut"
+//                    };
 //
-//                fetch(url, {
-//                    method: method,
-//                    body: JSON.stringify(this.Orders),
-//                    headers: {
-//                        'content-type': 'application/json'
+//                    toastr.success("Successfully Place The Order", "Order Created");
+//                    if (!response.ok) {
 //                    }
-//                }).then(async response => {
-////                    const data = await response.json();
-////                    window.location = data.redirect;
-////                    toastr.options = {
-////                        "closeButton": true,
-////                        "debug": false,
-////                        "newestOnTop": false,
-////                        "progressBar": false,
-////                        "positionClass": "toast-top-right",
-////                        "preventDuplicates": false,
-////                        "onclick": null,
-////                        "showDuration": "300",
-////                        "hideDuration": "1000",
-////                        "timeOut": "5000",
-////                        "extendedTimeOut": "1000",
-////                        "showEasing": "swing",
-////                        "hideEasing": "linear",
-////                        "showMethod": "fadeIn",
-////                        "hideMethod": "fadeOut"
-////                    };
-////
-////                    toastr.success("Successfully Place The Order", "Order Created");
-////                    if (!response.ok) {
-////                    }
 //                })
             }
         }

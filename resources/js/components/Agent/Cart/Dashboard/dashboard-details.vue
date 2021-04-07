@@ -1,13 +1,12 @@
 <template>
     <div class="d-flex flex-column-fluid">
         <div class="container-fluid">
-            <div class="row">
 <!--            <div class="row" v-if="isSpinner">-->
-                <div class="col-lg-12 d-flex justify-content-center">
-                    <div class="spinner spinner-success d-flex align-items-center">
-                    </div>
-                </div>
-            </div>
+<!--                <div class="col-lg-12 d-flex justify-content-center">-->
+<!--                    <div class="spinner spinner-success d-flex align-items-center">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
             <div class="row">
 <!--            <div class="row" v-if="!isSpinner">-->
                 <div class="col-lg-12">
@@ -172,7 +171,7 @@
                 CountSpecial: [],
                 CountAddOn: [],
                 TotalNormal: 0,
-                isSpinner: false,
+                // isSpinner: false,
             }
         },
         mounted() {

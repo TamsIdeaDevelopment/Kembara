@@ -41,7 +41,7 @@ class ListChart
                 ->where('buyer_type',null)
                 ->where('status',1)
 //                ->whereBetween('created_at', [Carbon::now()->startOfWeek()->format("Y-m-d H:i:s"),Carbon::now()->endOfWeek()->format("Y-m-d H:i:s")])
-                ->whereBetween('created_at', [Carbon::today()->subWeek()->format("Y-m-d H:i:s"), Carbon::today()])
+                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
                 ->sum('total');
 
             $week = number_format((float)$week, 2, '.', '');
@@ -84,7 +84,7 @@ class ListChart
                 ->where('buyer_type',null)
                 ->where('HQ',1)
                 ->where('status',1)
-                ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
+                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
                 ->sum('total');
 
             $week = number_format((float)$week, 2, '.', '');

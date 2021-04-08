@@ -58,56 +58,127 @@ class FilterOrder
 
     public function ListChartOrderHQ($option,$seller_id)
     {
-        if($option === 'Daily'){
-            $data = Order::where('seller_id',$seller_id)
-                ->where('status',1)
-                ->where('created_at','>=', Carbon::today()->toDateString())
-                ->latest()->get();
-        }
-        if($option === 'Week'){
-            $data = Order::where('seller_id',$seller_id)
-                ->where('status',1)
-                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-                ->latest()->get();
 
-        }
-        if($option === 'Month'){
-            $data = Order::where('seller_id',$seller_id)
-                ->where('status',1)
-                ->whereMonth('created_at', '=', Carbon::now()->month)
-                ->latest()->get();
+        $user = Agent::where('user_id',$seller_id)->first();
+        if($user->HQ == 0)
+        {
+            if($option === 'Daily'){
+                $data = Order::where('buyer_id',$seller_id)
+                    ->where('status',1)
+                    ->where('created_at','>=', Carbon::today()->toDateString())
+                    ->latest()->get();
+            }
+            if($option === 'Week'){
+                $data = Order::where('buyer_id',$seller_id)
+                    ->where('status',1)
+                    ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                    ->latest()->get();
 
+            }
+            if($option === 'Month'){
+                $data = Order::where('buyer_id',$seller_id)
+                    ->where('status',1)
+                    ->whereMonth('created_at', '=', Carbon::now()->month)
+                    ->latest()->get();
+
+            }
+            if($option === 'Year'){
+                $data = Order::where('buyer_id',$seller_id)
+                    ->where('status',1)
+                    ->whereYear('created_at', '=', Carbon::now()->year)
+                    ->latest()->get();
+            }
+            if($option === 'Total'){
+                $data = Order::where('buyer_id',$seller_id)
+                    ->where('status',1)
+                    ->latest()->get();
+            }
         }
-        if($option === 'Year'){
-            $data = Order::where('seller_id',$seller_id)
-                ->where('status',1)
-                ->whereYear('created_at', '=', Carbon::now()->year)
-                ->latest()->get();
+        if($user->HQ == 1)
+        {
+            if($option === 'Daily'){
+                $data = Order::where('seller_id',$seller_id)
+                    ->where('status',1)
+                    ->where('created_at','>=', Carbon::today()->toDateString())
+                    ->latest()->get();
+            }
+            if($option === 'Week'){
+                $data = Order::where('seller_id',$seller_id)
+                    ->where('status',1)
+                    ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                    ->latest()->get();
+
+            }
+            if($option === 'Month'){
+                $data = Order::where('seller_id',$seller_id)
+                    ->where('status',1)
+                    ->whereMonth('created_at', '=', Carbon::now()->month)
+                    ->latest()->get();
+
+            }
+            if($option === 'Year'){
+                $data = Order::where('seller_id',$seller_id)
+                    ->where('status',1)
+                    ->whereYear('created_at', '=', Carbon::now()->year)
+                    ->latest()->get();
+            }
+            if($option === 'Total'){
+                $data = Order::where('seller_id',$seller_id)
+                    ->where('status',1)
+                    ->latest()->get();
+            }
         }
-        if($option === 'Total'){
-            $data = Order::where('seller_id',$seller_id)
-                ->where('status',1)
-                ->latest()->get();
-        }
+
         return OrdersResources::collection($data);
     }
     public function SearchChartOrderHQ($startdate,$enddate,$seller_id)
     {
-        $data = Order::where('seller_id',$seller_id)
-            ->whereDate('created_at','>=', $startdate)
-            ->whereDate('created_at','<=', $enddate)
-            ->where('status',1)
-            ->latest()
-            ->get();
+        $user = Agent::where('user_id',$seller_id)->first();
+        if($user->HQ == 0)
+        {
+            $data = Order::where('buyer_id',$seller_id)
+                ->where('buyer_type',null)
+                ->whereDate('created_at','>=', $startdate)
+                ->whereDate('created_at','<=', $enddate)
+                ->where('status',1)
+                ->latest()
+                ->get();
+        }
+        if($user->HQ == 1)
+        {
+            $data = Order::where('seller_id',$seller_id)
+                ->where('buyer_type',null)
+                ->whereDate('created_at','>=', $startdate)
+                ->whereDate('created_at','<=', $enddate)
+                ->where('status',1)
+                ->latest()
+                ->get();
+        }
+
         return OrdersResources::collection($data);
     }
     public function SearchTotalChartOrderHQ($startdate,$enddate,$seller_id)
     {
-        $data = Order::where('status',1)
-            ->where('seller_id',$seller_id)
-            ->whereDate('created_at','>=', $startdate)
-            ->whereDate('created_at','<=', $enddate)
-            ->sum('total');
+        $user = Agent::where('user_id',$seller_id)->first();
+        if($user->HQ == 0)
+        {
+            $data = Order::where('status',1)
+                ->where('buyer_id',$seller_id)
+                ->where('buyer_type',null)
+                ->whereDate('created_at','>=', $startdate)
+                ->whereDate('created_at','<=', $enddate)
+                ->sum('total');
+        }
+        if($user->HQ == 1)
+        {
+            $data = Order::where('status',1)
+                ->where('seller_id',$seller_id)
+                ->where('buyer_type',null)
+                ->whereDate('created_at','>=', $startdate)
+                ->whereDate('created_at','<=', $enddate)
+                ->sum('total');
+        }
+
 
         $data = number_format((float)$data, 2, '.', '');
         return $data;

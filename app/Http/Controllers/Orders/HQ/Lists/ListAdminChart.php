@@ -82,7 +82,7 @@ class ListAdminChart
             $week = Order::where('status',1)
                 ->where('HQ',0)
                 ->where('buyer_type',null)
-                ->whereBetween('created_at', [Carbon::now()->subWeek()->format("Y-m-d H:i:s"), Carbon::now()])
+                ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
                 ->sum('total');
 
             $week = number_format((float)$week, 2, '.', '');

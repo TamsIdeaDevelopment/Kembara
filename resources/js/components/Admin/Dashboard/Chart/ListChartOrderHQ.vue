@@ -21,9 +21,9 @@
                                     </div>
                                 </div>
                                 <div class="d-flex flex-column" v-if="!isSpinner">
-                                    <a href="chart-detail/Total" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
+                                    <label class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">
                                         RM {{TotalSearch}}
-                                    </a>
+                                    </label>
                                     <div class="text-dark-75">
 
                                     </div>

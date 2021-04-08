@@ -84,22 +84,33 @@ class FilterOrder
                 ->whereYear('created_at', '=', Carbon::now()->year)
                 ->latest()->get();
         }
+        if($option === 'Total'){
+            $data = Order::where('seller_id',$seller_id)
+                ->where('status',1)
+                ->latest()->get();
+        }
         return OrdersResources::collection($data);
-//        if($customer === 'Customer')
-//        {
-//            $data = $this->repository->where('status', $status)
-//                ->where('HQ', $HQ)
-//                ->where('buyer_type', $customer)
-//                ->latest()->get();
-//        }
-//        else
-//        {
-//            $data = $this->repository->where('status', $status)
-//                ->where('HQ', $HQ)
-//                ->where('buyer_type', null)
-//                ->latest()->get();
-//        }
-//        return OrdersResources::collection($data);
+    }
+    public function SearchChartOrderHQ($startdate,$enddate,$seller_id)
+    {
+        $data = Order::where('seller_id',$seller_id)
+            ->whereDate('created_at','>=', $startdate)
+            ->whereDate('created_at','<=', $enddate)
+            ->where('status',1)
+            ->latest()
+            ->get();
+        return OrdersResources::collection($data);
+    }
+    public function SearchTotalChartOrderHQ($startdate,$enddate,$seller_id)
+    {
+        $data = Order::where('status',1)
+            ->where('seller_id',$seller_id)
+            ->whereDate('created_at','>=', $startdate)
+            ->whereDate('created_at','<=', $enddate)
+            ->sum('total');
+
+        $data = number_format((float)$data, 2, '.', '');
+        return $data;
     }
 
 }

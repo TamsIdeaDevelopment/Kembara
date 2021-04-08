@@ -103,6 +103,7 @@ Vue.component('team-transfer-network-form-update', require('./components/Admin/T
 Vue.component('team-upgrade-downgrade-membership-form-update', require('./components/Admin/Teams/Team/Forms/UpgradeDowngradeMembership.vue').default);
 Vue.component('team-terminate-membership-form-update', require('./components/Admin/Teams/Team/Forms/TerminateMembership.vue').default);
 Vue.component('team-form-delete', require('./components/Admin/Teams/Team/Forms/DeleteTeam.vue').default);
+Vue.component('team-point-form-update', require('./components/Admin/Teams/Team/Forms/UpdatePoint').default);
 
 
 /**  Product  */

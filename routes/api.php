@@ -157,6 +157,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
             Route::post('{NewLeaderID}/update-network', 'UpdateTeam@updateNetwork')->name('update-network');
             Route::post('{id}/upgrade-downgrade-membership', 'UpdateTeam@UpgradeDowngradeMembership')->name('upgrade-downgrade-membership');
 //            Route::post('{id}/upgrade-downgrade-membership', 'UpdateTeam@TerminateMembership')->name('upgrade-downgrade-membership');
+            Route::post('{id}/update-membership-point', 'UpdateTeam@updateMembershipPoint')->name('update-membership-point');
 
         });
 
@@ -247,14 +248,17 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
 
                 Route::get('/list-shipment', 'ListShipment@listShipment')->name('list-shipment');
 
-                Route::get('{user_id}/list-hall-of-fame-master-stokis', 'ListHallOfFame@adminlistMasterStokis')->name('admin-list-hall-of-fame-master-stokis');
-                Route::get('{user_id}/list-hall-of-fame-stokis', 'ListHallOfFame@adminlistStokis')->name('admin-list-hall-of-fame-stokis');
-                Route::get('{user_id}/list-hall-of-fame-agent', 'ListHallOfFame@adminlistAgent')->name('admin-list-hall-of-fame-agent');
-                Route::get('{user_id}/list-hall-of-fame-mini-agent', 'ListHallOfFame@adminlistMiniAgent')->name('admin-list-hall-of-fame-mini-agent');
+                Route::get('{user_id}/{option}/list-hall-of-fame-master-stokis', 'ListHallOfFame@adminlistMasterStokis')->name('admin-list-hall-of-fame-master-stokis');
+                Route::get('{user_id}/{option}/list-hall-of-fame-stokis', 'ListHallOfFame@adminlistStokis')->name('admin-list-hall-of-fame-stokis');
+                Route::get('{user_id}/{option}/list-hall-of-fame-agent', 'ListHallOfFame@adminlistAgent')->name('admin-list-hall-of-fame-agent');
+                Route::get('{user_id}/{option}/list-hall-of-fame-mini-agent', 'ListHallOfFame@adminlistMiniAgent')->name('admin-list-hall-of-fame-mini-agent');
+                Route::get('dropdown-date', 'ListHallOfFame@DropdownDate')->name('dropdown-date');
 
 
                 Route::get('{status}/{HQ}/{customer}/admin-filter-order', 'FilterOrder@adminFilter')->name('admin-filter-order');
-                Route::get('{option}/{seller_id}/admin-list-chart-order', 'FilterOrder@ListChartOrderHQ')->name('admin-filter-order');
+                Route::get('{option}/{seller_id}/admin-list-chart-order', 'FilterOrder@ListChartOrderHQ')->name('admin-list-chart-order');
+                Route::get('{startdate}/{enddate}/{seller_id}/admin-search-chart-order', 'FilterOrder@SearchChartOrderHQ')->name('admin-search-chart-order');
+                Route::get('{startdate}/{enddate}/{seller_id}/admin-search-total-chart-order', 'FilterOrder@SearchTotalChartOrderHQ')->name('admin-search-total-chart-order');
 
             });
 

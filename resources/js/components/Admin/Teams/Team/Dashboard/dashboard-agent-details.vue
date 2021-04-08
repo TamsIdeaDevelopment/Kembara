@@ -102,6 +102,13 @@
                                                                 <span class="nav-text">Stock</span>
                                                             </a>
                                                         </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link navi-link py-4" id="point-tab" data-toggle="tab" href="#point">
+                                                                <span class="nav-icon">
+                                                                    <i class="flaticon-coins"></i>
+                                                                </span><span class="nav-text">Point</span>
+                                                            </a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -194,6 +201,9 @@
                                                         <admin-stock-elements :data="this.Stock" :data2="this.data"></admin-stock-elements>
                                                         <!--<agent-sales-team-elements :data="this.AgentOrder"></agent-sales-team-elements>-->
                                                     </div>
+                                                    <div class="tab-pane fade" id="point" role="tabpanel">
+                                                        <team-point-form-update></team-point-form-update>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,7 +257,6 @@
                         this.detailsAgentLevels = response.data.agent_levels_id;
                         this.detailsState = response.data.state_id;
                         this.detailsTerritory = response.data.territory_id;
-
                         this.fetchTeam();
                         this.fetchHQOrder();
                         this.fetchAgentOrder();

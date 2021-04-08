@@ -90,4 +90,14 @@ class UpdateTeam
         }
     }
 
+    public function updateMembershipPoint(Request $request, $id)
+    {
+        $data = $this->repository->findOrFail($id);
+        $data->point = $request->input('point');
+
+        if($data->save()){
+            return $data;
+        }
+    }
+
 }

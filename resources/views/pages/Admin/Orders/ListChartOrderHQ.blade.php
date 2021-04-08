@@ -20,9 +20,9 @@
                     @if(Auth::user()->role_id == 1)
                         <admin-chart-list-order-hq :data="{{Auth::user()}}" option="{{$option}}"></admin-chart-list-order-hq>
                     @endif
-{{--                    @if(Auth::user()->role_id == 3)--}}
-{{--                        <agent-order-hq-dashboard :data="{{Auth::user()}}"></agent-order-hq-dashboard>--}}
-{{--                    @endif--}}
+                    @if(Auth::user()->role_id == 3)
+                        <admin-chart-list-order-hq :data="{{Auth::user()}}" option="{{$option}}"></admin-chart-list-order-hq>
+                    @endif
                 </div>
             </div>
         </div>

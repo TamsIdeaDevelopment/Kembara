@@ -2935,12 +2935,77 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data', 'option'],
   data: function data() {
     return {
       image_source: 'storage/ProfilePicture/',
-      Orders: []
+      Orders: [],
+      StartDate: '',
+      EndDate: '',
+      isSearch: false,
+      TotalSearch: 0,
+      isSpinner: false
     };
   },
   mounted: function mounted() {},
@@ -2951,17 +3016,74 @@ __webpack_require__.r(__webpack_exports__);
     this.fetchHQOrder();
   },
   methods: {
-    fetchHQOrder: function fetchHQOrder() {
+    searchHQOrder: function searchHQOrder() {
       var _this = this;
+
+      this.isSearch = true;
+      this.isSpinner = true;
+      fetch('/api/v1/orders/HQ/Lists/' + this.StartDate + '/' + this.EndDate + '/' + this.data.id + '/admin-search-chart-order').then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        _this.Orders = response.data;
+
+        _this.searchTotalChart();
+
+        _this.isSpinner = false;
+        $('#table-hq-order').DataTable().destroy();
+
+        _this.$nextTick(function () {
+          $('#table-hq-order').DataTable({
+            scrollX: false,
+            scrollCollapse: true,
+            responsive: true,
+            pagingType: 'full_numbers',
+            columnDefs: [{
+              "width": "50px",
+              "targets": 0
+            }, {
+              "width": "50px",
+              "targets": 1
+            }, {
+              "width": "100px",
+              "targets": 3
+            }, {
+              "width": "50px",
+              "targets": 4
+            }, {
+              //targets: 3,
+              width: '50px',
+              title: 'Actions',
+              orderable: false,
+              render: function render(data, type, full, meta) {}
+            }]
+          });
+        });
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    searchTotalChart: function searchTotalChart() {
+      var _this2 = this;
+
+      fetch('/api/v1/orders/HQ/Lists/' + this.StartDate + '/' + this.EndDate + '/' + this.data.id + '/admin-search-total-chart-order').then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        _this2.TotalSearch = response;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    fetchHQOrder: function fetchHQOrder() {
+      var _this3 = this;
 
       fetch('/api/v1/orders/HQ/Lists/' + this.option + '/' + this.data.id + '/admin-list-chart-order').then(function (response) {
         return response.json();
       }).then(function (response) {
-        _this.Orders = response.data;
-        console.log(_this.Orders);
+        _this3.Orders = response.data;
+        console.log(_this3.Orders);
         $('#table-hq-order').DataTable().destroy();
 
-        _this.$nextTick(function () {
+        _this3.$nextTick(function () {
           $('#table-hq-order').DataTable({
             scrollX: false,
             scrollCollapse: true,
@@ -3176,6 +3298,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
   data: function data() {
@@ -3183,57 +3335,92 @@ __webpack_require__.r(__webpack_exports__);
       MasterStokis: [],
       Stokis: [],
       Agent: [],
-      MiniAgent: []
+      MiniAgent: [],
+      Months: [],
+      MonthSelected: '0',
+      isSpinner: false
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    $('#select-month').select2({
+      placeholder: "Search By Month",
+      allowClear: true
+    });
+    $("#select-month").change(function () {
+      this.MonthSelected = $("#select-month").val();
+      this.fetchMasterStokis();
+      this.fetchStokis();
+      this.fetchaAgent();
+      this.fetchMiniAgent();
+    }.bind(this));
+  },
   created: function created() {
+    this.fetchMonth();
     this.fetchMasterStokis();
     this.fetchStokis();
     this.fetchaAgent();
     this.fetchMiniAgent();
   },
   methods: {
-    fetchMasterStokis: function fetchMasterStokis() {
+    fetchMonth: function fetchMonth() {
       var _this = this;
 
-      fetch('api/v1/orders/HQ/Lists/' + this.$parent.data.id + '/list-hall-of-fame-master-stokis').then(function (response) {
+      fetch('api/v1/orders/HQ/Lists/dropdown-date').then(function (response) {
         return response.json();
       }).then(function (response) {
-        _this.MasterStokis = response.data;
+        _this.Months = response;
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    fetchMasterStokis: function fetchMasterStokis() {
+      var _this2 = this;
+
+      this.isSpinner = true;
+      fetch('api/v1/orders/HQ/Lists/' + this.$parent.data.id + '/' + this.MonthSelected + '/list-hall-of-fame-master-stokis').then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        _this2.MasterStokis = response.data;
+        _this2.isSpinner = false;
       })["catch"](function (error) {
         return console.log(error);
       });
     },
     fetchStokis: function fetchStokis() {
-      var _this2 = this;
+      var _this3 = this;
 
-      fetch('api/v1/orders/HQ/Lists/' + this.$parent.data.id + '/list-hall-of-fame-stokis').then(function (response) {
+      this.isSpinner = true;
+      fetch('api/v1/orders/HQ/Lists/' + this.$parent.data.id + '/' + this.MonthSelected + '/list-hall-of-fame-stokis').then(function (response) {
         return response.json();
       }).then(function (response) {
-        _this2.Stokis = response.data;
+        _this3.Stokis = response.data;
+        _this3.isSpinner = false;
       })["catch"](function (error) {
         return console.log(error);
       });
     },
     fetchaAgent: function fetchaAgent() {
-      var _this3 = this;
+      var _this4 = this;
 
-      fetch('api/v1/orders/HQ/Lists/' + this.$parent.data.id + '/list-hall-of-fame-agent').then(function (response) {
+      this.isSpinner = true;
+      fetch('api/v1/orders/HQ/Lists/' + this.$parent.data.id + '/' + this.MonthSelected + '/list-hall-of-fame-agent').then(function (response) {
         return response.json();
       }).then(function (response) {
-        _this3.Agent = response.data;
+        _this4.Agent = response.data;
+        _this4.isSpinner = false;
       })["catch"](function (error) {
         return console.log(error);
       });
     },
     fetchMiniAgent: function fetchMiniAgent() {
-      var _this4 = this;
+      var _this5 = this;
 
-      fetch('api/v1/orders/HQ/Lists/' + this.$parent.data.id + '/list-hall-of-fame-mini-agent').then(function (response) {
+      this.isSpinner = true;
+      fetch('api/v1/orders/HQ/Lists/' + this.$parent.data.id + '/' + this.MonthSelected + '/list-hall-of-fame-mini-agent').then(function (response) {
         return response.json();
       }).then(function (response) {
-        _this4.MiniAgent = response.data;
+        _this5.MiniAgent = response.data;
+        _this5.isSpinner = false;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -8359,6 +8546,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data', 'data2'],
   data: function data() {
@@ -9612,6 +9809,100 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.$parent.detailsTerritory.id) {
         this.errors['territory'] = "Please select the territory";
       }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      errors: [],
+      States: [],
+      territories: [],
+      options: [],
+      state_id: ''
+    };
+  },
+  created: function created() {},
+  mounted: function mounted() {},
+  methods: {
+    UpdatePoint: function UpdatePoint() {
+      var url = '/api/v1/team/Updates/' + this.$parent.AgentDetails.id + '/update-membership-point',
+          method = 'post';
+      fetch(url, {
+        method: method,
+        body: JSON.stringify({
+          point: this.$parent.AgentDetails.point
+        }),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (response) {
+        VueEvent.$emit('fetchAgentDetails');
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        };
+        toastr.success("Successfully update membership point.", "Membership Updated");
+      });
     }
   }
 });
@@ -11374,7 +11665,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
   data: function data() {
@@ -11590,83 +11880,78 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     CreateOrder: function CreateOrder() {
-      this.isSpinner = !this.isSpinner;
-      alert(this.payment_selected); // if(this.payment_selected == 2)
-      // {
-      //     this.Orders.details.paid_at = this.paid_at;
-      //     this.Orders.details.total_paid = this.total_paid;
-      // }
-      // this.Orders.delivery_type=this.delivery_type;
-      // this.Orders.delivery_fees=this.total_delivery_fee;
-      // this.Orders.payment_methods=this.payment_selected;
-      // this.Orders.proof_of_payment=this.proof_of_payment_image;
-      // this.Orders.point=this.point;
+      this.isSpinner = !this.isSpinner; // alert(this.payment_selected);
+
+      if (this.payment_selected == 2) {
+        this.Orders.details.paid_at = this.paid_at;
+        this.Orders.details.total_paid = this.total_paid;
+      }
+
+      this.Orders.delivery_type = this.delivery_type;
+      this.Orders.delivery_fees = this.total_delivery_fee;
+      this.Orders.payment_methods = this.payment_selected;
+      this.Orders.proof_of_payment = this.proof_of_payment_image;
+      this.Orders.point = this.point;
+      this.Orders.Carts = this.Carts;
+      this.Orders.details.HQ = this.IsSellerHQ;
+      this.Orders.details.seller_id = this.seller_id;
+      this.Orders.details.buyer_id = this.BillingDetails.id;
+      this.Orders.details.total = this.Totals;
+      this.Orders.details.deliver_to = this.DeliveryDetails.name;
+      this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
+      this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
+      this.Orders.details.city = this.DeliveryDetails.city;
+      this.Orders.details.state = this.DeliveryDetails.state;
+      this.Orders.details.country = this.DeliveryDetails.country;
+      this.Orders.details.postcode = this.DeliveryDetails.postcode;
+      this.Orders.details.remarks = this.remarks;
+      var currentObj = this;
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      var formData = new FormData();
+      formData.append("order", JSON.stringify(this.Orders));
+      formData.append("proof_of_payment", this.proof_of_payment_image);
+      var vm = this;
+      axios.post('/api/v1/orders/HQ/Creates/create-order', formData, config).then(function (data) {
+        console.log(data.data.redirect);
+        window.location = data.data.redirect;
+      })["catch"](function (error) {
+        currentObj.output = error;
+      }); // var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
       //
-      // this.Orders.Carts = this.Carts;
-      // this.Orders.details.HQ = this.IsSellerHQ;
-      // this.Orders.details.seller_id = this.seller_id;
-      // this.Orders.details.buyer_id = this.BillingDetails.id;
-      // this.Orders.details.total = this.Totals;
-      // this.Orders.details.deliver_to = this.DeliveryDetails.name;
-      // this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
-      // this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
-      // this.Orders.details.city = this.DeliveryDetails.city;
-      // this.Orders.details.state = this.DeliveryDetails.state;
-      // this.Orders.details.country = this.DeliveryDetails.country;
-      // this.Orders.details.postcode = this.DeliveryDetails.postcode;
-      // this.Orders.details.remarks = this.remarks;
+      // fetch(url, {
+      //     method: method,
+      //     body: JSON.stringify(this.Orders),
+      //     headers: {
+      //         'content-type': 'application/json'
+      //     }
+      // }).then(async response => {
+      //                    const data = await response.json();
+      //                    window.location = data.redirect;
+      //                    toastr.options = {
+      //                        "closeButton": true,
+      //                        "debug": false,
+      //                        "newestOnTop": false,
+      //                        "progressBar": false,
+      //                        "positionClass": "toast-top-right",
+      //                        "preventDuplicates": false,
+      //                        "onclick": null,
+      //                        "showDuration": "300",
+      //                        "hideDuration": "1000",
+      //                        "timeOut": "5000",
+      //                        "extendedTimeOut": "1000",
+      //                        "showEasing": "swing",
+      //                        "hideEasing": "linear",
+      //                        "showMethod": "fadeIn",
+      //                        "hideMethod": "fadeOut"
+      //                    };
       //
-      //
-      // let currentObj = this;
-      // const config = {
-      //     headers: { 'content-type': 'multipart/form-data' }
-      // }
-      //
-      // let formData = new FormData();
-      // formData.append("order", JSON.stringify(this.Orders));
-      // formData.append("proof_of_payment", this.proof_of_payment_image);
-      // let vm= this;
-      // axios.post('/api/v1/orders/HQ/Creates/create-order', formData, config)
-      //     .then(function (data) {
-      //         this.isSpinner = !this.isSpinner;
-      //         console.log(data.data.redirect);
-      //         window.location = data.data.redirect;
-      //     })
-      //     .catch(function (error) {
-      //         currentObj.output = error;
-      //     });
-      //                var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
-      //
-      //                fetch(url, {
-      //                    method: method,
-      //                    body: JSON.stringify(this.Orders),
-      //                    headers: {
-      //                        'content-type': 'application/json'
+      //                    toastr.success("Successfully Place The Order", "Order Created");
+      //                    if (!response.ok) {
       //                    }
-      //                }).then(async response => {
-      ////                    const data = await response.json();
-      ////                    window.location = data.redirect;
-      ////                    toastr.options = {
-      ////                        "closeButton": true,
-      ////                        "debug": false,
-      ////                        "newestOnTop": false,
-      ////                        "progressBar": false,
-      ////                        "positionClass": "toast-top-right",
-      ////                        "preventDuplicates": false,
-      ////                        "onclick": null,
-      ////                        "showDuration": "300",
-      ////                        "hideDuration": "1000",
-      ////                        "timeOut": "5000",
-      ////                        "extendedTimeOut": "1000",
-      ////                        "showEasing": "swing",
-      ////                        "hideEasing": "linear",
-      ////                        "showMethod": "fadeIn",
-      ////                        "hideMethod": "fadeOut"
-      ////                    };
-      ////
-      ////                    toastr.success("Successfully Place The Order", "Order Created");
-      ////                    if (!response.ok) {
-      ////                    }
       //                })
     }
   }
@@ -15864,56 +16149,51 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     CreateOrder: function CreateOrder() {
-      this.isSpinner = !this.isSpinner;
-      alert(this.payment_selected); // if(!this.payment_selected)
-      // {
-      //     this.payment_selected = 2;
-      // }
-      // if(this.payment_selected == 2)
-      // {
-      //     this.Orders.details.paid_at = this.paid_at;
-      //     this.Orders.details.total_paid = this.total_paid;
-      // }
-      // this.Orders.delivery_type=this.delivery_type;
-      // this.Orders.delivery_fees=this.total_delivery_fee;
-      // this.Orders.payment_methods=this.payment_selected;
-      // this.Orders.proof_of_payment=this.proof_of_payment_image;
-      // this.Orders.point=this.point;
-      //
-      // this.Orders.Carts = this.Carts;
-      // this.Orders.details.HQ = this.IsSellerHQ;
-      // this.Orders.details.seller_id = this.seller_id;
-      // this.Orders.details.buyer_id = this.BillingDetails.id;
-      // this.Orders.details.total = this.Totals;
-      // this.Orders.details.deliver_to = this.DeliveryDetails.name;
-      // this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
-      // this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
-      // this.Orders.details.city = this.DeliveryDetails.city;
-      // this.Orders.details.state = this.DeliveryDetails.state;
-      // this.Orders.details.country = this.DeliveryDetails.country;
-      // this.Orders.details.postcode = this.DeliveryDetails.postcode;
-      // this.Orders.details.remarks = this.remarks;
-      //
-      //
-      // let currentObj = this;
-      // const config = {
-      //     headers: { 'content-type': 'multipart/form-data' }
-      // }
-      //
-      // let formData = new FormData();
-      // formData.append("order", JSON.stringify(this.Orders));
-      // formData.append("proof_of_payment", this.proof_of_payment_image);
-      // let vm= this;
-      // axios.post('/api/v1/orders/HQ/Creates/create-first-purchase', formData, config)
-      //     .then(function (data) {
-      //         this.isSpinner = !this.isSpinner;
-      //         console.log(data.data.redirect);
-      //         window.location = data.data.redirect;
-      //     })
-      //     .catch(function (error) {
-      //         currentObj.output = error;
-      //     });
-      //                var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
+      this.isSpinner = !this.isSpinner; // alert(this.payment_selected);
+
+      if (!this.payment_selected) {
+        this.payment_selected = 2;
+      }
+
+      if (this.payment_selected == 2) {
+        this.Orders.details.paid_at = this.paid_at;
+        this.Orders.details.total_paid = this.total_paid;
+      }
+
+      this.Orders.delivery_type = this.delivery_type;
+      this.Orders.delivery_fees = this.total_delivery_fee;
+      this.Orders.payment_methods = this.payment_selected;
+      this.Orders.proof_of_payment = this.proof_of_payment_image;
+      this.Orders.point = this.point;
+      this.Orders.Carts = this.Carts;
+      this.Orders.details.HQ = this.IsSellerHQ;
+      this.Orders.details.seller_id = this.seller_id;
+      this.Orders.details.buyer_id = this.BillingDetails.id;
+      this.Orders.details.total = this.Totals;
+      this.Orders.details.deliver_to = this.DeliveryDetails.name;
+      this.Orders.details.deliver_to_phone_no = this.DeliveryDetails.phone_no;
+      this.Orders.details.shipping_address = this.DeliveryDetails.address_1;
+      this.Orders.details.city = this.DeliveryDetails.city;
+      this.Orders.details.state = this.DeliveryDetails.state;
+      this.Orders.details.country = this.DeliveryDetails.country;
+      this.Orders.details.postcode = this.DeliveryDetails.postcode;
+      this.Orders.details.remarks = this.remarks;
+      var currentObj = this;
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      };
+      var formData = new FormData();
+      formData.append("order", JSON.stringify(this.Orders));
+      formData.append("proof_of_payment", this.proof_of_payment_image);
+      var vm = this;
+      axios.post('/api/v1/orders/HQ/Creates/create-first-purchase', formData, config).then(function (data) {
+        console.log(data.data.redirect);
+        window.location = data.data.redirect;
+      })["catch"](function (error) {
+        currentObj.output = error;
+      }); //                var url = '/api/v1/orders/HQ/Creates/create-order', method = 'post';
       //
       //                fetch(url, {
       //                    method: method,
@@ -25404,35 +25684,219 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "d-flex flex-column-fluid" }, [
-    _c(
-      "div",
-      { staticClass: "container-fluid" },
-      [
-        _c("agent-dashboard-chart", { attrs: { data: _vm.data } }),
-        _vm._v(" "),
-        _c("div", { staticClass: "row mt-5" }, [
-          _c("div", { staticClass: "col-lg-12 col-xxl-12" }, [
-            _c("div", { staticClass: "card card-custom" }, [
-              _c("div", { staticClass: "card-header flex-wrap py-5" }, [
-                _c("div", { staticClass: "card-title" }, [
-                  _c("h3", { staticClass: "card-label" }, [
-                    _vm._v(
-                      "List " +
-                        _vm._s(_vm.option) +
-                        " Order\n                                    "
-                    ),
+    _c("div", { staticClass: "container-fluid" }, [
+      !_vm.isSearch
+        ? _c(
+            "div",
+            [_c("agent-dashboard-chart", { attrs: { data: _vm.data } })],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isSearch
+        ? _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 col-xxl-12 col-sm-12" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "card card-custom wave-primary wave wave-animate-slow mb-8 mb-lg-0"
+                },
+                [
+                  _c("div", { staticClass: " ribbon ribbon-right" }, [
                     _c(
-                      "span",
-                      { staticClass: "d-block text-muted pt-2 font-size-sm" },
-                      [_vm._v("List of Order (Restock)")]
+                      "div",
+                      {
+                        staticClass: "ribbon-target bg-primary",
+                        staticStyle: { top: "10px", right: "-2px" }
+                      },
+                      [
+                        _c("h5", { staticClass: "mt-2" }, [
+                          _vm._v(
+                            _vm._s(_vm.StartDate) +
+                              "   -   " +
+                              _vm._s(_vm.EndDate)
+                          )
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c(
+                      "div",
+                      { staticClass: "d-flex align-items-center p-5" },
+                      [
+                        _vm.isSpinner
+                          ? _c("div", { staticClass: "row" }, [_vm._m(0)])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        !_vm.isSpinner
+                          ? _c("div", { staticClass: "d-flex flex-column" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "text-dark text-hover-primary font-weight-bold font-size-h4 mb-3",
+                                  attrs: { href: "chart-detail/Total" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        RM " +
+                                      _vm._s(_vm.TotalSearch) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "text-dark-75" })
+                            ])
+                          : _vm._e()
+                      ]
                     )
                   ])
+                ]
+              )
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "row mt-5" }, [
+        _c("div", { staticClass: "col-lg-12 col-xxl-12" }, [
+          _c("div", { staticClass: "card card-custom" }, [
+            _c("div", { staticClass: "card-header flex-wrap py-5" }, [
+              _c("div", { staticClass: "card-title" }, [
+                _c("h3", { staticClass: "card-label" }, [
+                  _vm._v(
+                    "List " +
+                      _vm._s(_vm.option) +
+                      " Order\n                                    "
+                  ),
+                  _c(
+                    "span",
+                    { staticClass: "d-block text-muted pt-2 font-size-sm" },
+                    [_vm._v("List of Order (Restock)")]
+                  )
                 ])
               ]),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "card-body" },
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value:
+                        _vm.option === "Week" ||
+                        _vm.option === "Month" ||
+                        _vm.option === "Year" ||
+                        _vm.option === "Total",
+                      expression:
+                        "option === 'Week' || option === 'Month' || option === 'Year' || option === 'Total'"
+                    }
+                  ],
+                  staticClass: "card-toolbar"
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-10" }, [
+                      _c("div", { staticClass: "form-group row" }, [
+                        _c("div", { staticClass: "col-lg-5" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.StartDate,
+                                expression: "StartDate"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "date" },
+                            domProps: { value: _vm.StartDate },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.StartDate = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-5" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.EndDate,
+                                expression: "EndDate"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "date" },
+                            domProps: { value: _vm.EndDate },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.EndDate = $event.target.value
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-primary",
+                          on: { click: _vm.searchHQOrder }
+                        },
+                        [_vm._v(" Search")]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.isSpinner,
+                      expression: "isSpinner"
+                    }
+                  ]
+                },
+                [_vm._m(2)]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.isSpinner,
+                      expression: "!isSpinner"
+                    }
+                  ]
+                },
                 [
                   _c("agent-order-hq-elements", {
                     attrs: { data: this.Orders }
@@ -25443,12 +25907,50 @@ var render = function() {
             ])
           ])
         ])
-      ],
-      1
-    )
+      ])
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-12 d-flex justify-content-center" },
+      [
+        _c("div", {
+          staticClass: "spinner spinner-success d-flex align-items-center"
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-2 d-flex justify-content-center" },
+      [_c("label", { staticClass: "col-2 col-form-label" }, [_vm._v("-")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-12 d-flex justify-content-center" },
+      [
+        _c("div", {
+          staticClass: "spinner spinner-success d-flex align-items-center"
+        })
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -25471,37 +25973,82 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "col-lg-6" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "row mt-1" }, [
+      _c("div", { staticClass: "col-6  d-flex justify-content-end" }, [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.MonthSelected,
+                expression: "MonthSelected"
+              }
+            ],
+            staticClass: "form-control select2",
+            staticStyle: { width: "100%" },
+            attrs: { id: "select-month" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.MonthSelected = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          _vm._l(_vm.Months, function(Month) {
+            return _c("option", { domProps: { value: Month } }, [
+              _vm._v(_vm._s(Month))
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-5" }, [
       _c("div", { staticClass: "col-lg-12" }, [
         _c(
           "div",
-          {
-            staticClass: "card card-custom card-collapsed",
-            attrs: { "data-card": "true" }
-          },
+          { staticClass: "card card-custom", attrs: { "data-card": "true" } },
           [
             _vm._m(1),
             _vm._v(" "),
             _c("div", { staticClass: "card-body pt-2" }, [
-              _c("table", { staticClass: "table table-sm" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.MasterStokis, function(list, index) {
-                    return _c("tr", [
-                      _c("td", [_vm._v(_vm._s(index + 1))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(list.buyer_id.name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(list.total))])
-                    ])
-                  }),
-                  0
-                )
-              ])
+              _vm.isSpinner
+                ? _c("div", { staticClass: "row" }, [_vm._m(2)])
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.isSpinner
+                ? _c("table", { staticClass: "table table-sm" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.MasterStokis, function(list, index) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(index + 1))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(list.buyer_id.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(list.total))])
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                : _vm._e()
             ])
           ]
         )
@@ -25512,31 +26059,34 @@ var render = function() {
       _c("div", { staticClass: "col-lg-12" }, [
         _c(
           "div",
-          {
-            staticClass: "card card-custom card-collapsed",
-            attrs: { "data-card": "true" }
-          },
+          { staticClass: "card card-custom", attrs: { "data-card": "true" } },
           [
-            _vm._m(3),
+            _vm._m(4),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _c("table", { staticClass: "table table-sm" }, [
-                _vm._m(4),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.Stokis, function(list, index) {
-                    return _c("tr", [
-                      _c("td", [_vm._v(_vm._s(index + 1))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(list.buyer_id.name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(list.total))])
-                    ])
-                  }),
-                  0
-                )
-              ])
+              _vm.isSpinner
+                ? _c("div", { staticClass: "row" }, [_vm._m(5)])
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.isSpinner
+                ? _c("table", { staticClass: "table table-sm" }, [
+                    _vm._m(6),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.Stokis, function(list, index) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(index + 1))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(list.buyer_id.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(list.total))])
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                : _vm._e()
             ])
           ]
         )
@@ -25547,66 +26097,72 @@ var render = function() {
       _c("div", { staticClass: "col-lg-12" }, [
         _c(
           "div",
-          {
-            staticClass: "card card-custom card-collapsed",
-            attrs: { "data-card": "true" }
-          },
-          [
-            _vm._m(5),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("table", { staticClass: "table table-sm" }, [
-                _vm._m(6),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.Agent, function(list, index) {
-                    return _c("tr", [
-                      _c("td", [_vm._v(_vm._s(index + 1))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(list.buyer_id.name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(list.total))])
-                    ])
-                  }),
-                  0
-                )
-              ])
-            ])
-          ]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row mt-5" }, [
-      _c("div", { staticClass: "col-lg-12" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card card-custom card-collapsed",
-            attrs: { "data-card": "true" }
-          },
+          { staticClass: "card card-custom", attrs: { "data-card": "true" } },
           [
             _vm._m(7),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _c("table", { staticClass: "table table-sm" }, [
-                _vm._m(8),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.MiniAgent, function(list, index) {
-                    return _c("tr", [
-                      _c("td", [_vm._v(_vm._s(index + 1))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(list.buyer_id.name))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(list.total))])
-                    ])
-                  }),
-                  0
-                )
-              ])
+              _vm.isSpinner
+                ? _c("div", { staticClass: "row" }, [_vm._m(8)])
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.isSpinner
+                ? _c("table", { staticClass: "table table-sm" }, [
+                    _vm._m(9),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.Agent, function(list, index) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(index + 1))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(list.buyer_id.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(list.total))])
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                : _vm._e()
+            ])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mt-5" }, [
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c(
+          "div",
+          { staticClass: "card card-custom", attrs: { "data-card": "true" } },
+          [
+            _vm._m(10),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _vm.isSpinner
+                ? _c("div", { staticClass: "row" }, [_vm._m(11)])
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.isSpinner
+                ? _c("table", { staticClass: "table table-sm" }, [
+                    _vm._m(12),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.MiniAgent, function(list, index) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(index + 1))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(list.buyer_id.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(list.total))])
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                : _vm._e()
             ])
           ]
         )
@@ -25619,25 +26175,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-12  d-flex justify-content-end" }, [
-        _c("div", { staticClass: "card card-custom" }, [
-          _c("div", { staticClass: " ribbon ribbon-right" }, [
-            _c(
-              "div",
-              {
-                staticClass: "ribbon-target bg-success",
-                staticStyle: { top: "10px", right: "-2px" }
-              },
-              [_c("i", { staticClass: "text-white fas fa-trophy" })]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-header" }, [
-            _c("div", { staticClass: "card-title" }, [
-              _c("h3", { staticClass: "card-label text-success text-center" }, [
-                _vm._v("Hall Of Fame - Restock HQ")
-              ])
+    return _c("div", { staticClass: "col-6  d-flex justify-content-end" }, [
+      _c("div", { staticClass: "card card-custom" }, [
+        _c("div", { staticClass: " ribbon ribbon-right" }, [
+          _c(
+            "div",
+            {
+              staticClass: "ribbon-target bg-success",
+              staticStyle: { top: "10px", right: "-2px" }
+            },
+            [_c("i", { staticClass: "text-white fas fa-trophy" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-header" }, [
+          _c("div", { staticClass: "card-title" }, [
+            _c("h3", { staticClass: "card-label text-success text-center" }, [
+              _vm._v("Hall Of Fame - Restock HQ")
             ])
           ])
         ])
@@ -25673,6 +26227,20 @@ var staticRenderFns = [
         )
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-12 d-flex justify-content-center" },
+      [
+        _c("div", {
+          staticClass: "spinner spinner-success d-flex align-items-center"
+        })
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -25722,6 +26290,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-12 d-flex justify-content-center" },
+      [
+        _c("div", {
+          staticClass: "spinner spinner-success d-flex align-items-center"
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("No")]),
@@ -25766,6 +26348,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-12 d-flex justify-content-center" },
+      [
+        _c("div", {
+          staticClass: "spinner spinner-success d-flex align-items-center"
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("No")]),
@@ -25805,6 +26401,20 @@ var staticRenderFns = [
         )
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-12 d-flex justify-content-center" },
+      [
+        _c("div", {
+          staticClass: "spinner spinner-success d-flex align-items-center"
+        })
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -33398,6 +34008,16 @@ var render = function() {
                                 })
                               ],
                               1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "tab-pane fade",
+                                attrs: { id: "point", role: "tabpanel" }
+                              },
+                              [_c("team-point-form-update")],
+                              1
                             )
                           ]
                         )
@@ -33644,6 +34264,28 @@ var staticRenderFns = [
                           _vm._v(" "),
                           _c("span", { staticClass: "nav-text" }, [
                             _vm._v("Stock")
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "nav-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link navi-link py-4",
+                          attrs: {
+                            id: "point-tab",
+                            "data-toggle": "tab",
+                            href: "#point"
+                          }
+                        },
+                        [
+                          _c("span", { staticClass: "nav-icon" }, [
+                            _c("i", { staticClass: "flaticon-coins" })
+                          ]),
+                          _c("span", { staticClass: "nav-text" }, [
+                            _vm._v("Point")
                           ])
                         ]
                       )
@@ -35442,6 +36084,134 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-prepend" }, [
       _c("span", { staticClass: "input-group-text" }, [_vm._v("TMP")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "card-footer pr-0",
+        staticStyle: { display: "flex", "justify-content": "flex-end" }
+      },
+      [
+        _c(
+          "button",
+          { staticClass: "btn btn-primary mt-n5", attrs: { type: "submit" } },
+          [_vm._v("Save")]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=template&id=30c0c5ce&":
+/*!*************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=template&id=30c0c5ce& ***!
+  \*************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row " }, [
+    _c("div", { staticClass: "col-lg-12" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-12" }, [
+          _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.UpdatePoint($event)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "card-body p-0 pl-0" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Point")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.$parent.AgentDetails.point,
+                          expression: "$parent.AgentDetails.point"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text" },
+                      domProps: { value: _vm.$parent.AgentDetails.point },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.$parent.AgentDetails,
+                            "point",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(2)
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c("h3", { staticClass: "card-title" }, [
+          _c("span", { staticClass: "nav-icon mr-3" }, [
+            _c("i", { staticClass: "flaticon-coins text-primary" })
+          ]),
+          _vm._v("\n                    Point\n                ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [
+        _c("i", { staticClass: "flaticon-coins text-primary" })
+      ])
     ])
   },
   function() {
@@ -46358,7 +47128,7 @@ var render = function() {
                       {
                         staticClass:
                           "text-dark text-hover-primary font-weight-bold font-size-h4 mb-3",
-                        attrs: { href: "#" }
+                        attrs: { href: "chart-detail/Total" }
                       },
                       [
                         _vm._v(
@@ -51242,7 +52012,7 @@ var render = function() {
                                             staticClass: "btn btn-primary",
                                             on: { click: _vm.ApproveOrder }
                                           },
-                                          [_vm._v("Approve123")]
+                                          [_vm._v("Approve")]
                                         )
                                       ]
                                     )
@@ -69425,6 +70195,7 @@ Vue.component('team-transfer-network-form-update', __webpack_require__(/*! ./com
 Vue.component('team-upgrade-downgrade-membership-form-update', __webpack_require__(/*! ./components/Admin/Teams/Team/Forms/UpgradeDowngradeMembership.vue */ "./resources/js/components/Admin/Teams/Team/Forms/UpgradeDowngradeMembership.vue")["default"]);
 Vue.component('team-terminate-membership-form-update', __webpack_require__(/*! ./components/Admin/Teams/Team/Forms/TerminateMembership.vue */ "./resources/js/components/Admin/Teams/Team/Forms/TerminateMembership.vue")["default"]);
 Vue.component('team-form-delete', __webpack_require__(/*! ./components/Admin/Teams/Team/Forms/DeleteTeam.vue */ "./resources/js/components/Admin/Teams/Team/Forms/DeleteTeam.vue")["default"]);
+Vue.component('team-point-form-update', __webpack_require__(/*! ./components/Admin/Teams/Team/Forms/UpdatePoint */ "./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue")["default"]);
 /**  Product  */
 
 Vue.component('product-dashboard', __webpack_require__(/*! ./components/Admin/Product/Dashboard/dashboard.vue */ "./resources/js/components/Admin/Product/Dashboard/dashboard.vue")["default"]);
@@ -73637,6 +74408,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateMembership_vue_vue_type_template_id_7c39f11d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdateMembership_vue_vue_type_template_id_7c39f11d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _UpdatePoint_vue_vue_type_template_id_30c0c5ce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UpdatePoint.vue?vue&type=template&id=30c0c5ce& */ "./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=template&id=30c0c5ce&");
+/* harmony import */ var _UpdatePoint_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UpdatePoint.vue?vue&type=script&lang=js& */ "./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _UpdatePoint_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UpdatePoint_vue_vue_type_template_id_30c0c5ce___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UpdatePoint_vue_vue_type_template_id_30c0c5ce___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************!*\
+  !*** ./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdatePoint_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./UpdatePoint.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdatePoint_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=template&id=30c0c5ce&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=template&id=30c0c5ce& ***!
+  \*******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdatePoint_vue_vue_type_template_id_30c0c5ce___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../../node_modules/vue-loader/lib??vue-loader-options!./UpdatePoint.vue?vue&type=template&id=30c0c5ce& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Admin/Teams/Team/Forms/UpdatePoint.vue?vue&type=template&id=30c0c5ce&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdatePoint_vue_vue_type_template_id_30c0c5ce___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UpdatePoint_vue_vue_type_template_id_30c0c5ce___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

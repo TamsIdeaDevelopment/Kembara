@@ -25734,11 +25734,10 @@ var render = function() {
                         !_vm.isSpinner
                           ? _c("div", { staticClass: "d-flex flex-column" }, [
                               _c(
-                                "a",
+                                "label",
                                 {
                                   staticClass:
-                                    "text-dark text-hover-primary font-weight-bold font-size-h4 mb-3",
-                                  attrs: { href: "chart-detail/Total" }
+                                    "text-dark text-hover-primary font-weight-bold font-size-h4 mb-3"
                                 },
                                 [
                                   _vm._v(

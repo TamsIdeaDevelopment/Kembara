@@ -148,6 +148,7 @@ class RegisterController extends Controller
                     'HQ' => 0,
                     'agent_levels_id' => $data['level'],
                     'leader_id' => $data['leader'],
+                    'referral_id' => $data['leader'],
                     'territory_id' => $data['territory'],
                     'state_id' => $data['state'],
                     'paid' => '0',

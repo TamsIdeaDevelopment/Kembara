@@ -36,28 +36,42 @@
         <div class="row">
             <div class="col-xl-6">
                 <div class="form-group">
-                    <label>Weight</label>
-                    <input type="text" class="form-control" v-model="$parent.Products.weight" placeholder="Weight"/>
+                    <label>Weight (kg)</label>
+                    <input type="number" class="form-control" v-model="$parent.Products.weight" placeholder="Weight"/>
                 </div>
             </div>
             <div class="col-xl-6">
                 <div class="form-group">
                     <label>Stock</label>
-                    <input type="text" class="form-control" v-model="$parent.Products.stock" placeholder="Stock"/>
+                    <input type="number" class="form-control" v-model="$parent.Products.stock" placeholder="Stock"/>
                 </div>
             </div>
         </div>
         <div class="row">
-            <!--<div class="col-xl-6">-->
-                <!--<div class="form-group">-->
-                    <!--<label>Stock Alert</label>-->
-                    <!--<input type="text" class="form-control" name="address2" placeholder="Stock Alert"/>-->
-                <!--</div>-->
-            <!--</div>-->
+        <!--<div class="col-xl-6">-->
+        <!--<div class="form-group">-->
+        <!--<label>Stock Alert</label>-->
+        <!--<input type="text" class="form-control" name="address2" placeholder="Stock Alert"/>-->
+        <!--</div>-->
+        <!--</div>-->
+        <div class="col-xl-12">
+            <div class="form-group">
+                <label>Semenanjung Retail</label>
+                <div class="input-group">
+                    <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
+                    <input type="number" class="form-control" v-model="$parent.Products.retail_price" placeholder="RM"/>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
             <div class="col-xl-12">
                 <div class="form-group">
-                    <label>Retail</label>
-                    <input type="text" class="form-control" v-model="$parent.Products.retail_price" placeholder="RM"/>
+                    <label>Sabah & Sarawak Retail</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
+                        <input type="number" class="form-control" v-model="$parent.Products.ss_retail_price" placeholder="RM"/>
+                    </div>
                 </div>
             </div>
         </div>

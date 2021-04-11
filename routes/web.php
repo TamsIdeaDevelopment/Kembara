@@ -62,6 +62,10 @@ Route::group(['namespace' => 'Cart'], function () {
     Route::get('/cart-first-purchase', 'CartController@CartFirstPurchase')->name('/cart-first-purchase');
     Route::get('/cart-count', 'CartController@CartCount')->name('/cart-count');
     Route::get('{rowID}/remove-item', 'CartController@RemoveItem')->name('/remove-item');
+
+    Route::get('/cart-miniagent-item/{user_id}/{package_id}', 'CartController@CartMiniAgentAddItems')->name('/cart-miniagent-item');
+//    Route::get('/cart-miniagentdetails', 'CartMiniAgentController@CartMiniAgentDetails')->name('/cart-details');
+
 });
 
 
@@ -73,9 +77,14 @@ Route::get('{orderId}/order-details', 'HomeController@orderDetails')->name('deta
 
 Route::get('/list-product', 'HomeController@ListProducts')->name('list.product')->middleware('verified');
 Route::get('/add-product', 'HomeController@AddProducts')->name('add.product')->middleware('verified');
+Route::get('/list-package', 'HomeController@ListPackage')->name('list.package')->middleware('verified');
+Route::get('/add-package', 'HomeController@AddPackages')->name('add.package')->middleware('verified');
 
 Route::get('/edit-product/{product_id}', function ($product_id) {
     return view('pages.Admin.Products.EditProduct',['product_id' => $product_id]);
+})->middleware('verified');
+Route::get('/view-package/{package_id}', function ($package_id) {
+    return view('pages.Admin.Products.ViewPackage',['package_id' => $package_id]);
 })->middleware('verified');
 
 Route::get('/list-team', 'HomeController@ListTeam')->name('list.team')->middleware('verified');

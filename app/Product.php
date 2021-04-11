@@ -17,7 +17,7 @@ class Product extends Model
      * @var array
      */
     protected $fillable = [
-        'product_type_id','product_set', 'status', 'name', 'description', 'retail_price','featured_image', 'images', 'weight', 'stock', 'shipping_west_my','shipping_east_my', 'shipping_bn', 'shipping_sg','score','remarks'
+        'product_type_id','product_set', 'status', 'name', 'description', 'retail_price','ss_retail_price','featured_image', 'images', 'weight', 'stock', 'shipping_west_my','shipping_east_my', 'shipping_bn', 'shipping_sg','score','remarks'
     ];
 
 }

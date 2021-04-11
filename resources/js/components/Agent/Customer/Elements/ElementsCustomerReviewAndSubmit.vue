@@ -52,10 +52,22 @@
                                     </div>
                                     {{Cart.product_id.name}}</td>
                                 <td class="text-right pt-7 align-middle">{{Cart.quantity}}</td>
-                                <td class="text-right pt-7 align-middle">
-                                    <span v-if="$parent.data.country == 'Malaysia'">RM</span>
-                                    <span v-if="$parent.data.country == 'Singapura' || $parent.data.country == 'Brunei'">$</span>
-                                    {{Cart.product_id.retail_price}}</td>
+                                <td class="text-right pt-7 align-middle" v-if="$parent.data.country == 'Singapura' || $parent.data.country == 'Brunei'">
+                                    <span>$</span>
+                                    {{Cart.product_id.sg_brn_retail_price}}
+                                </td>
+                                <td class="text-right pt-7 align-middle" v-if="$parent.data.country == 'Malaysia'">
+                                    <div v-if="$parent.data.east_west == 'Semenanjung'">
+                                        <span>
+                                            RM {{Cart.product_id.retail_price}}
+                                        </span>
+                                    </div>
+                                    <div v-if="$parent.data.east_west == 'SS'">
+                                        <span>
+                                            RM {{Cart.product_id.ss_retail_price}}
+                                        </span>
+                                    </div>
+                                </td>
                                 <td class="text-primary pr-0 pt-7 text-right align-middle">
                                     <span v-if="$parent.data.country == 'Malaysia'">RM</span>
                                     <span v-if="$parent.data.country == 'Singapura' || $parent.data.country == 'Brunei'">$</span>

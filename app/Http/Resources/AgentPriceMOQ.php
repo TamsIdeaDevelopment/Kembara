@@ -25,6 +25,7 @@ class AgentPriceMOQ extends JsonResource
             'status' => $this->status,
             'agent_levels_id' => Agent_levelsModel::where('id', $this->agent_levels_id)->first(['name','id']),
             'price' => $this->price,
+            'ss_price' => $this->ss_price,
             'minimum_order' => $this->minimum_order,
             'quantity' => $this->quantity,
             'postage' => $this->postage,

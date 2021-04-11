@@ -4,7 +4,7 @@
         <div class="form-group" v-for="(Role,index) in $parent.Roles">
             <label>{{Role.name}}</label>
             <input type="hidden" class="form-control" v-model="$parent.Roles[index].id"/>
-            <input type="text" class="form-control" v-model="$parent.Roles[index].moq"/>
+            <input type="number" class="form-control" v-model="$parent.Roles[index].moq"/>
         </div>
     </div>
 </template>

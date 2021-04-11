@@ -9,11 +9,14 @@
 namespace App\Http\Controllers\Cart;
 
 
+use App\Agent;
 use App\CartItem;
 use App\Http\Controllers\Team\Lists\ListTeam;
+use App\Package;
 use App\Product;
 use App\Stock_agent;
 use Cart;
+use App\Http\Resources\Package as PackageResource;
 
 
 class CartController
@@ -81,6 +84,99 @@ class CartController
 //        //return redirect('/cart-details');
 //    }
 
+    public function CartMiniAgentAddItems($user_id,$package_id)
+    {
+        $agent = Agent::where('user_id',$user_id)->first();
+
+        $data = Cart::count();
+        if($data ==0)
+        {
+            $package_items = Package::where('packages_type_id', $package_id)->get();
+
+            $package_details = PackageResource::collection($package_items);
+            $package_details = json_decode(json_encode($package_details), true);
+
+
+
+//        $data = $this->product->findOrFail($product_id);
+
+            $agent_detail = $this->agent_details->agentInformation($user_id);
+            $agent_detail = json_decode(json_encode($agent_detail), true);
+            $leader_id = $agent_detail['leader_id']['user_id'];
+            $paid = $agent_detail['paid'];
+            $stock = 0;
+            $HQ = 0;
+
+            for($i=0; $i<count($package_details); $i++)
+            {
+
+                $cart[] = Cart::add($package_details[$i]['product_id']['id'],$package_details[$i]['product_id']['name'], $package_details[$i]['qty'], $package_details[$i]['retail_price'], $package_details[$i]['product_id']['weight'] , ['size' => $package_details[$i]['product_id']['featured_image']]);
+
+                $cart_items [] = CartItem::create([
+                    'rowId' =>  $cart[$i]->rowId,
+                    'product_id' =>  $package_details[$i]['product_id']['id'],
+                    'seller_id' =>  $leader_id,
+                    'HQ' =>  $HQ,
+                    'quantity' =>  $package_details[$i]['qty'],
+                    'status' =>  0,
+                ]);
+
+                $product = $this->product->findOrFail($package_details[$i]['product_id']['id']);
+
+                if($product->id == $package_details[$i]['product_id']['id'])
+                {
+                    $product->stock = $product->stock - $package_details[$i]['qty'];
+                    $product->save();
+                }
+            }
+            return view('pages.Cart.MiniAgentDetails',['agent' => $agent]);
+
+        }
+        else
+
+        {
+//            return 'no';
+            return view('pages.Cart.MiniAgentDetails',['agent' => $agent]);
+
+        }
+
+
+
+
+
+//        if($paid == 0)
+//        {
+//            $data->stock = $data->stock -$quantity;
+//            $data->save();
+//            $stock = $data->stock;
+//            $HQ = 1;
+//        }
+//        else
+//        {
+//            if($agent_detail['leader_id']['HQ'] == 1)
+//            {
+//                $data->stock = $data->stock -$quantity;
+//                $data->save();
+//                $stock = $data->stock;
+//                $HQ = 1;
+//            }
+//            if($agent_detail['leader_id']['HQ'] == 0)
+//            {
+//                $stock_leader = $this->stock_leader->where([['user_id',$leader_id],['product_id',$product_id]])->first();
+//
+//                $stock_leader->quantity = $stock_leader->quantity-$quantity;
+//
+//                $stock_leader->save();
+//                $stock = $stock_leader->quantity;
+//                $HQ = 0;
+//            }
+//        }
+
+
+
+
+        //return redirect('/cart-details');
+    }
     public function CartAddItems($user_id,$product_id, $price, $minimum_order, $quantity,$product_type)
     {
         $data = $this->product->findOrFail($product_id);

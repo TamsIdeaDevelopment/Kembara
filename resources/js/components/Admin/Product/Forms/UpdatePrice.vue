@@ -25,8 +25,30 @@
                                     <form @submit.prevent="UpdateRolesPrice">
                                         <div class="card-body p-0 pl-0">
                                             <div class="form-group" v-for="(Role,index) in $parent.RolesPriceMOQ">
-                                                <label>{{Role.agent_levels_id.name}}</label>
-                                                <input type="text" class="form-control" v-model="$parent.RolesPriceMOQ[index].price" placeholder="RM"/>
+                                                <h6 class="text-primary">{{Role.agent_levels_id.name}}</h6>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <label>Semenanjung</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
+                                                            <input type="number" class="form-control" v-model="$parent.RolesPriceMOQ[index].price" placeholder="RM"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <label>Sabah & Sarawak</label>
+                                                        <div class="input-group">
+                                                            <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
+                                                            <input type="number" class="form-control" v-model="$parent.RolesPriceMOQ[index].ss_price" placeholder="RM"/>
+                                                        </div>
+                                                    </div>
+<!--                                                    <div class="col-lg-4">-->
+<!--                                                        <label>Singapura & Brunei</label>-->
+<!--                                                        <div class="input-group">-->
+<!--                                                            <div class="input-group-prepend"><span class="input-group-text">$</span></div>-->
+<!--                                                            <input type="text" class="form-control" v-model="$parent.RolesPriceMOQ[index].sg_brn_price" placeholder="RM"/>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="card-footer pb-5 pr-0" style="display: flex; justify-content: flex-end">

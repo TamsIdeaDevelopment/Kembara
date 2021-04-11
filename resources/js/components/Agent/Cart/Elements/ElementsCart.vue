@@ -70,7 +70,7 @@
                             <span class="ml-21">PRODUCT</span>
                         </div>
                         <div class="col-lg-2  text-right align-middle p-0 d-none d-sm-block">
-                            STOCK
+<!--                            STOCK-->
                         </div>
                         <div class="col-lg-4  text-right align-middle p-0 d-none d-sm-block">
                             QTY
@@ -98,8 +98,8 @@
                             <!--end::Symbol-->
                         </div>
                         <div class="col-lg-2   mt-3 text-center text-dark align-middle font-weight-bolder font-size-h5 p-2 d-flex justify-content-end">
-                            <span class="d-block d-sm-none">Stock : </span>
-                            <span class="text-danger">&nbsp; {{Cart.options.stock}}</span>
+<!--                            <span class="d-block d-sm-none">Stock : </span>-->
+<!--                            <span class="text-danger">&nbsp; {{Cart.options.stock}}</span>-->
                         </div>
                         <div class="col-lg-4  text-right p-2">
                             <div class="row mt-3">

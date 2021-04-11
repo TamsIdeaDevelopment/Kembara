@@ -28,7 +28,7 @@
                                                                 <label class="text-danger">{{errors['stock']}}</label>
                                                             </div>
                                                         </div>
-                                                        <input type="text" class="form-control" v-model="$parent.Products.stock" placeholder="Stock"/>
+                                                        <input type="number" class="form-control" v-model="$parent.Products.stock" placeholder="Stock"/>
                                                     </div>
                                                 </div>
                                             </div>

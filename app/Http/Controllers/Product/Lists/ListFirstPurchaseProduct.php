@@ -71,6 +71,7 @@ class ListFirstPurchaseProduct
             $product_details[] = array(
                 'product_id' => $data['product_id']['id'],
                 'price' => $data['price'],
+                'ss_price' => $data['ss_price'],
                 'minimum_order' => $data['minimum_order'],
                 'quantity' => $data['product_id']['stock'],
             );

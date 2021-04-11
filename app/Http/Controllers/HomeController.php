@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Agent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,7 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $agent = Agent::where('user_id',Auth::user()->id)->first();
+
+        return view('home',['agent' => $agent]);
     }
 
     public function listOrderHQ()
@@ -54,6 +58,16 @@ class HomeController extends Controller
     public function AddProducts()
     {
         return view('pages.Admin.Products.AddProduct');
+    }
+
+    public function ListPackage()
+    {
+        return view('pages.Admin.Products.ListPackage');
+    }
+
+    public function AddPackages()
+    {
+        return view('pages.Admin.Products.AddPackage');
     }
 
     public function ListTeam()

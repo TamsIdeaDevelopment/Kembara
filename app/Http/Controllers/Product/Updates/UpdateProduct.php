@@ -55,6 +55,7 @@ class UpdateProduct
         $product->weight = $request->input('weight');
         $product->stock = $request->input('stock');
         $product->retail_price = $request->input('retail_price');
+        $product->ss_retail_price = $request->input('ss_retail_price');
         $product->featured_image = $fileNameToStore;
 
 

@@ -7,7 +7,8 @@
                 <th>Name</th>
                 <th>Set</th>
                 <th>Stock</th>
-                <th>Price</th>
+                <th>Price (SM)</th>
+                <th>Price (SS)</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -37,6 +38,7 @@
                 <td>{{Product.product_set}}</td>
                 <td>{{Product.stock}}</td>
                 <td>RM {{Product.retail_price}}</td>
+                <td>RM {{Product.ss_retail_price}}</td>
                 <td>
                     <div class="row mb-1">
                         <div class="col-lg-5 mb-1">

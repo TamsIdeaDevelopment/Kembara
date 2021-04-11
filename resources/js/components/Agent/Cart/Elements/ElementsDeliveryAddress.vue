@@ -138,7 +138,7 @@
                                                 </div>
                                             </div>
                                             <select class="form-control" style="width:100%" id="select-state" v-model="$parent.DeliveryDetails.state">
-                                                <option value="">Select2</option>
+                                                <option value="" disabled>State</option>
                                                 <option value="Kuala Lumpur">Kuala Lumpur</option>
                                                 <option value="Selangor">Selangor</option>
                                                 <option value="Pahang">Pahang</option>
@@ -153,8 +153,24 @@
                                                 <option value="Sarawak">Sarawak</option>
                                                 <option value="Pulau Pinang">Pulau Pinang</option>
                                                 <option value="Kedah">Kedah</option>
+                                                <option value="Putrajaya">Putrajaya</option>
+                                                <option value="Labuan">Labuan</option>
                                             </select>
-                                            <!--<input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>-->
+
+<!--                                            <div class="form-group">-->
+<!--                                                <label>Country</label>-->
+<!--                                                <select name="country" class="form-control selectpicker" >-->
+<!--                                                    <option value="">Select</option>-->
+<!--                                                    <option value="AF">Afghanistan</option>-->
+<!--                                                    <option value="AX">Åland Islands</option>-->
+<!--                                                </select>-->
+<!--                                            </div>-->
+
+<!--                                            <select class="form-control select" style="width:100%" id="select-state" v-model="$parent.DeliveryDetails.state">-->
+<!--                                                <option value="" disabled>State</option>-->
+<!--                                                <option  v-for="State in States" :value="State.name">{{ State.name }}</option>-->
+<!--                                            </select>-->
+<!--                                            <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>-->
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
@@ -289,8 +305,8 @@
                                                 <label class="text-danger">{{$parent.errors['state']}}</label>
                                             </div>
                                         </div>
-                                        <select class="form-control" style="width:100%" id="select-not-HQ-state" v-model="$parent.DeliveryDetails.state">
-                                            <option value="">Select2</option>
+                                        <select class="form-control" style="width:100%" id="select-state" v-model="$parent.DeliveryDetails.state">
+                                            <option value="" disabled>State</option>
                                             <option value="Kuala Lumpur">Kuala Lumpur</option>
                                             <option value="Selangor">Selangor</option>
                                             <option value="Pahang">Pahang</option>
@@ -305,8 +321,10 @@
                                             <option value="Sarawak">Sarawak</option>
                                             <option value="Pulau Pinang">Pulau Pinang</option>
                                             <option value="Kedah">Kedah</option>
+                                            <option value="Putrajaya">Putrajaya</option>
+                                            <option value="Labuan">Labuan</option>
                                         </select>
-                                        <!--<input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>-->
+<!--                                        <input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>-->
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
@@ -335,10 +353,12 @@
             return{
                 isSeller:'',
                 tempCount:0,
+                States: [],
             }
         },
         created() {
             this.fetchAgentDetails();
+            this.getStateName();
         },
         mounted() {
             $('#select-not-HQ-state').select2({
@@ -351,12 +371,83 @@
                 console.log(this.$parent.DeliveryDetails.state);
             }.bind(this));
 
-            $('#select-state').select2({
-                placeholder: 'Select',
-                allowClear: true
-            });
+            // $("#update-select-state").change(function(){
+            //     this.$parent.DeliveryDetails.state = $("#update-select-state").val();
+            // }.bind(this));
+
+            // $("#select-state").select2({
+            //     placeholder: 'State',
+            //     allowClear: true
+            // });
             $("#select-state").change(function(){
                 this.$parent.DeliveryDetails.state= $("#select-state").val();
+                this.tempCount = 0;
+                this.tempCount = this.$parent.Count / 10;
+                this.tempCount = parseInt(this.tempCount);
+
+               console.log(this.$parent.DeliveryDetails.state);
+
+                this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
+                if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak')
+                {
+                    this.$parent.delivery_fee = 27;
+
+                    if(this.isSeller == 1)
+                    {
+                        this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.tempCount;
+                        this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
+
+                        this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
+
+                    }
+                }
+                else
+                {
+
+                    this.$parent.delivery_fee = 6.90;
+
+                    if(this.isSeller == 1)
+                    {
+                        this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.tempCount;
+                        this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
+                        this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
+                    }
+                }
+                console.log('Total: ' + this.$parent.Totals )
+                console.log('Shipping: ' + this.$parent.total_delivery_fee )
+            }.bind(this));
+        },
+        methods: {
+            getStateName(){
+                axios.get('/api/v1/state/Lists/list-state')
+                    .then(function (response) {
+                        this.States = response.data;
+                    }.bind(this));
+            },
+            fetchAgentDetails(){
+                fetch('/api/v1/team/Lists/' + this.$parent.data +'/agent-info').then(response => response.json())
+                    .then(response => {
+                        this.isSeller = response.data.leader_id.HQ;
+                        console.log(this.isSeller);
+
+                    })
+                    .catch(error => console.log(error))
+            },
+            ifSelfPickup() {
+                if(this.$parent.delivery_type == 0)
+                {
+                    this.$parent.Totals= this.$parent.Totals + this.$parent.total_delivery_fee;
+                    console.log('Total :' + this.$parent.Totals);
+                }
+                if(this.$parent.delivery_type == 1)
+                {
+                    this.$parent.Totals= this.$parent.Totals - this.$parent.total_delivery_fee;
+                    console.log('Total :' + this.$parent.Totals);
+                }
+            },
+            sameAddress() {
+                this.$parent.DeliveryDetails = this.$parent.BillingDetails;
+
                 this.tempCount = 0;
                 this.tempCount = this.$parent.Count / 10;
                 this.tempCount = parseInt(this.tempCount);
@@ -391,32 +482,6 @@
                 }
                 console.log('Total: ' + this.$parent.Totals )
                 console.log('Shipping: ' + this.$parent.total_delivery_fee )
-            }.bind(this));
-        },
-        methods: {
-            fetchAgentDetails(){
-                fetch('/api/v1/team/Lists/' + this.$parent.data +'/agent-info').then(response => response.json())
-                    .then(response => {
-                        this.isSeller = response.data.leader_id.HQ;
-                        console.log(this.isSeller);
-
-                    })
-                    .catch(error => console.log(error))
-            },
-            ifSelfPickup() {
-                if(this.$parent.delivery_type == 0)
-                {
-                    this.$parent.Totals= this.$parent.Totals + this.$parent.total_delivery_fee;
-                    console.log('Total :' + this.$parent.Totals);
-                }
-                if(this.$parent.delivery_type == 1)
-                {
-                    this.$parent.Totals= this.$parent.Totals - this.$parent.total_delivery_fee;
-                    console.log('Total :' + this.$parent.Totals);
-                }
-            },
-            sameAddress() {
-                this.$parent.DeliveryDetails = this.$parent.BillingDetails;
             },
         }
     }

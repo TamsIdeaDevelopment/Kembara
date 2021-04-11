@@ -4,7 +4,7 @@
             <div class="modal-content">
                 <form @submit.prevent="CreateRolesPrice">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New Agent Price - {{$parent.$parent.Products.id}}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">New Agent Price</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <i aria-hidden="true" class="ki ki-close"></i>
                         </button>
@@ -22,13 +22,28 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Price</label>
+                            <label>Semenanjung</label>
                             <div class="row" v-if="('price' in errors)">
                                 <div class="col">
                                     <label class="text-danger">{{errors['price']}}</label>
                                 </div>
                             </div>
-                            <input type="text"  class="form-control"  v-model="AgentPrice.price"/>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
+                                <input type="number"  class="form-control"  v-model="AgentPrice.price"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Sabah & Sarawak</label>
+                            <div class="row" v-if="('ss_price' in errors)">
+                                <div class="col">
+                                    <label class="text-danger">{{errors['ss_price']}}</label>
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
+                                <input type="number"  class="form-control"  v-model="AgentPrice.ss_price"/>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">

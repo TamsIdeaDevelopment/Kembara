@@ -1083,9 +1083,9 @@
                                             <div class="input-icon ">
                                                 <span class="color-primary "></span>
                                             </div>
-                                            <input id="phone_no" type="phone_no"
+                                            <input id="phone_no" type="number"
                                                    class="form-control @error('phone_no') is-invalid @enderror" name="phone_no"
-                                                   value="{{ old('phone_no') }}" required autocomplete="phone" placeholder="Phone No">
+                                                   value="{{ old('phone_no') }}" required autocomplete="phone" placeholder="Phone No (0123456789)">
 
                                             @error('phone_no')
                                             <span class="invalid-feedback" role="alert">
@@ -1099,7 +1099,7 @@
                                             <div class="input-icon ">
                                                 <span class="color-primary "></span>
                                             </div>
-                                            <input class="form-control  @error('email') is-invalid @enderror" type="text" placeholder="Email" name="email" value="{{ old('email') }}" required autocomplete="email" />
+                                            <input class="form-control  @error('email') is-invalid @enderror" type="email" placeholder="Email" name="email" value="{{ old('email') }}" required autocomplete="email" />
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -1242,6 +1242,21 @@
                                                    name="postcode" value="{{ old('postcode') }}" required autocomplete="postcode" autofocus  placeholder="Postcode">
 
                                             @error('postcode')
+                                            <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group ">
+                                        <div class="input-group input-group-merge ">
+                                            <div class="input-icon ">
+                                                <span class="color-primary "></span>
+                                            </div>
+                                            <input id="country" type="text" class="form-control @error('country') is-invalid @enderror"
+                                                   name="country" value="{{ old('country') }}" required autocomplete="country" autofocus  placeholder="Country">
+
+                                            @error('country')
                                             <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>

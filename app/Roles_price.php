@@ -18,6 +18,6 @@ class Roles_price extends Model
      * @var array
      */
     protected $fillable = [
-        'product_id', 'status', 'agent_levels_id', 'price', 'minimum_order','quantity', 'postage', 'postage_west_my', 'starter', 'remarks'
+        'product_id', 'status', 'agent_levels_id', 'price','ss_price','minimum_order','quantity', 'postage', 'postage_west_my', 'starter', 'remarks'
     ];
 }

@@ -185,6 +185,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
             Route::post('/create-product', 'CreateProduct@create')->name('create-product');
             Route::post('/create-price-product', 'CreateAgentsPrice@create')->name('create-price-product');
             Route::post('/create-agent-price-product', 'CreateAgentsPrice@createAgentPrice')->name('create-agent-price-product');
+            Route::post('/create-package', 'CreatePackage@create')->name('create-package');
+            Route::post('{package_id}/create-package-product', 'CreatePackageProduct@create')->name('create-package-product');
         });
 
         Route::group(['prefix' => 'Updates', 'as' => 'Updates.','namespace' => 'Updates'], function () {
@@ -193,15 +195,20 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
             Route::post('/agent-price-products', 'UpdateAgentsPrice@update')->name('agent-price-products');
             Route::post('{user_id}/{product_id}/{quantity}/edit-stock-agent', 'UpdateProduct@editAgentStock')->name('edit-stock-agent');
 
+            Route::post('{package_id}/update-package', 'UpdatePackage@updatePackage')->name('update-package');
+            Route::post('{package_id}/update-package-product', 'UpdatePackageProduct@updatePackageProduct')->name('update-package-product');
+
         });
 
         Route::group(['prefix' => 'Deletes', 'as' => 'Deletes.','namespace' => 'Deletes'], function () {
             Route::post('{id}/products', 'DeleteProduct@delete')->name('products');
+            Route::post('{id}/package', 'DeletePackage@delete')->name('package');
         });
 
         Route::group(['prefix' => 'Lists', 'as' => 'Lists.','namespace' => 'Lists'], function () {
             Route::get('/products', 'ListProduct@list')->name('products');
             Route::get('/category-products', 'ListProduct@category')->name('category-products');
+            Route::get('/list-products', 'ListProduct@listProduct')->name('list-products');
             Route::get('{id}/products-details', 'ListProduct@productDetails')->name('products-details');
             Route::get('{product_id}/agent-price-moq', 'ListProduct@agentPriceAndMOQ')->name('agent-price-moq');
             Route::get('{user_id}/list-price-moq', 'ListProduct@ListPriceAndMOQ')->name('agent-price-moq');
@@ -211,6 +218,11 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
             Route::get('{user_id}/stock-list-agent-for-customer', 'ListProduct@StockListAgentForCustomer')->name('stock-list-agent-for-customer');
 
             Route::get('{user_id}/stock-first-purchase', 'ListFirstPurchaseProduct@StockFirstPurchase')->name('stock-first-purchase');
+
+            Route::get('/package', 'ListPackage@list')->name('package');
+            Route::get('{id}/package-details', 'ListPackage@PackageDetails')->name('package-details');
+            Route::get('{id}/package-product-details', 'ListPackage@PackageProductDetails')->name('package-product-details');
+            Route::get('{id}/list-package-product-details', 'ListPackage@listPackageProductDetails')->name('list-package-product-details');
 
 
         });

@@ -21,7 +21,7 @@
                                         <div class="card-body p-0 pl-0">
                                             <div class="form-group" v-for="(Role,index) in $parent.RolesPriceMOQ">
                                                 <label>{{Role.agent_levels_id.name}}</label>
-                                                <input type="text" class="form-control" v-model="$parent.RolesPriceMOQ[index].minimum_order" placeholder="RM"/>
+                                                <input type="number" class="form-control" v-model="$parent.RolesPriceMOQ[index].minimum_order" placeholder="RM"/>
                                             </div>
                                         </div>
                                         <div class="card-footer pb-5 pr-0" style="display: flex; justify-content: flex-end">

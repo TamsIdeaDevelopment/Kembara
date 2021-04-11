@@ -37,6 +37,7 @@ class CreateAgentsPrice
                 'product_id' => $input[$i]['product_id'],
                 'agent_levels_id' => $input[$i]['id'],
                 'price' => $input[$i]['price'],
+                'ss_price' => $input[$i]['ss_price'],
                 'minimum_order' => $input[$i]['moq'],
                 'status' => 'On',
             ]);
@@ -49,6 +50,7 @@ class CreateAgentsPrice
                 'product_id' => $request->input('product_id'),
                 'agent_levels_id' => $request->input('agent_levels_id'),
                 'price' => $request->input('price'),
+                'ss_price' => $request->input('ss_price'),
                 'minimum_order' => 0,
                 'status' => 'On',
             ]);

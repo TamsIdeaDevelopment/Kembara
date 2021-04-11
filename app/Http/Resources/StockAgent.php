@@ -22,6 +22,7 @@ class StockAgent extends JsonResource
             'product_id' => ProductModel::findOrFail($this->product_id),
             'quantity' => $this->quantity,
             'price' => $this->price,
+            'ss_price' => $this->ss_price,
             'minimum_order' => $this->minimum_order,
         ];
     }

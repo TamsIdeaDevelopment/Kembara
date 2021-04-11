@@ -37,8 +37,16 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="form-group">
-                                    <label>Retail</label>
+                                    <label>Semenanjung Retail</label>
                                     <input type="text" class="form-control" v-model="Product.retail_price"disabled/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="form-group">
+                                    <label>Sabah & Sarawak Retail</label>
+                                    <input type="text" class="form-control" v-model="Product.ss_retail_price"disabled/>
                                 </div>
                             </div>
                         </div>

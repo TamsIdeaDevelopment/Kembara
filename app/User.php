@@ -21,7 +21,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name', 'email', 'email_verified_at', 'password', 'role_id', 'avatar','bank_name', 'bank_acc_no', 'bank_acc_name', 'settings', 'phone_no', 'address_1',
-        'address_2', 'postcode', 'country', 'state', 'is_admin', 'nric', 'city',
+        'address_2', 'postcode', 'country', 'state', 'east_west', 'is_admin', 'nric', 'city',
         'ssm','company_name','facebook','Shopee', 'Lazada', 'instagram','payment_api_key','payment_cat_code','remarks','deleted_at',
     ];
 

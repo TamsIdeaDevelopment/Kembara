@@ -54,6 +54,7 @@ class CreateProduct
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'retail_price' => $request->input('retail_price'),
+            'ss_retail_price' => $request->input('ss_retail_price'),
             'weight' => $request->input('weight'),
             'stock' => $request->input('stock'),
             'featured_image' => $fileNameToStore,

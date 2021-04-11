@@ -36,6 +36,7 @@ class UpdateAgentsPrice
         for ($i = 0; $i < $count; $i++) {
             $product [] = $this->repository->findOrFail($input[$i]['id']);
             $product[$i]['price'] = $input[$i]['price'];
+            $product[$i]['ss_price'] = $input[$i]['ss_price'];
             $product[$i]['minimum_order'] = $input[$i]['minimum_order'];
             $product[$i]->save();
         }

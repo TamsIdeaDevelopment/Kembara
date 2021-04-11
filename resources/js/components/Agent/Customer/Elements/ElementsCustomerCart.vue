@@ -92,11 +92,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-1  text-right text-dark align-middle font-weight-bolder font-size-h5 p-2 justify-items-center">
-                            <span v-if="$parent.data.country == 'Malaysia'">RM</span>
-                            <span v-if="$parent.data.country == 'Singapura' || $parent.data.country == 'Brunei'">$</span>
-                            {{Cart.product_id.retail_price}}
+                        <div v-if="$parent.data.country == 'Malaysia'" class="col-lg-1  text-right text-dark align-middle font-weight-bolder font-size-h5 p-2 justify-items-center">
+                            <div v-if="$parent.data.east_west == 'Semenanjung'">
+                                <span>
+                                    RM {{Cart.product_id.retail_price}}
+                                </span>
+                            </div>
+                            <div v-if="$parent.data.east_west == 'SS'">
+                                <span>
+                                    RM {{Cart.product_id.ss_retail_price}}
+                                </span>
+                            </div>
                         </div>
+<!--                        <div v-if="$parent.data.country == 'Singapura' || $parent.data.country == 'Brunei'" class="col-lg-1  text-right text-dark align-middle font-weight-bolder font-size-h5 p-2 justify-items-center">-->
+<!--                            <span>$</span>-->
+<!--                            {{Cart.product_id.sg_brn_retail_price}}-->
+<!--                        </div>-->
                         <div class="col-lg-1  text-right text-primary align-middle font-weight-bolder font-size-h5 p-2">
                             <span v-if="$parent.data.country == 'Malaysia'">RM</span>
                             <span v-if="$parent.data.country == 'Singapura' || $parent.data.country == 'Brunei'">$</span>
@@ -188,11 +199,34 @@
         },
         computed :{
             total_price: function() {
-                return this.$parent.Stock.map(function(Stock) {
-                    Stock.total_price = Stock.quantity * Stock.product_id.retail_price;
-                  Stock.total_price =  Stock.total_price.toFixed(2);
-                    return Stock.total_price;
-                });
+                if(this.$parent.data.country == 'Malaysia')
+                {
+                    if(this.$parent.data.east_west == 'Semenanjung')
+                    {
+                        return this.$parent.Stock.map(function(Stock) {
+                            Stock.total_price = Stock.quantity * Stock.product_id.retail_price;
+                            Stock.total_price =  Stock.total_price.toFixed(2);
+                            return Stock.total_price;
+                        });
+                    }
+                    if(this.$parent.data.east_west == 'SS')
+                    {
+                        return this.$parent.Stock.map(function(Stock) {
+                            Stock.total_price = Stock.quantity * Stock.product_id.ss_retail_price;
+                            Stock.total_price =  Stock.total_price.toFixed(2);
+                            return Stock.total_price;
+                        });
+                    }
+                }
+                if(this.$parent.data.country == 'Singapura' || this.$parent.data.country == 'Brunei')
+                {
+                    return this.$parent.Stock.map(function(Stock) {
+                        Stock.total_price = Stock.quantity * Stock.product_id.sg_brn_retail_price;
+                        Stock.total_price =  Stock.total_price.toFixed(2);
+                        return Stock.total_price;
+                    });
+                }
+
             },
         },
         created(){

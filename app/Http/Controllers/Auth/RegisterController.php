@@ -6,6 +6,7 @@ use App\Agent;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\States;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -70,6 +71,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $east_west ='';
+        if($data['country'] == 'Malaysia')
+        {
+            $east_west = 'Semenanjung';
+
+            if($data['state'] == 12 || $data['state'] == 11)
+            {
+                $east_west = 'SS';
+            }
+        }
+
+        $state = States::select('name')->where('id', $data['state'])->get();
+
          $user = User::create([
              'name' => $data['name'],
              'email' => $data['email'],
@@ -77,11 +91,12 @@ class RegisterController extends Controller
              'postcode' => $data['postcode'],
              'address_1' => $data['address_1'],
              'city' => $data['city'],
-             'country' => 'Malaysia',
+             'country' => $data['country'],
+             'east_west' => $east_west,
              'nric' => $data['nric'],
              'ssm' => $data['ssm'],
              'company_name' => $data['company_name'],
-             //'state' => $data['state'] || '',
+             'state' => $state[0]->name,
              'facebook' => $data['facebook'],
              'instagram' => $data['instagram'],
              'Shopee' => $data['shopee'],

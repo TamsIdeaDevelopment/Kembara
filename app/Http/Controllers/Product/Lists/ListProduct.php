@@ -67,6 +67,12 @@ class ListProduct
         return ProductResources::collection($data);
     }
 
+    public function listProduct()
+    {
+        $data = $this->repository->where('status', 'On')->latest()->get();
+        return response()->json($data);
+    }
+
     public function productDetails($id)
     {
         $data = $this->repository->find($id);
@@ -133,6 +139,7 @@ class ListProduct
                 $product_details[] = array(
                     'product_id' => $data['product_id']['id'],
                     'price' => $data['price'],
+                    'ss_price' => $data['ss_price'],
                     'minimum_order' => $data['minimum_order'],
                     'quantity' => $data['product_id']['stock'],
                 );
@@ -165,6 +172,7 @@ class ListProduct
                 $product_details[] = array(
                     'product_id' => $data['product_id'],
                     'price' => $data['price'],
+                    'ss_price' => $data['ss_price'],
                     'minimum_order' => $data['minimum_order'],
                     'quantity' => 0,
                 );
@@ -177,6 +185,7 @@ class ListProduct
                     // Check for date, size and type
                     if ($data['product_id']===$value['product_id']) {
                         $final[$key]['price'] = $value['price'];
+                        $final[$key]['ss_price'] = $value['ss_price'];
                         $final[$key]['minimum_order'] = $value['minimum_order'];
                         $flag = 1;
                         break;
@@ -215,6 +224,7 @@ class ListProduct
             $product_details[] = array(
                 'product_id' => $data['product_id'],
                 'price' => $data['price'],
+                'ss_price' => $data['ss_price'],
                 'minimum_order' => $data['minimum_order'],
                 'quantity' => 0,
             );
@@ -227,6 +237,7 @@ class ListProduct
                 // Check for date, size and type
                 if ($data['product_id']===$value['product_id']) {
                     $final[$key]['price'] = $value['price'];
+                    $final[$key]['ss_price'] = $value['ss_price'];
                     $final[$key]['minimum_order'] = $value['minimum_order'];
                     $flag = 1;
                     break;

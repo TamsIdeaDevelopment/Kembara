@@ -27,6 +27,7 @@ Vue.component('downloadExcel', JsonExcel);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('state-territory-component', require('./components/StateTerritory.vue').default);
 
+
 /********************************************* Admin ****************************************************************/
 
 /**  Product  */
@@ -123,6 +124,23 @@ Vue.component('stock-form-update', require('./components/Admin/Product/Forms/Upd
 
 Vue.component('product-form-delete', require('./components/Admin/Product/Forms/DeleteProduct.vue').default);
 
+/** Product (Package) */
+Vue.component('package-dashboard', require('./components/Admin/Product/Dashboard/dashboard-package.vue').default);
+Vue.component('package-list', require('./components/Admin/Product/Lists/ListsPackage.vue').default);
+Vue.component('package-elements', require('./components/Admin/Product/Elements/ElementsPackage.vue').default);
+Vue.component('view-package-dashboard', require('./components/Admin/Product/Dashboard/view-package-dashboard.vue').default);
+Vue.component('package-form-view', require('./components/Admin/Product/Forms/ViewPackage.vue').default);
+
+Vue.component('add-package-dashboard', require('./components/Admin/Product/Dashboard/add-package-dashboard.vue').default);
+Vue.component('package-form-create', require('./components/Admin/Product/Forms/CreatePackage.vue').default);
+Vue.component('package-product-form-create', require('./components/Admin/Product/Forms/CreatePackageProduct.vue').default);
+
+Vue.component('edit-package-dashboard', require('./components/Admin/Product/Dashboard/edit-package-dashboard.vue').default);
+Vue.component('package-form-update', require('./components/Admin/Product/Forms/UpdatePackage.vue').default);
+Vue.component('package-product-form-update', require('./components/Admin/Product/Forms/UpdatePackageProduct.vue').default);
+
+Vue.component('package-form-delete', require('./components/Admin/Product/Forms/DeletePackage.vue').default);
+
 /**  Order  */
 ////////////////////////////////////// HQ ///////////////////////////////////////////
 Vue.component('order-hq-dashboard', require('./components/Admin/Order/HQ/Dashboard/dashboard.vue').default);
@@ -161,6 +179,7 @@ Vue.component('agent-customer-review-submit-elements', require('./components/Age
 
 /**  Dashboard  */
 Vue.component('agent-dashboard', require('./components/Agent/Dashboard/Dashboard/dashboard.vue').default);
+Vue.component('agent-mini-dashboard', require('./components/Agent/Dashboard/Dashboard/MiniDashboard.vue').default);
 Vue.component('agent-hall-of-fame-restock', require('./components/Agent/Dashboard/Dashboard/HallOfFameRestock').default);
 Vue.component('agent-dashboard-chart', require('./components/Agent/Dashboard/Chart/DashboardChart.vue').default);
 
@@ -225,11 +244,20 @@ Vue.component('agent-cart-review-submit-elements', require('./components/Agent/C
 
 Vue.component('agent-first-purchase-details-dashboard', require('./components/Agent/FirstPurchase/Dashboard/dashboard-details.vue').default);
 
-
 Vue.component('agent-first-purchase-elements', require('./components/Agent/FirstPurchase/Elements/ElementsCart.vue').default);
 Vue.component('agent-first-purchase-delivery-address-elements', require('./components/Agent/FirstPurchase/Elements/ElementsDeliveryAddress.vue').default);
 Vue.component('agent-first-purchase-payment-method-elements', require('./components/Agent/FirstPurchase/Elements/ElementsPaymentMethod.vue').default);
 Vue.component('agent-first-purchase-review-submit-elements', require('./components/Agent/FirstPurchase/Elements/ElementsReviewAndSubmit.vue').default);
+
+/**  First Purchase Mini Agent*/
+
+Vue.component('mini-agent-first-purchase-details-dashboard', require('./components/Agent/FirstPurchase/Dashboard/Dashboard-MiniAgentDetails.vue').default);
+
+
+Vue.component('mini-agent-first-purchase-elements', require('./components/Agent/FirstPurchase/Elements/MiniAgentElementsCart.vue').default);
+Vue.component('mini-agent-first-purchase-delivery-address-elements', require('./components/Agent/FirstPurchase/Elements/MiniAgentElementsDeliveryAddress.vue').default);
+Vue.component('mini-agent-first-purchase-payment-method-elements', require('./components/Agent/FirstPurchase/Elements/MiniAgentElementsPaymentMethod.vue').default);
+Vue.component('mini-agent-first-purchase-review-submit-elements', require('./components/Agent/FirstPurchase/Elements/MiniAgentElementsReviewAndSubmit.vue').default);
 
 
 /**  Product  */

@@ -148,6 +148,7 @@
                         <div class="col-lg-2 text-right font-weight-bolder">
                             <div class="font-weight-bolder text-success font-size-h4 text-right">
                                 RM {{$parent.Totals}}
+
                             </div>
                         </div>
                     </div>

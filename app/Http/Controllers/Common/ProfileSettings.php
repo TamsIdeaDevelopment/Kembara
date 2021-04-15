@@ -45,6 +45,7 @@ class ProfileSettings
         $user->phone_no = $request->input('phone_no');
         $user->postcode = $request->input('postcode');
         $user->city = $request->input('city');
+        $user->state = $request->input('state');
         $user->country = $request->input('country');
         $user->address_1 = $request->input('address_1');
         $user->bank_name = $request->input('bank_name');

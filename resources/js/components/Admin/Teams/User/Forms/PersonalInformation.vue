@@ -34,13 +34,29 @@
                                 <input type="text" class="form-control"  v-model="$parent.details.nric"/>
                             </div>
                             <div class="form-group mt-n5">
-                                <label>Email <span class="text-danger">*</span></label>
-                                <div class="row" v-if="('email' in errors)">
-                                    <div class="col">
-                                        <label class="text-danger">{{errors['email']}}</label>
+                                <div class="row">
+                                    <div class="col-lg-6 mb-3">
+                                        <label>Email <span class="text-danger">*</span></label>
+                                        <div class="row" v-if="('email' in errors)">
+                                            <div class="col">
+                                                <label class="text-danger">{{errors['email']}}</label>
+                                            </div>
+                                        </div>
+                                        <input type="email" class="form-control"  v-model="$parent.details.email"/>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label>Phone <span class="text-danger">*</span></label>
+                                        <div class="row" v-if="('phone_no' in errors)">
+                                            <div class="col">
+                                                <label class="text-danger">{{errors['phone_no']}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text">+6</span></div>
+                                            <input type="tel" class="form-control" maxlength="11" placeholder="Phone No (0123456789)" v-model="$parent.details.phone_no"/>
+                                        </div>
                                     </div>
                                 </div>
-                                <input type="email" class="form-control"  v-model="$parent.details.email"/>
                             </div>
                             <div class="form-group mt-n5">
                                 <label>Company Name</label>
@@ -67,21 +83,8 @@
                                 <input type="text" class="form-control"  v-model="$parent.details.Lazada"/>
                             </div>
                             <div class="form-group mt-n5">
-                                <div class="row">
-                                    <div class="col-lg-6 mb-3">
-                                        <label>Phone <span class="text-danger">*</span></label>
-                                        <div class="row" v-if="('phone_no' in errors)">
-                                            <div class="col">
-                                                <label class="text-danger">{{errors['phone_no']}}</label>
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control"  v-model="$parent.details.phone_no"/>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label>Postcode</label>
-                                        <input type="text" class="form-control"  v-model="$parent.details.postcode"/>
-                                    </div>
-                                </div>
+                                <label>Address</label>
+                                <input type="text" class="form-control"  v-model="$parent.details.address_1"/>
                             </div>
                             <div class="form-group mt-n5">
                                 <div class="row">
@@ -90,18 +93,29 @@
                                         <input type="text" class="form-control"  v-model="$parent.details.city"/>
                                     </div>
                                     <div class="col-lg-6  mb-3">
+                                        <label>Postcode</label>
+                                        <input type="text" class="form-control"  v-model="$parent.details.postcode"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-n5">
+                                <div class="row">
+                                    <div class="col-lg-6  mb-3">
+                                        <label>State</label>
+<!--                                        <input type="text" class="form-control"  v-model="$parent.details.state"/>-->
+                                        <select class="form-control select2" style="width:100%" id="select-state" v-model="this.$parent.details.state">
+                                            <option  v-for="State in States" :value="State.name">{{ State.name }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6  mb-3">
                                         <label>Country</label>
                                         <input type="text" class="form-control"  v-model="$parent.details.country"/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group mt-n5">
-                                <label>Address</label>
-                                <input type="text" class="form-control"  v-model="$parent.details.address_1"/>
+                            <div class="card-footer pr-0" style="display: flex; justify-content: flex-end">
+                                <button type="submit" class="btn btn-primary mt-n5">Save</button>
                             </div>
-                        </div>
-                        <div class="card-footer pr-0" style="display: flex; justify-content: flex-end">
-                            <button type="submit" class="btn btn-primary mt-n5">Save</button>
                         </div>
                     </form>
                 </div>
@@ -115,13 +129,29 @@
         data(){
             return{
                 errors: [],
+                States: [],
             }
         },
         created() {
-
+            this.getStateName();
+        },
+        mounted() {
+            $('#select-state').select2({
+                placeholder: this.$parent.details.state,
+                allowClear: true
+            });
+            $("#select-state").change(function() {
+                this.$parent.details.state = $("#select-state").val();
+            }.bind(this));
         },
         methods:
             {
+                getStateName(){
+                    axios.get('/api/v1/state/Lists/list-state')
+                        .then(function (response) {
+                            this.States = response.data;
+                        }.bind(this));
+                },
                 UpdateProfile() {
                     this.errors = [];
                     if((this.$parent.details.name !== '') && (this.$parent.details.nric !== '') && (this.$parent.details.email !== '') && (this.$parent.details.phone_no !== ''))
@@ -143,6 +173,7 @@
                                 phone_no: this.$parent.details.phone_no,
                                 postcode : this.$parent.details.postcode,
                                 city: this.$parent.details.city,
+                                state: this.$parent.details.state,
                                 country: this.$parent.details.country,
                                 address_1: this.$parent.details.address_1,
                                 bank_name: this.$parent.details.bank_name,

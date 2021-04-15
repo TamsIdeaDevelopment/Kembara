@@ -65,12 +65,14 @@ class FilterOrder
             if($option === 'Daily'){
                 $data = Order::where('buyer_id',$seller_id)
                     ->where('status',1)
+                    ->where('buyer_type',null)
                     ->where('created_at','>=', Carbon::today()->toDateString())
                     ->latest()->get();
             }
             if($option === 'Week'){
                 $data = Order::where('buyer_id',$seller_id)
                     ->where('status',1)
+                    ->where('buyer_type',null)
                     ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
                     ->latest()->get();
 
@@ -78,6 +80,7 @@ class FilterOrder
             if($option === 'Month'){
                 $data = Order::where('buyer_id',$seller_id)
                     ->where('status',1)
+                    ->where('buyer_type',null)
                     ->whereMonth('created_at', '=', Carbon::now()->month)
                     ->latest()->get();
 
@@ -85,12 +88,14 @@ class FilterOrder
             if($option === 'Year'){
                 $data = Order::where('buyer_id',$seller_id)
                     ->where('status',1)
+                    ->where('buyer_type',null)
                     ->whereYear('created_at', '=', Carbon::now()->year)
                     ->latest()->get();
             }
             if($option === 'Total'){
                 $data = Order::where('buyer_id',$seller_id)
                     ->where('status',1)
+                    ->where('buyer_type',null)
                     ->latest()->get();
             }
         }

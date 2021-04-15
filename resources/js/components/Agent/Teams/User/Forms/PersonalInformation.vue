@@ -29,13 +29,29 @@
                                 <input type="text" class="form-control"  v-model="$parent.details.nric" disabled/>
                             </div>
                             <div class="form-group mt-n5">
-                                <label>Email <span class="text-danger">*</span></label>
-                                <div class="row" v-if="('email' in errors)">
-                                    <div class="col">
-                                        <label class="text-danger">{{errors['email']}}</label>
+                                <div class="row">
+                                    <div class="col-lg-6 mb-3">
+                                        <label>Email <span class="text-danger">*</span></label>
+                                        <div class="row" v-if="('email' in errors)">
+                                            <div class="col">
+                                                <label class="text-danger">{{errors['email']}}</label>
+                                            </div>
+                                        </div>
+                                        <input type="email" class="form-control"  v-model="$parent.details.email" disabled/>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label>Phone <span class="text-danger">*</span></label>
+                                        <div class="row" v-if="('phone_no' in errors)">
+                                            <div class="col">
+                                                <label class="text-danger">{{errors['phone_no']}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend"><span class="input-group-text">+6</span></div>
+                                            <input type="text" class="form-control"  v-model="$parent.details.phone_no" disabled/>
+                                        </div>
                                     </div>
                                 </div>
-                                <input type="email" class="form-control"  v-model="$parent.details.email" disabled/>
                             </div>
                             <div class="form-group mt-n5">
                                 <label>Facebook</label>
@@ -54,15 +70,14 @@
                                 <input type="text" class="form-control"  v-model="$parent.details.Lazada" disabled/>
                             </div>
                             <div class="form-group mt-n5">
+                                <label>Address</label>
+                                <input type="text" class="form-control"  v-model="$parent.details.address_1" disabled/>
+                            </div>
+                            <div class="form-group mt-n5">
                                 <div class="row">
                                     <div class="col-lg-6 mb-3">
-                                        <label>Phone <span class="text-danger">*</span></label>
-                                        <div class="row" v-if="('phone_no' in errors)">
-                                            <div class="col">
-                                                <label class="text-danger">{{errors['phone_no']}}</label>
-                                            </div>
-                                        </div>
-                                        <input type="text" class="form-control"  v-model="$parent.details.phone_no" disabled/>
+                                        <label>City</label>
+                                        <input type="text" class="form-control"  v-model="$parent.details.city" disabled/>
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <label>Postcode</label>
@@ -73,18 +88,14 @@
                             <div class="form-group mt-n5">
                                 <div class="row">
                                     <div class="col-lg-6  mb-3">
-                                        <label>City</label>
-                                        <input type="text" class="form-control"  v-model="$parent.details.city" disabled/>
+                                        <label>State</label>
+                                        <input type="text" class="form-control"  v-model="$parent.details.state" disabled/>
                                     </div>
                                     <div class="col-lg-6  mb-3">
                                         <label>Country</label>
                                         <input type="text" class="form-control"  v-model="$parent.details.country" disabled/>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group mt-n5">
-                                <label>Address</label>
-                                <input type="text" class="form-control"  v-model="$parent.details.address_1" disabled/>
                             </div>
                         </div>
                     </form>
@@ -123,6 +134,7 @@
                                 phone_no: this.$parent.details.phone_no,
                                 postcode : this.$parent.details.postcode,
                                 city: this.$parent.details.city,
+                                state: this.$parent.details.state,
                                 country: this.$parent.details.country,
                                 address_1: this.$parent.details.address_1,
                             }),

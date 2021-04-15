@@ -56,6 +56,7 @@ class CustomerCreateOrder
             'point' => 0,
             'HQ' => $details['HQ'],
             'buyer_type' => 'Customer',
+            'delivery_fees' => $details['delivery_fees'],
             'seller_id' => $details['seller_id'],
             'buyer_id' => $details['buyer_id'],
             'payment_methods' => '2',

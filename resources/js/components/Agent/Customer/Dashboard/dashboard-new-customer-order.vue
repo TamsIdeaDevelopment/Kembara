@@ -133,6 +133,8 @@
                 Discount: 0,
                 TempDiscount: 0,
                 TempTotal: 0,
+                DeliveryFees:0,
+                TempDeliveryFees:0,
             }
         },
         mounted() {},
@@ -219,6 +221,7 @@
                 this.Orders.details.HQ = 0;
                 this.Orders.details.seller_id = this.data.id;
                 this.Orders.details.buyer_id = this.data.id;
+                this.Orders.details.delivery_fees = this.DeliveryFees;
                 this.Orders.details.total = this.Totals;
                 this.Orders.details.total_paid = this.Totals;
                 this.Orders.details.deliver_to = this.DeliveryDetails.name;

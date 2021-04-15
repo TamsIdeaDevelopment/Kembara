@@ -133,6 +133,15 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2"></td>
+                                        <td class="font-weight-bolder font-size-h6 text-right">Delivery Fees</td>
+                                        <td class="font-weight-bolder pr-0 text-right text-success font-size-h6 text-right"  v-if="BuyerDetails.country =='Malaysia'">
+                                            RM {{Order.delivery_fees}}
+                                            <input type="hidden" class="form-control"  placeholder="RM" v-model="total"/>
+                                        </td>
+                                        <td class="font-weight-bolder pr-0 text-right text-success font-size-h6 text-right" v-if="BuyerDetails.country =='Singapura' || BuyerDetails.country =='Brunei'">$ {{Order.total}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
                                         <td class="font-weight-bolder font-size-h4 text-right">Subtotal</td>
                                         <td class="font-weight-bolder pr-0 text-right text-success font-size-h4 text-right"  v-if="BuyerDetails.country =='Malaysia'">RM {{Order.total}}</td>
                                         <td class="font-weight-bolder pr-0 text-right text-success font-size-h4 text-right" v-if="BuyerDetails.country =='Singapura' || BuyerDetails.country =='Brunei'">$ {{Order.total}}</td>
@@ -184,7 +193,7 @@
                 var sum = 0;
                 this.OrderItems.forEach(e => {
 
-                    sum += e.total;
+                    sum += e.total+this.Order.delivery_fees;
 
                 });
                 this.totalDiscount = sum;
@@ -201,7 +210,7 @@
                     .then(response => {
                         this.Order = response.data;
                         this.BuyerDetails = response.data.buyer_id;
-                        console.log(this.BuyerDetails.country);
+                        console.log(this.Order.delivery_fees);
                         this.fetchSellerDetails();
                     })
                     .catch(error => console.log(error))

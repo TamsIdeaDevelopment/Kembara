@@ -8,24 +8,24 @@
             </div>
             <div class="card-body">
                 <!--<div class="row">-->
-                    <!--<div class="col-lg-12 ">-->
-                        <!--<div class="row  d-inline"  v-if="$parent.TotalMOQ > $parent.Count">-->
-                            <!--<div class="col-lg-12 d-flex justify-content-end">-->
-                                <!--<h6 class="font-weight-bolder  mt-n5">MOQ : <span class="text-danger">{{$parent.TotalMOQ}}</span></h6>-->
+                <!--<div class="col-lg-12 ">-->
+                <!--<div class="row  d-inline"  v-if="$parent.TotalMOQ > $parent.Count">-->
+                <!--<div class="col-lg-12 d-flex justify-content-end">-->
+                <!--<h6 class="font-weight-bolder  mt-n5">MOQ : <span class="text-danger">{{$parent.TotalMOQ}}</span></h6>-->
 
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row d-inline"  v-if="$parent.TotalMOQ > $parent.Count">-->
-                            <!--<div class="col-lg-12 d-flex justify-content-end">-->
-                                <!--<h6 class="font-weight-bolder  mt-n5">Total : <span class="text-danger">{{$parent.TotalMOQ - $parent.Count}} More ..</span></h6>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="row d-inline"  v-if="$parent.Count >= $parent.TotalMOQ">-->
-                            <!--<div class="col-lg-12 d-flex justify-content-end">-->
-                                <!--<h6 class="font-weight-bolder  mt-n5"><span class="text-success">You can place order now</span></h6>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row d-inline"  v-if="$parent.TotalMOQ > $parent.Count">-->
+                <!--<div class="col-lg-12 d-flex justify-content-end">-->
+                <!--<h6 class="font-weight-bolder  mt-n5">Total : <span class="text-danger">{{$parent.TotalMOQ - $parent.Count}} More ..</span></h6>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row d-inline"  v-if="$parent.Count >= $parent.TotalMOQ">-->
+                <!--<div class="col-lg-12 d-flex justify-content-end">-->
+                <!--<h6 class="font-weight-bolder  mt-n5"><span class="text-success">You can place order now</span></h6>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
                 <!--</div>-->
                 <div>
                     <div class="row text-muted  font-weight-bolder mb-5">
@@ -51,7 +51,7 @@
                     <div class="row border-bottom" v-for="(Cart, index) in $parent.Stock">
                         <div class="col-lg-4 d-flex align-items-center font-weight-bolder p-2">
                             <!--<a @click="removeItems(Cart.rowId)" class="btn btn-icon btn-xs btn-outline-danger justify-content-center text-hover-white">-->
-                                <!--<i class="flaticon2-delete text-danger "></i>-->
+                            <!--<i class="flaticon2-delete text-danger "></i>-->
                             <!--</a>-->
                             <div class="ml-10 symbol symbol-60 flex-shrink-0 mr-4 bg-light">
                                 <div class="symbol-label" :style="'background-image:url( storage/Product/' + Cart.product_id.featured_image +')'"></div>
@@ -79,7 +79,7 @@
                             <div class="row mt-5" v-if="Cart.stock> 0">
                                 <div class="col-4 d-flex justify-content-end">
                                     <!--<a @click="decreaseQuantity(Cart.rowId,Cart.qty,Cart.id)" class="btn btn-xs btn-light-success btn-icon mr-2">-->
-                                        <!--<i class="ki ki-minus icon-xs"></i>-->
+                                    <!--<i class="ki ki-minus icon-xs"></i>-->
                                     <!--</a>-->
                                 </div>
                                 <div class="col-4">
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="col-4 d-flex justify-content-start">
                                     <!--<a @click="addQuantity(Cart.rowId,Cart.qty,Cart.id)" class="btn btn-xs btn-light-success btn-icon">-->
-                                        <!--<i class="ki ki-plus icon-xs"></i>-->
+                                    <!--<i class="ki ki-plus icon-xs"></i>-->
                                     <!--</a>-->
                                 </div>
                             </div>
@@ -104,10 +104,10 @@
                                 </span>
                             </div>
                         </div>
-<!--                        <div v-if="$parent.data.country == 'Singapura' || $parent.data.country == 'Brunei'" class="col-lg-1  text-right text-dark align-middle font-weight-bolder font-size-h5 p-2 justify-items-center">-->
-<!--                            <span>$</span>-->
-<!--                            {{Cart.product_id.sg_brn_retail_price}}-->
-<!--                        </div>-->
+                        <!--                        <div v-if="$parent.data.country == 'Singapura' || $parent.data.country == 'Brunei'" class="col-lg-1  text-right text-dark align-middle font-weight-bolder font-size-h5 p-2 justify-items-center">-->
+                        <!--                            <span>$</span>-->
+                        <!--                            {{Cart.product_id.sg_brn_retail_price}}-->
+                        <!--                        </div>-->
                         <div class="col-lg-1  text-right text-primary align-middle font-weight-bolder font-size-h5 p-2">
                             <span v-if="$parent.data.country == 'Malaysia'">RM</span>
                             <span v-if="$parent.data.country == 'Singapura' || $parent.data.country == 'Brunei'">$</span>
@@ -115,7 +115,7 @@
                             <input type="hidden" class="form-control"  placeholder="RM" v-model="total_price[index]"/>
 
                             <!--{{Cart.total_price = Cart.quantity * Cart.product_id.retail_price-->
-                              <!--Cart.total_price.toFixed(2)-->
+                            <!--Cart.total_price.toFixed(2)-->
                             <!--}}-->
                         </div>
                     </div>
@@ -129,6 +129,22 @@
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
                                 <input type="text" class="form-control" v-model="$parent.Discount" @change="addDiscount" placeholder="RM"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row border-bottom">
+
+                    </div>
+                    <div class="row mt-3 mb-3">
+                        <div class="col-lg-4 text-right font-weight-bolder"></div>
+                        <div class="col-lg-4 text-right font-weight-bolder"></div>
+                        <div class="col-lg-2 text-right font-weight-bolder">
+                            <span class="font-weight-bolder font-size-h6 text-right">Delivery Fees</span>
+                        </div>
+                        <div class="col-lg-2 text-right font-weight-bolder">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
+                                <input type="text" class="form-control" v-model="$parent.DeliveryFees" @change="addDeliveryFees" placeholder="RM"/>
                             </div>
                         </div>
                     </div>
@@ -233,11 +249,11 @@
 //            this.fetchCart();
         },
         methods: {
-            addDiscount(){
+            addDeliveryFees(){
 
-                if(this.$parent.Discount === '')
+                if(this.$parent.DeliveryFees === '')
                 {
-                    var tempTotal = parseFloat(this.$parent.TempDiscount) + parseFloat(this.$parent.TempTotal);
+                    var tempTotal = parseFloat(this.$parent.DeliveryFees) + parseFloat(this.$parent.TempDiscount) + parseFloat(this.$parent.TempTotal);
 
                     this.$parent.Totals = tempTotal;
 
@@ -245,9 +261,50 @@
                 }
                 else
                 {
-//                    var discount = this.$parent.Discount;
-//                    var temporaryDiscount = discount.toFixed(2);
+                    if(this.$parent.TempTotal != 0)
+                    {
+                        var TempTotal1 = parseFloat(this.$parent.TempTotal)
+                        var TempDeliveryFees = parseFloat(this.$parent.TempDeliveryFees)
+                        console.log('TempTotal1: ' + TempTotal1)
+                        console.log('TempDeliveryFees: ' + TempDeliveryFees)
 
+                        var tempTotal = TempTotal1 - TempDeliveryFees;
+                        var tempTotal = parseFloat(tempTotal)
+                        this.$parent.DeliveryFees = parseFloat(this.$parent.DeliveryFees)
+
+                        console.log('tempTotal: ' + tempTotal)
+                        var afterDeliveryFees = tempTotal + this.$parent.DeliveryFees;
+                        var afterDeliveryFees = parseFloat(afterDeliveryFees);
+                        console.log('afterDeliveryFees: ' + afterDeliveryFees)
+
+                        this.$parent.Totals = afterDeliveryFees.toFixed(2);
+                        this.$parent.TempDeliveryFees  = this.$parent.DeliveryFees;
+                        this.$parent.TempTotal  = this.$parent.Totals;
+                    }
+                    else {
+                        var delivery = parseFloat(this.$parent.DeliveryFees)
+                        var total = parseFloat(this.$parent.Totals)
+                        var afterDeliveryFees = total + delivery;
+                        var afterDeliveryFees = parseFloat(afterDeliveryFees);
+
+                        var temporaryDeliveryFees = parseFloat(this.$parent.DeliveryFees);
+                        console.log('afterDeliveryFees: ' + afterDeliveryFees)
+
+                        this.$parent.Totals = afterDeliveryFees.toFixed(2);
+                        this.$parent.TempDeliveryFees  = temporaryDeliveryFees.toFixed(2);
+                        this.$parent.TempTotal  = afterDeliveryFees.toFixed(2);
+                    }
+                }
+            },
+            addDiscount(){
+
+                if(this.$parent.Discount === '')
+                {
+                    var tempTotal = parseFloat(this.$parent.TempDiscount) + parseFloat(this.$parent.TempTotal);
+                    this.$parent.Totals = tempTotal;
+                }
+                else
+                {
                     if(this.$parent.TempTotal != 0)
                     {
                         var tempTotal = parseFloat(this.$parent.TempDiscount) + parseFloat(this.$parent.TempTotal);
@@ -314,6 +371,18 @@
                             this.$parent.TempTotal  = afterdiscount.toFixed(2);
                         }
 
+                        if(this.$parent.DeliveryFees !== 0)
+                        {
+                            this.$parent.Totals = parseFloat(this.$parent.Totals);
+                            this.$parent.DeliveryFees = parseFloat(this.$parent.DeliveryFees);
+                            var afterDelivery = this.$parent.Totals + this.$parent.DeliveryFees;
+                            var afterDelivery = parseFloat(afterDelivery);
+                            console.log('afterDeliveryFees: ' + afterDelivery)
+                            var temporaryDelivery = parseFloat(this.$parent.DeliveryFees);
+                            this.$parent.Totals = afterDelivery.toFixed(2);
+                            this.$parent.TempDeliveryFees  = temporaryDelivery.toFixed(2);
+                            this.$parent.TempTotal  = afterDelivery.toFixed(2);
+                        }
 
 
                     }
@@ -369,6 +438,19 @@
                             this.$parent.Totals = afterdiscount.toFixed(2);
                             this.$parent.TempDiscount  = temporarydiscount.toFixed(2);
                             this.$parent.TempTotal  = afterdiscount.toFixed(2);
+                        }
+
+                        if(this.$parent.DeliveryFees !== 0)
+                        {
+                            this.$parent.Totals = parseFloat(this.$parent.Totals);
+                            this.$parent.DeliveryFees = parseFloat(this.$parent.DeliveryFees);
+                            var afterDelivery = this.$parent.Totals + this.$parent.DeliveryFees;
+                            var afterDelivery = parseFloat(afterDelivery);
+                            console.log('afterDeliveryFees: ' + afterDelivery)
+                            var temporaryDelivery = parseFloat(this.$parent.DeliveryFees);
+                            this.$parent.Totals = afterDelivery.toFixed(2);
+                            this.$parent.TempDeliveryFees  = temporaryDelivery.toFixed(2);
+                            this.$parent.TempTotal  = afterDelivery.toFixed(2);
                         }
                     }
                     this.$parent.CustomerCartStatus = true;

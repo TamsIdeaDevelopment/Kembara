@@ -199,7 +199,7 @@
                 });
                 discount = sum + this.Order.delivery_fees;
                 this.totalDiscount = discount;
-                return discount.toFixed(2)-this.Order.total;
+                return (discount-this.Order.total).toFixed(2);
             }
         },
         methods: {

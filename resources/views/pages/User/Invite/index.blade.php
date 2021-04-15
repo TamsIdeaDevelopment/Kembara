@@ -1083,9 +1083,10 @@
                                             <div class="input-icon ">
                                                 <span class="color-primary "></span>
                                             </div>
-                                            <input id="phone_no" type="number"
+                                            <div class="input-group-prepend"><span class="input-group-text">+6</span></div>
+                                            <input id="phone_no" type="tel"
                                                    class="form-control @error('phone_no') is-invalid @enderror" name="phone_no"
-                                                   value="{{ old('phone_no') }}" required autocomplete="phone" placeholder="Phone No (0123456789)">
+                                                   value="{{ old('phone_no') }}" required autocomplete="phone" maxlength="11" placeholder="Phone No (0123456789)"/>
 
                                             @error('phone_no')
                                             <span class="invalid-feedback" role="alert">

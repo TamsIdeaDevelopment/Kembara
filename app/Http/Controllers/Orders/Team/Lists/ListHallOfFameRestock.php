@@ -6,7 +6,8 @@ namespace App\Http\Controllers\Orders\Team\Lists;
 
 use App\Order;
 use App\Order_items;
-use App\Http\Resources\HallOfFame as HallOfFameResouces;
+use App\Http\Resources\HallOfFame as HallOfFameResources;
+use Carbon\Carbon;
 
 class ListHallOfFameRestock
 {
@@ -33,7 +34,7 @@ class ListHallOfFameRestock
             ->join('users', 'users.id', '=', 'orders.buyer_id')
             ->join('agent', 'agent.user_id', '=', 'users.id')
 //            ->whereYear('orders.created_at', $year)
-//            ->whereMonth('orders.created_at', '=', $month)
+            ->whereMonth('orders.created_at', '=', Carbon::now()->month)
             ->where('orders.status', '=', 1)
 //            ->where('orders.HQ', '=', 0)
             ->where('orders.seller_id', '=', $leader_id)
@@ -41,6 +42,6 @@ class ListHallOfFameRestock
             ->where('agent.agent_levels_id', $agent_levels_id)
             ->groupBy('buyer_id')->orderBy('total', 'desc')->get()->take(10);
 
-        return HallOfFameResouces::collection($data);
+        return HallOfFameResources::collection($data);
     }
 }

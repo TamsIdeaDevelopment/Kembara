@@ -39,7 +39,8 @@ class ListHallOfFameRestock
 //            ->where('orders.HQ', '=', 0)
             ->where('orders.seller_id', '=', $leader_id)
             ->where('orders.buyer_type', '=', null)
-            ->where('agent.agent_levels_id', $agent_levels_id)
+            ->where('agent.leader_id', '=', $leader_id)
+            ->where('agent.agent_levels_id', '=', $agent_levels_id)
             ->groupBy('buyer_id')->orderBy('total', 'desc')->get()->take(10);
 
         return HallOfFameResources::collection($data);

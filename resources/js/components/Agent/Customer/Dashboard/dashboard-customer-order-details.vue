@@ -191,13 +191,15 @@
         computed :{
             total: function () {
                 var sum = 0;
+                var discount;
                 this.OrderItems.forEach(e => {
 
-                    sum += e.total+this.Order.delivery_fees;
+                    sum += e.total;
 
                 });
-                this.totalDiscount = sum;
-                return sum.toFixed(2)-this.Order.total;
+                discount = sum + this.Order.delivery_fees;
+                this.totalDiscount = discount;
+                return discount.toFixed(2)-this.Order.total;
             }
         },
         methods: {

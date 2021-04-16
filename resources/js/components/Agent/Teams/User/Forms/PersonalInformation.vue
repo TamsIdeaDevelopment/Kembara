@@ -76,12 +76,12 @@
                             <div class="form-group mt-n5">
                                 <div class="row">
                                     <div class="col-lg-6 mb-3">
-                                        <label>City</label>
-                                        <input type="text" class="form-control"  v-model="$parent.details.city" disabled/>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
                                         <label>Postcode</label>
                                         <input type="text" class="form-control"  v-model="$parent.details.postcode" disabled/>
+                                    </div>
+                                    <div class="col-lg-6 mb-3">
+                                        <label>City</label>
+                                        <input type="text" class="form-control"  v-model="$parent.details.city" disabled/>
                                     </div>
                                 </div>
                             </div>

@@ -89,12 +89,12 @@
                             <div class="form-group mt-n5">
                                 <div class="row">
                                     <div class="col-lg-6  mb-3">
-                                        <label>City</label>
-                                        <input type="text" class="form-control"  v-model="$parent.details.city"/>
-                                    </div>
-                                    <div class="col-lg-6  mb-3">
                                         <label>Postcode</label>
                                         <input type="text" class="form-control"  v-model="$parent.details.postcode"/>
+                                    </div>
+                                    <div class="col-lg-6  mb-3">
+                                        <label>City</label>
+                                        <input type="text" class="form-control"  v-model="$parent.details.city"/>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +103,7 @@
                                     <div class="col-lg-6  mb-3">
                                         <label>State</label>
 <!--                                        <input type="text" class="form-control"  v-model="$parent.details.state"/>-->
-                                        <select class="form-control select2" style="width:100%" id="select-state" v-model="this.$parent.details.state">
+                                        <select class="form-control select2" style="width:100%" id="update-select-state" v-model="$parent.details.state">
                                             <option  v-for="State in States" :value="State.name">{{ State.name }}</option>
                                         </select>
                                     </div>
@@ -136,12 +136,12 @@
             this.getStateName();
         },
         mounted() {
-            $('#select-state').select2({
+            $('#update-select-state').select2({
                 placeholder: this.$parent.details.state,
                 allowClear: true
             });
-            $("#select-state").change(function() {
-                this.$parent.details.state = $("#select-state").val();
+            $("#update-select-state").change(function() {
+                this.$parent.details.state = $("#update-select-state").val();
             }.bind(this));
         },
         methods:

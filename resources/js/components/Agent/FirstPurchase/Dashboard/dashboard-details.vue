@@ -170,6 +170,7 @@
                 CountAddOn: [],
                 TotalNormal: 0,
                 isSpinner: false,
+                tempCount:0,
             }
         },
         mounted() {

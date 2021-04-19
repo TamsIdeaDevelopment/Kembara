@@ -137,22 +137,9 @@
                                                     <label class="text-danger">{{$parent.errors['state']}}</label>
                                                 </div>
                                             </div>
-                                            <select class="form-control" style="width:100%" id="select-state" v-model="$parent.DeliveryDetails.state">
-                                                <option value="">Select2</option>
-                                                <option value="Kuala Lumpur">Kuala Lumpur</option>
-                                                <option value="Selangor">Selangor</option>
-                                                <option value="Pahang">Pahang</option>
-                                                <option value="Terengganu">Terengganu</option>
-                                                <option value="Kelantan">Kelantan</option>
-                                                <option value="Negeri Sembilan">Negeri Sembilan</option>
-                                                <option value="Melaka">Melaka</option>
-                                                <option value="Johor">Johor</option>
-                                                <option value="Perlis">Perlis</option>
-                                                <option value="Perak">Perak</option>
-                                                <option value="Sabah">Sabah</option>
-                                                <option value="Sarawak">Sarawak</option>
-                                                <option value="Pulau Pinang">Pulau Pinang</option>
-                                                <option value="Kedah">Kedah</option>
+                                            <select class="form-control" style="width:100%" id="update-select-state" v-model="$parent.DeliveryDetails.state">
+                                                <option value="" disabled>State</option>
+                                                <option  v-for="State in States" :value="State.name">{{ State.name }}</option>
                                             </select>
                                             <!--<input type="text" class="form-control form-control-lg" v-model="$parent.DeliveryDetails.state" placeholder="State"/>-->
                                         </div>
@@ -183,11 +170,13 @@
         data(){
             return{
                 isSeller:1,
-                tempCount:0,
+                // tempCount:0,
+                States: [],
             }
         },
         created() {
             // this.fetchAgentDetails();
+            this.getStateName();
         },
         mounted() {
             $('#select-not-HQ-state').select2({
@@ -200,49 +189,86 @@
                 console.log(this.$parent.DeliveryDetails.state);
             }.bind(this));
 
-            $('#select-state').select2({
-                placeholder: 'Select',
-                allowClear: true
-            });
-            $("#select-state").change(function(){
-                this.$parent.DeliveryDetails.state= $("#select-state").val();
-                this.tempCount = 0;
-                this.tempCount = this.$parent.Count / 10;
-                this.tempCount = parseInt(this.tempCount);
+            // $('#update-select-state').select2({
+            //     placeholder: 'State',
+            //     allowClear: true
+            // });
 
-//                console.log(this.tempCount);
+            $("#update-select-state").change(function(){
+                this.$parent.DeliveryDetails.state= $("#update-select-state").val();
 
-                this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
-                if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak')
-                {
-                    this.$parent.delivery_fee = 27;
+                if(this.$parent.DeliveryDetails.state != null) {
+                    this.$parent.tempCount = 0;
+                    // this.$parent.tempCount = this.$parent.Count / 10;
+                    // this.$parent.tempCount = parseInt(this.$parent.tempCount);
 
-                    if(this.isSeller == 1)
+//                console.log(this.$parent.tempCount);
+
+                    this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
+
+                    for (var key in this.$parent.Carts)
                     {
-                        this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.tempCount;
-                        this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
-
-                        this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
-
+                        if (this.$parent.Carts[key].options.product_type === 'Normal')
+                        {
+                            var quantity = parseInt(this.$parent.Carts[key].qty);
+                            var quantity = quantity / 10;
+                            this.$parent.tempCount += quantity;
+                        }
+                        if (this.$parent.Carts[key].options.product_type === 'Special')
+                        {
+                            var quantity = parseInt(this.$parent.Carts[key].qty);
+                            var quantity = quantity / 10;
+                            this.$parent.tempCount += quantity;
+                        }
+                        if (this.$parent.Carts[key].options.product_type === 'Add-On')
+                        {
+                            var quantity = parseInt(this.$parent.Carts[key].qty);
+                            var quantity = quantity / 20;
+                            var quantity = parseInt(quantity);
+                            this.$parent.tempCount += quantity;
+                        }
                     }
-                }
-                else
-                {
 
-                    this.$parent.delivery_fee = 6.90;
-
-                    if(this.isSeller == 1)
+                    if (this.$parent.DeliveryDetails.state == 'Sabah' || this.$parent.DeliveryDetails.state == 'Sarawak')
                     {
-                        this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.tempCount;
-                        this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
-                        this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
+                        this.$parent.delivery_fee = 27;
+
+                        if (this.isSeller == 1)
+                        {
+                            this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
+                            this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
+
+                            this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
+                            this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
+
+                        }
+                    } else {
+
+                        this.$parent.delivery_fee = 6.90;
+
+                        if (this.isSeller == 1)
+                        {
+                            this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
+                            this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
+
+                            this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
+                            this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
+                        }
                     }
+                    console.log('Total: ' + this.$parent.Totals);
+                    console.log('Shipping: ' + this.$parent.total_delivery_fee);
+
+                    EventBus.$emit('updateCountCart');
                 }
-                console.log('Total: ' + this.$parent.Totals )
-                console.log('Shipping: ' + this.$parent.total_delivery_fee )
             }.bind(this));
         },
         methods: {
+            getStateName(){
+                axios.get('/api/v1/state/Lists/list-state')
+                    .then(function (response) {
+                        this.States = response.data;
+                    }.bind(this));
+            },
             fetchAgentDetails(){
                 fetch('/api/v1/team/Lists/' + this.$parent.data +'/agent-info').then(response => response.json())
                     .then(response => {
@@ -256,16 +282,85 @@
                 if(this.$parent.delivery_type == 0)
                 {
                     this.$parent.Totals= this.$parent.Totals + this.$parent.total_delivery_fee;
+                    this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
+                    EventBus.$emit('updateCountCart');
+
                     console.log('Total :' + this.$parent.Totals);
                 }
                 if(this.$parent.delivery_type == 1)
                 {
                     this.$parent.Totals= this.$parent.Totals - this.$parent.total_delivery_fee;
+                    this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
+                    this.$parent.total_delivery_fee = 0;
+
                     console.log('Total :' + this.$parent.Totals);
                 }
             },
             sameAddress() {
                 this.$parent.DeliveryDetails = this.$parent.BillingDetails;
+
+                if(this.$parent.DeliveryDetails.state != null)
+                {
+                    this.$parent.tempCount = 0;
+                    // this.$parent.tempCount = this.$parent.Count / 10;
+                    // this.$parent.tempCount = parseInt(this.$parent.tempCount);
+
+//                console.log(this.tempCount);
+
+                    this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
+
+                    for (var key in this.$parent.Carts)
+                    {
+                        if (this.$parent.Carts[key].options.product_type === 'Normal')
+                        {
+                            var quantity = parseInt(this.$parent.Carts[key].qty);
+                            var quantity = quantity / 10;
+                            this.$parent.tempCount += quantity;
+                        }
+                        if (this.$parent.Carts[key].options.product_type === 'Special')
+                        {
+                            var quantity = parseInt(this.$parent.Carts[key].qty);
+                            var quantity = quantity / 10;
+                            this.$parent.tempCount += quantity;
+                        }
+                        if (this.$parent.Carts[key].options.product_type === 'Add-On')
+                        {
+                            var quantity = parseInt(this.$parent.Carts[key].qty);
+                            var quantity = quantity / 20;
+                            var quantity = parseInt(quantity);
+                            this.$parent.tempCount += quantity;
+                        }
+                    }
+
+                    if (this.$parent.DeliveryDetails.state == 'Sabah' || this.$parent.DeliveryDetails.state == 'Sarawak')
+                    {
+                        this.$parent.delivery_fee = 27;
+
+                        if (this.isSeller == 1)
+                        {
+                            this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
+                            this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
+
+                            this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
+                            this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
+                        }
+                    } else {
+
+                        this.$parent.delivery_fee = 6.90;
+
+                        if (this.isSeller == 1)
+                        {
+                            this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
+                            this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
+                            this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
+                            this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
+                        }
+                    }
+                    console.log('Total: ' + this.$parent.Totals);
+                    console.log('Shipping: ' + this.$parent.total_delivery_fee);
+
+                    EventBus.$emit('updateCountCart');
+                }
             },
         }
     }

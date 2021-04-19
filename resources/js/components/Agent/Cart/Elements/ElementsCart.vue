@@ -35,7 +35,7 @@
 
                             </div>
                         </div>
-                        <div class="row d-inline"  v-if="$parent.TotalMOQSpecial >= $parent.CountSpecial">
+                        <div class="row d-inline"  v-if="$parent.TotalMOQSpecial > $parent.CountSpecial">
                             <div class="col-lg-12 d-flex justify-content-end">
                                 <h6 class="font-weight-bolder  mt-n5">Set Special: <span class="text-danger">{{$parent.TotalMOQSpecial - $parent.CountSpecial}} More ..</span></h6>
                             </div>
@@ -139,6 +139,18 @@
                             <span class="font-weight-bolder font-size-h6 text-right">{{$parent.Count}}</span>
                         </div>
                     </div>
+
+                    <div class="row mt-3 mb-3">
+                        <div class="col-lg-4 text-right font-weight-bolder"></div>
+                        <div class="col-lg-4 text-right font-weight-bolder"></div>
+                        <div class="col-lg-2 text-right font-weight-bolder">
+                            <span class="font-weight-bolder font-size-h6 text-right">Delivery Fees</span>
+                        </div>
+                        <div class="col-lg-2 text-right font-weight-bolder">
+                            <span class="font-weight-bolder font-size-h6 text-right">RM {{$parent.total_delivery_fee}}</span>
+                        </div>
+                    </div>
+
                     <div class="row mt-3 mb-3">
                         <div class="col-lg-4 text-right font-weight-bolder"></div>
                         <div class="col-lg-4 text-right font-weight-bolder"></div>
@@ -207,6 +219,9 @@
                 this.fetchCart();
             });
 
+            EventBus.$on('updateCountCart', () => {
+                this.fetchCount();
+            });
         },
         watch: {
             data: function() {
@@ -250,16 +265,14 @@
                         console.log(this.$parent.Carts)
                         this.isSeller = this.$parent.IsSellerHQ;
                         this.$parent.TotalNormal = 0;
-                        for (var key in this.$parent.Carts) {
+                        for (var key in this.$parent.Carts)
+                        {
                             if(this.$parent.Carts[key].options.product_type === 'Normal')
                             {
                                 var moq = parseInt(this.$parent.Carts[key].options.MOQ);
-
                                 this.$parent.TotalMOQNormal = moq;
 
-
                                 var quantity = parseInt(this.$parent.Carts[key].qty);
-
                                 this.$parent.TotalNormal = this.$parent.TotalNormal + quantity;
                                 if(this.$parent.CountNormal !== 0)
                                 {
@@ -271,6 +284,7 @@
                             {
                                 var moq = parseInt(this.$parent.Carts[key].options.MOQ);
                                 this.$parent.TotalMOQSpecial = moq;
+
                                 var quantity = parseInt(this.$parent.Carts[key].qty);
                                 this.$parent.CountSpecial = quantity;
 
@@ -278,10 +292,9 @@
                             if(this.$parent.Carts[key].options.product_type === 'Add-On')
                             {
                                 var moq = parseInt(this.$parent.Carts[key].options.MOQ);
-
                                 this.$parent.TotalMOQAddOn = moq;
-                                var quantity = parseInt(this.$parent.Carts[key].qty);
 
+                                var quantity = parseInt(this.$parent.Carts[key].qty);
                                 this.$parent.CountAddOn = quantity;
 
                             }
@@ -295,14 +308,69 @@
                         {
                             this.$parent.CartStatus = true;
                         }
-                        this.fetchCount();
                         this.fetchTotals();
+                        this.fetchCount();
                     }.bind(this));
             },
             fetchCount(){
                 axios.get('/api/v1/cart/count-cart')
                     .then(function (response) {
                         this.$parent.Count = response.data;
+
+                        if(this.$parent.DeliveryDetails.state != null)
+                        {
+                            this.$parent.tempCount = 0;
+                            this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
+
+                            for (var key in this.$parent.Carts)
+                            {
+                                if(this.$parent.Carts[key].options.product_type === 'Normal')
+                                {
+
+                                    var quantity = parseInt(this.$parent.Carts[key].qty);
+                                    var quantity = quantity / 10;
+                                    this.$parent.tempCount += quantity;
+                                }
+                                if(this.$parent.Carts[key].options.product_type === 'Special')
+                                {
+                                    var quantity = parseInt(this.$parent.Carts[key].qty);
+                                    var quantity = quantity / 10;
+                                    this.$parent.tempCount += quantity;
+                                }
+                                if(this.$parent.Carts[key].options.product_type === 'Add-On')
+                                {
+                                    var quantity = parseInt(this.$parent.Carts[key].qty);
+                                    var quantity = quantity / 20;
+                                    var quantity = parseInt(quantity);
+                                    this.$parent.tempCount += quantity;
+                                }
+                            }
+
+                            if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak')
+                            {
+                                this.$parent.delivery_fee = 27;
+                                if(this.isSeller == 1)
+                                {
+                                    this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
+                                    this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
+                                    this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
+                                    this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
+                                }
+                            }
+                            else {
+                                this.$parent.delivery_fee = 6.90;
+                                if(this.isSeller == 1)
+                                {
+                                    this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
+                                    this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
+                                    this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
+                                    this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
+                                }
+                            }
+                            console.log('Total: ' + this.$parent.Totals )
+                            console.log('Shipping: ' + this.$parent.total_delivery_fee )
+                        }
+
                     }.bind(this));
             },
             fetchTotals(){

@@ -139,18 +139,9 @@
                             <span class="font-weight-bolder font-size-h6 text-right">{{$parent.Count}}</span>
                         </div>
                     </div>
+<!--                    <div class="row border-bottom">-->
 
-                    <div class="row mt-3 mb-3">
-                        <div class="col-lg-4 text-right font-weight-bolder"></div>
-                        <div class="col-lg-4 text-right font-weight-bolder"></div>
-                        <div class="col-lg-2 text-right font-weight-bolder">
-                            <span class="font-weight-bolder font-size-h6 text-right">Delivery Fees</span>
-                        </div>
-                        <div class="col-lg-2 text-right font-weight-bolder">
-                            <span class="font-weight-bolder font-size-h6 text-right">RM {{$parent.total_delivery_fee}}</span>
-                        </div>
-                    </div>
-
+<!--                    </div>-->
                     <div class="row mt-3 mb-3">
                         <div class="col-lg-4 text-right font-weight-bolder"></div>
                         <div class="col-lg-4 text-right font-weight-bolder"></div>
@@ -173,6 +164,21 @@
                             </div>
                         </div>
                     </div>
+<!--                    <div class="row border-bottom">-->
+
+<!--                    </div>-->
+
+                    <div class="row mt-3 mb-3">
+                        <div class="col-lg-4 text-right font-weight-bolder"></div>
+                        <div class="col-lg-4 text-right font-weight-bolder"></div>
+                        <div class="col-lg-2 text-right font-weight-bolder">
+                            <span class="font-weight-bolder font-size-h6 text-right">Delivery Fees</span>
+                        </div>
+                        <div class="col-lg-2 text-right font-weight-bolder">
+                            <span class="font-weight-bolder font-size-h6 text-right">RM {{$parent.total_delivery_fee}}</span>
+                        </div>
+                    </div>
+
                     <div class="row border-bottom">
 
                     </div>

@@ -75,18 +75,18 @@
                             </tr>
                             <tr>
                                 <td colspan="2"></td>
-                                <td class="font-weight-bolder text-right font-size-h6">Discount</td>
-                                <td class="font-weight-bolder text-right pr-0 font-size-h6">RM {{$parent.Discount}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"></td>
-                                <td class="font-weight-bolder text-right font-size-h6">Delivery Fees</td>
-                                <td class="font-weight-bolder text-right pr-0 font-size-h6">RM {{$parent.DeliveryFees}}</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"></td>
                                 <td class="font-weight-bolder text-right font-size-h6">Total Item</td>
                                 <td class="font-weight-bolder text-right pr-0 font-size-h6">{{$parent.Count}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-0 pt-0"></td>
+                                <td class="border-0 pt-0 font-weight-bolder text-right font-size-h6">Discount</td>
+                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0 font-size-h6">RM {{$parent.Discount}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border-0 pt-0"></td>
+                                <td class="border-0 pt-0 font-weight-bolder text-right font-size-h6">Delivery Fees</td>
+                                <td class="border-0 pt-0 font-weight-bolder text-right pr-0 font-size-h6">RM {{$parent.DeliveryFees}}</td>
                             </tr>
                             <!--<tr>-->
                             <!--<td colspan="2" class="border-0 pt-0"></td>-->
@@ -94,9 +94,9 @@
                             <!--<td class="border-0 pt-0 font-weight-bolder text-right pr-0">RM 15.00</td>-->
                             <!--</tr>-->
                             <tr>
-                                <td colspan="2" class="border-0 pt-0"></td>
-                                <td class="border-0 pt-0 font-weight-bolder font-size-h5 text-right">Grand Total</td>
-                                <td class="border-0 pt-0 font-weight-bolder font-size-h5 text-success text-right pr-0">
+                                <td colspan="2"></td>
+                                <td class="font-weight-bolder font-size-h5 text-right">Grand Total</td>
+                                <td class="font-weight-bolder font-size-h5 text-success text-right pr-0">
                                     <span v-if="$parent.data.country == 'Malaysia'">RM</span>
                                     <span v-if="$parent.data.country == 'Singapura' || $parent.data.country == 'Brunei'">$</span>
                                     {{$parent.Totals}}</td>

@@ -80,9 +80,9 @@
                                 <td class="border-0 pt-0 font-weight-bolder text-right pr-0">RM {{$parent.total_delivery_fee}}</td>
                             </tr>
                             <tr>
-                                <td colspan="2" class="border-0 pt-0"></td>
-                                <td class="border-0 pt-0 font-weight-bolder font-size-h5 text-right">Grand Total</td>
-                                <td class="border-0 pt-0 font-weight-bolder font-size-h5 text-success text-right pr-0">RM {{$parent.Totals}}</td>
+                                <td colspan="2"></td>
+                                <td class="font-weight-bolder font-size-h5 text-right">Grand Total</td>
+                                <td class="font-weight-bolder font-size-h5 text-success text-right pr-0">RM {{$parent.Totals}}</td>
                             </tr>
                             </tbody>
                         </table>

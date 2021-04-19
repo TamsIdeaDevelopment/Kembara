@@ -123,6 +123,19 @@
                         <div class="col-lg-4 text-right font-weight-bolder"></div>
                         <div class="col-lg-4 text-right font-weight-bolder"></div>
                         <div class="col-lg-2 text-right font-weight-bolder">
+                            <span class="font-weight-bolder font-size-h6 text-right">Total Item</span>
+                        </div>
+                        <div class="col-lg-2 text-right font-weight-bolder">
+                            <span class="font-weight-bolder font-size-h6 text-right">{{$parent.Count}}</span>
+                        </div>
+                    </div>
+<!--                    <div class="row border-bottom">-->
+
+<!--                    </div>-->
+                    <div class="row mt-3 mb-3">
+                        <div class="col-lg-4 text-right font-weight-bolder"></div>
+                        <div class="col-lg-4 text-right font-weight-bolder"></div>
+                        <div class="col-lg-2 text-right font-weight-bolder">
                             <span class="font-weight-bolder font-size-h6 text-right">Discount</span>
                         </div>
                         <div class="col-lg-2 text-right font-weight-bolder">
@@ -132,9 +145,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row border-bottom">
+<!--                    <div class="row border-bottom">-->
 
-                    </div>
+<!--                    </div>-->
                     <div class="row mt-3 mb-3">
                         <div class="col-lg-4 text-right font-weight-bolder"></div>
                         <div class="col-lg-4 text-right font-weight-bolder"></div>
@@ -146,19 +159,6 @@
                                 <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
                                 <input type="text" class="form-control" v-model="$parent.DeliveryFees" @change="addDeliveryFees" placeholder="RM"/>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row border-bottom">
-
-                    </div>
-                    <div class="row mt-3 mb-3">
-                        <div class="col-lg-4 text-right font-weight-bolder"></div>
-                        <div class="col-lg-4 text-right font-weight-bolder"></div>
-                        <div class="col-lg-2 text-right font-weight-bolder">
-                            <span class="font-weight-bolder font-size-h6 text-right">Total Item</span>
-                        </div>
-                        <div class="col-lg-2 text-right font-weight-bolder">
-                            <span class="font-weight-bolder font-size-h6 text-right">{{$parent.Count}}</span>
                         </div>
                     </div>
                     <div class="row border-bottom">

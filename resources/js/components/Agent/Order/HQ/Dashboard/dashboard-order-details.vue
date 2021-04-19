@@ -186,9 +186,9 @@
                                         <td class="font-weight-bolder pr-0 text-right text-danger font-size-h6 text-right">RM {{Order.point}}</td>
                                     </tr>
                                     <tr v-if="Order.delivery_type =='0'">
-                                        <td colspan="2"></td>
-                                        <td class="font-weight-bolder font-size-h6 text-right">Delivery Fees</td>
-                                        <td class="font-weight-bolder pr-0 text-right text-primary font-size-h6 text-right">RM {{Order.delivery_fees}}</td>
+                                        <td colspan="2" class="border-0 pt-0"></td>
+                                        <td class="border-0 pt-0 font-weight-bolder font-size-h6 text-right">Delivery Fees</td>
+                                        <td class="border-0 pt-0 font-weight-bolder pr-0 text-right text-primary font-size-h6 text-right">RM {{Order.delivery_fees}}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2"></td>

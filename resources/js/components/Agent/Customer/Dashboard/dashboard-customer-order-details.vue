@@ -132,13 +132,13 @@
                                         <td class="font-weight-bolder pr-0 text-right text-success font-size-h6 text-right" v-if="BuyerDetails.country =='Singapura' || BuyerDetails.country =='Brunei'">$ {{Order.total}}</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"></td>
-                                        <td class="font-weight-bolder font-size-h6 text-right">Delivery Fees</td>
-                                        <td class="font-weight-bolder pr-0 text-right text-success font-size-h6 text-right"  v-if="BuyerDetails.country =='Malaysia'">
+                                        <td colspan="2" class="border-0 pt-0"></td>
+                                        <td class="border-0 pt-0 font-weight-bolder font-size-h6 text-right">Delivery Fees</td>
+                                        <td class="border-0 pt-0 font-weight-bolder pr-0 text-right text-success font-size-h6 text-right"  v-if="BuyerDetails.country =='Malaysia'">
                                             RM {{Order.delivery_fees}}
                                             <input type="hidden" class="form-control"  placeholder="RM" v-model="total"/>
                                         </td>
-                                        <td class="font-weight-bolder pr-0 text-right text-success font-size-h6 text-right" v-if="BuyerDetails.country =='Singapura' || BuyerDetails.country =='Brunei'">$ {{Order.total}}</td>
+                                        <td class="border-0 pt-0 font-weight-bolder pr-0 text-right text-success font-size-h6 text-right" v-if="BuyerDetails.country =='Singapura' || BuyerDetails.country =='Brunei'">$ {{Order.total}}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2"></td>

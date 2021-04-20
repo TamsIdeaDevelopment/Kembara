@@ -18,13 +18,13 @@
                 <td>
                     <div class="input-group">
                         <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                        <input type="number" class="form-control" id="product-smprice" placeholder="RM" v-model="ProductName.semenanjung_price"/>
+                        <input type="text" class="form-control" id="product-smprice" placeholder="RM" v-model="ProductName.semenanjung_price"/>
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
                         <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                        <input type="number" class="form-control" id="product-ssprice" placeholder="RM" v-model="ProductName.ss_price" />
+                        <input type="text" class="form-control" id="product-ssprice" placeholder="RM" v-model="ProductName.ss_price" />
                     </div>
                 </td>
                 <td>

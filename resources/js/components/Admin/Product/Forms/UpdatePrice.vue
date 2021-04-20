@@ -31,14 +31,14 @@
                                                         <label>Semenanjung</label>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                                                            <input type="number" class="form-control" v-model="$parent.RolesPriceMOQ[index].price" placeholder="RM"/>
+                                                            <input type="text" class="form-control" v-model="$parent.RolesPriceMOQ[index].price" placeholder="RM"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <label>Sabah & Sarawak</label>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                                                            <input type="number" class="form-control" v-model="$parent.RolesPriceMOQ[index].ss_price" placeholder="RM"/>
+                                                            <input type="text" class="form-control" v-model="$parent.RolesPriceMOQ[index].ss_price" placeholder="RM"/>
                                                         </div>
                                                     </div>
 <!--                                                    <div class="col-lg-4">-->

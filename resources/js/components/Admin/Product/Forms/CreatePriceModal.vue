@@ -30,7 +30,7 @@
                             </div>
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                                <input type="number"  class="form-control"  v-model="AgentPrice.price"/>
+                                <input type="text"  class="form-control"  v-model="AgentPrice.price"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -42,7 +42,7 @@
                             </div>
                             <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                                <input type="number"  class="form-control"  v-model="AgentPrice.ss_price"/>
+                                <input type="text"  class="form-control"  v-model="AgentPrice.ss_price"/>
                             </div>
                         </div>
                     </div>

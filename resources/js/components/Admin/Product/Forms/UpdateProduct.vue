@@ -57,7 +57,7 @@
                                                 <div class="col-xl-12">
                                                     <div class="form-group">
                                                         <label>Weight (kg)</label>
-                                                        <input type="number" class="form-control" v-model="$parent.Products.weight" placeholder="Weight"/>
+                                                        <input type="text" class="form-control" v-model="$parent.Products.weight" placeholder="Weight"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -72,7 +72,7 @@
                                                         </div>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                                                            <input type="number" class="form-control" v-model="$parent.Products.retail_price" placeholder="RM"/>
+                                                            <input type="text" class="form-control" v-model="$parent.Products.retail_price" placeholder="RM"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -88,7 +88,7 @@
                                                         </div>
                                                         <div class="input-group">
                                                             <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                                                            <input type="number" class="form-control" v-model="$parent.Products.ss_retail_price" placeholder="RM"/>
+                                                            <input type="text" class="form-control" v-model="$parent.Products.ss_retail_price" placeholder="RM"/>
                                                         </div>
                                                     </div>
                                                 </div>

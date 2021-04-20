@@ -30,7 +30,7 @@
                     </div>
                     <div class="input-group">
                         <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                        <input type="number" class="form-control" placeholder="RM" v-model="$parent.PackagesType.retail_price"/>
+                        <input type="text" class="form-control" placeholder="RM" v-model="$parent.PackagesType.retail_price"/>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="input-group">
                         <div class="input-group-prepend"><span class="input-group-text">RM</span></div>
-                        <input type="number" class="form-control" placeholder="RM" v-model="$parent.PackagesType.ss_retail_price"/>
+                        <input type="text" class="form-control" placeholder="RM" v-model="$parent.PackagesType.ss_retail_price"/>
                     </div>
                 </div>
             </div>

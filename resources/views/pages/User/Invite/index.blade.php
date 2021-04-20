@@ -1254,9 +1254,12 @@
                                             <div class="input-icon ">
                                                 <span class="color-primary "></span>
                                             </div>
-                                            <input id="country" type="text" class="form-control @error('country') is-invalid @enderror"
-                                                   name="country" value="{{ old('country') }}" required autocomplete="country" autofocus  placeholder="Country">
+{{--                                            <input id="country" type="text" class="form-control @error('country') is-invalid @enderror"--}}
+{{--                                                   name="country" value="{{ old('country') }}" required autocomplete="country" autofocus  placeholder="Country">--}}
 
+                                            <select class="form-control" style="width:100%" id="update-select-country" name="country" required>
+                                                <option value="Malaysia">Malaysia</option>
+                                            </select>
                                             @error('country')
                                             <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -1434,6 +1437,7 @@
             </div>
         </div>
         <!--footer top end-->
+
     </footer>
     <!--footer section end-->
 

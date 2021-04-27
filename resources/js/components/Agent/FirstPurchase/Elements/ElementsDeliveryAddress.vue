@@ -24,7 +24,7 @@
                     <div v-show="$parent.delivery_type == 0">
                         <div class="form-group mt-8">
                             <div class="checkbox-inline">
-                                <label class="checkbox checkbox-square"  @click="sameAddress">
+                                <label class="checkbox checkbox-square"  @change="sameAddress($parent.isSameDeliveryDetails)">
                                     <input type="checkbox"/>
                                     <span></span>
                                     Use this billing address as my shipping address
@@ -170,7 +170,6 @@
         data(){
             return{
                 isSeller:1,
-                // tempCount:0,
                 States: [],
             }
         },
@@ -197,69 +196,7 @@
             $("#update-select-state").change(function(){
                 this.$parent.DeliveryDetails.state= $("#update-select-state").val();
 
-                if(this.$parent.DeliveryDetails.state != null) {
-                    this.$parent.tempCount = 0;
-                    // this.$parent.tempCount = this.$parent.Count / 10;
-                    // this.$parent.tempCount = parseInt(this.$parent.tempCount);
-
-//                console.log(this.$parent.tempCount);
-
-                    this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
-
-                    for (var key in this.$parent.Carts)
-                    {
-                        if (this.$parent.Carts[key].options.product_type === 'Normal')
-                        {
-                            var quantity = parseInt(this.$parent.Carts[key].qty);
-                            var quantity = quantity / 10;
-                            this.$parent.tempCount += quantity;
-                        }
-                        if (this.$parent.Carts[key].options.product_type === 'Special')
-                        {
-                            var quantity = parseInt(this.$parent.Carts[key].qty);
-                            var quantity = quantity / 10;
-                            this.$parent.tempCount += quantity;
-                        }
-                        if (this.$parent.Carts[key].options.product_type === 'Add-On')
-                        {
-                            var quantity = parseInt(this.$parent.Carts[key].qty);
-                            var quantity = quantity / 20;
-                            var quantity = parseInt(quantity);
-                            this.$parent.tempCount += quantity;
-                        }
-                    }
-
-                    if (this.$parent.DeliveryDetails.state == 'Sabah' || this.$parent.DeliveryDetails.state == 'Sarawak')
-                    {
-                        this.$parent.delivery_fee = 27;
-
-                        if (this.isSeller == 1)
-                        {
-                            this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
-                            this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
-
-                            this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
-                            this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
-
-                        }
-                    } else {
-
-                        this.$parent.delivery_fee = 6.90;
-
-                        if (this.isSeller == 1)
-                        {
-                            this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
-                            this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
-
-                            this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
-                            this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
-                        }
-                    }
-                    console.log('Total: ' + this.$parent.Totals);
-                    console.log('Shipping: ' + this.$parent.total_delivery_fee);
-
-                    EventBus.$emit('updateCountCart');
-                }
+                EventBus.$emit('updateCountCart');
             }.bind(this));
         },
         methods: {
@@ -296,71 +233,19 @@
                     console.log('Total :' + this.$parent.Totals);
                 }
             },
-            sameAddress() {
-                this.$parent.DeliveryDetails = this.$parent.BillingDetails;
-
-                if(this.$parent.DeliveryDetails.state != null)
+            sameAddress(data) {
+                if (!data)
                 {
-                    this.$parent.tempCount = 0;
-                    // this.$parent.tempCount = this.$parent.Count / 10;
-                    // this.$parent.tempCount = parseInt(this.$parent.tempCount);
-
-//                console.log(this.tempCount);
-
-                    this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
-
-                    for (var key in this.$parent.Carts)
-                    {
-                        if (this.$parent.Carts[key].options.product_type === 'Normal')
-                        {
-                            var quantity = parseInt(this.$parent.Carts[key].qty);
-                            var quantity = quantity / 10;
-                            this.$parent.tempCount += quantity;
-                        }
-                        if (this.$parent.Carts[key].options.product_type === 'Special')
-                        {
-                            var quantity = parseInt(this.$parent.Carts[key].qty);
-                            var quantity = quantity / 10;
-                            this.$parent.tempCount += quantity;
-                        }
-                        if (this.$parent.Carts[key].options.product_type === 'Add-On')
-                        {
-                            var quantity = parseInt(this.$parent.Carts[key].qty);
-                            var quantity = quantity / 20;
-                            var quantity = parseInt(quantity);
-                            this.$parent.tempCount += quantity;
-                        }
-                    }
-
-                    if (this.$parent.DeliveryDetails.state == 'Sabah' || this.$parent.DeliveryDetails.state == 'Sarawak')
-                    {
-                        this.$parent.delivery_fee = 27;
-
-                        if (this.isSeller == 1)
-                        {
-                            this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
-                            this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
-
-                            this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
-                            this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
-                        }
-                    } else {
-
-                        this.$parent.delivery_fee = 6.90;
-
-                        if (this.isSeller == 1)
-                        {
-                            this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
-                            this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
-                            this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
-                            this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
-                        }
-                    }
-                    console.log('Total: ' + this.$parent.Totals);
-                    console.log('Shipping: ' + this.$parent.total_delivery_fee);
-
-                    EventBus.$emit('updateCountCart');
+                    this.$parent.DeliveryDetails = this.$parent.BillingDetails;
                 }
+                if(data)
+                {
+                    this.$parent.DeliveryDetails = [];
+                }
+                this.$parent.isSameDeliveryDetails = !this.$parent.isSameDeliveryDetails;
+
+                EventBus.$emit('updateCountCart');
+
             },
         }
     }

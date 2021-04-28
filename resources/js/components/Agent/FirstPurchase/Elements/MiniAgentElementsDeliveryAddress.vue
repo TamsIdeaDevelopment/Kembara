@@ -24,7 +24,7 @@
                     <div v-show="$parent.delivery_type == 0">
                         <div class="form-group mt-8">
                             <div class="checkbox-inline">
-                                <label class="checkbox checkbox-square"  @click="sameAddress">
+                                <label class="checkbox checkbox-square"  @change="sameAddress($parent.isSameDeliveryDetails)">
                                     <input type="checkbox"/>
                                     <span></span>
                                     Use this billing address as my shipping address
@@ -137,24 +137,9 @@
                                                     <label class="text-danger">{{$parent.errors['state']}}</label>
                                                 </div>
                                             </div>
-                                            <select class="form-control" style="width:100%" id="select-state" v-model="$parent.DeliveryDetails.state">
+                                            <select class="form-control" style="width:100%" id="update-select-state" v-model="$parent.DeliveryDetails.state">
                                                 <option value="" disabled>State</option>
-                                                <option value="Kuala Lumpur">Kuala Lumpur</option>
-                                                <option value="Selangor">Selangor</option>
-                                                <option value="Pahang">Pahang</option>
-                                                <option value="Terengganu">Terengganu</option>
-                                                <option value="Kelantan">Kelantan</option>
-                                                <option value="Negeri Sembilan">Negeri Sembilan</option>
-                                                <option value="Melaka">Melaka</option>
-                                                <option value="Johor">Johor</option>
-                                                <option value="Perlis">Perlis</option>
-                                                <option value="Perak">Perak</option>
-                                                <option value="Sabah">Sabah</option>
-                                                <option value="Sarawak">Sarawak</option>
-                                                <option value="Pulau Pinang">Pulau Pinang</option>
-                                                <option value="Kedah">Kedah</option>
-                                                <option value="Putrajaya">Putrajaya</option>
-                                                <option value="Labuan">Labuan</option>
+                                                <option  v-for="State in States" :value="State.name">{{ State.name }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -211,8 +196,8 @@
             //     placeholder: 'State',
             //     allowClear: true
             // });
-            $("#select-state").change(function(){
-                this.$parent.DeliveryDetails.state= $("#select-state").val();
+            $("#update-select-state").change(function(){
+                this.$parent.DeliveryDetails.state= $("#update-select-state").val();
                 this.tempCount = 0;
                 this.tempCount = this.$parent.Count / 10;
                 this.tempCount = parseInt(this.tempCount);
@@ -278,8 +263,16 @@
                     console.log('Total :' + this.$parent.Totals);
                 }
             },
-            sameAddress() {
-                this.$parent.DeliveryDetails = this.$parent.BillingDetails;
+            sameAddress(data) {
+                if (!data)
+                {
+                    this.$parent.DeliveryDetails = this.$parent.BillingDetails;
+                }
+                if(data)
+                {
+                    this.$parent.DeliveryDetails = [];
+                }
+                this.$parent.isSameDeliveryDetails = !this.$parent.isSameDeliveryDetails;
 
                 this.tempCount = 0;
                 this.tempCount = this.$parent.Count / 10;

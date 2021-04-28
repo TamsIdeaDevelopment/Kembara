@@ -182,6 +182,8 @@ Vue.component('agent-customer-review-submit-elements', require('./components/Age
 /**  Dashboard  */
 Vue.component('agent-dashboard', require('./components/Agent/Dashboard/Dashboard/dashboard.vue').default);
 Vue.component('agent-mini-dashboard', require('./components/Agent/Dashboard/Dashboard/MiniDashboard.vue').default);
+Vue.component('agent-mini-package-lists', require('./components/Agent/Dashboard/Lists/ListsPackage.vue').default);
+Vue.component('agent-mini-package-elements', require('./components/Agent/Dashboard/Elements/ElementsMiniAgentPackage.vue').default);
 Vue.component('agent-hall-of-fame-restock', require('./components/Agent/Dashboard/Dashboard/HallOfFameRestock').default);
 Vue.component('agent-dashboard-chart', require('./components/Agent/Dashboard/Chart/DashboardChart.vue').default);
 

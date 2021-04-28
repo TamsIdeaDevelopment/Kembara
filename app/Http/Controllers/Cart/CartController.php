@@ -15,6 +15,7 @@ use App\Http\Controllers\Team\Lists\ListTeam;
 use App\Package;
 use App\Product;
 use App\Stock_agent;
+use App\User;
 use Cart;
 use App\Http\Resources\Package as PackageResource;
 
@@ -88,6 +89,16 @@ class CartController
     {
         $agent = Agent::where('user_id',$user_id)->first();
 
+        $user_state = User::where('id',$user_id)->first();
+
+        if($user_state['east_west'] == 'SS')
+        {
+            $price = 'ss_retail_price';
+        }
+        else {
+            $price = 'retail_price';
+        }
+
         $data = Cart::count();
         if($data ==0)
         {
@@ -110,7 +121,7 @@ class CartController
             for($i=0; $i<count($package_details); $i++)
             {
 
-                $cart[] = Cart::add($package_details[$i]['product_id']['id'],$package_details[$i]['product_id']['name'], $package_details[$i]['qty'], $package_details[$i]['retail_price'], $package_details[$i]['product_id']['weight'] , ['size' => $package_details[$i]['product_id']['featured_image']]);
+                $cart[] = Cart::add($package_details[$i]['product_id']['id'],$package_details[$i]['product_id']['name'], $package_details[$i]['qty'], $package_details[$i][$price], $package_details[$i]['product_id']['weight'] , ['size' => $package_details[$i]['product_id']['featured_image']]);
 
                 $cart_items [] = CartItem::create([
                     'rowId' =>  $cart[$i]->rowId,

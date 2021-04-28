@@ -33,6 +33,17 @@ class ProfileSettings
 
         $user = $this->repository->findOrFail($id);
 
+        $east_west ='';
+        if($user['country'] == 'Malaysia')
+        {
+            $east_west = 'Semenanjung';
+
+            if($request->input('state') == 'Sabah' || $request->input('state') == 'Sarawak' || $request->input('state') == 'Labuan')
+            {
+                $east_west = 'SS';
+            }
+        }
+
         $user->name = $request->input('name');
         $user->nric = $request->input('nric');
         $user->email = $request->input('email');
@@ -46,6 +57,7 @@ class ProfileSettings
         $user->postcode = $request->input('postcode');
         $user->city = $request->input('city');
         $user->state = $request->input('state');
+        $user->east_west = $east_west;
         $user->country = $request->input('country');
         $user->address_1 = $request->input('address_1');
         $user->bank_name = $request->input('bank_name');

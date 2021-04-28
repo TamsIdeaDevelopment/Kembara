@@ -30,7 +30,7 @@
 
                             </div>
                         </div>
-                        <div class="row d-inline"  v-if="$parent.TotalMOQSpecial >= $parent.CountSpecial">
+                        <div class="row d-inline"  v-if="$parent.TotalMOQSpecial > $parent.CountSpecial">
                             <div class="col-lg-12 d-flex justify-content-end">
                                 <h6 class="font-weight-bolder  mt-n5">Set Special: <span class="text-danger">{{$parent.TotalMOQSpecial - $parent.CountSpecial}} More ..</span></h6>
                             </div>

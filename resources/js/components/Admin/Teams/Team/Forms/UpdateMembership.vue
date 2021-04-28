@@ -41,7 +41,7 @@
                                         <label class="text-danger">{{errors['state']}}</label>
                                     </div>
                                 </div>
-                                <select class="form-control select2" style="width:100%" id="update-select-state" v-model="this.$parent.detailsState.id">
+                                <select class="form-control select2" style="width:100%" id="update-select-state-profile" v-model="this.$parent.detailsState.id">
                                     <option  v-for="State in States" :value="State.id">{{ State.name }}</option>
                                 </select>
                             </div>
@@ -83,8 +83,8 @@
         },
 
         mounted () {
-            $("#update-select-state").change(function(){
-                this.$parent.detailsState.id = $("#update-select-state").val();
+            $("#update-select-state-profile").change(function(){
+                this.$parent.detailsState.id = $("#update-select-state-profile").val();
             }.bind(this));
             $("#update-select-territory").change(function(){
                 this.$parent.detailsTerritory.id = $("#update-select-territory").val();

@@ -165,6 +165,7 @@
     </div>
 </template>
 <script>
+    import {EventBus} from "../../../../app";
     export default{
         props: [],
         data(){

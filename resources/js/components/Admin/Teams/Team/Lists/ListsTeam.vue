@@ -42,12 +42,13 @@
                             $('#kt_datatable').DataTable(
                                 {
                                     responsive: true,
+                                    select:{items:'Status'},
                                     pagingType: 'full_numbers',
                                     columnDefs: [
                                         { "width": "50px", "targets": 0 },
                                         { "width": "50px", "targets": 1 },
                                         { "width": "550px", "targets": 2 },
-                                        { "width": "50px", "targets": 3 },
+                                        { "width": "90px", "targets": 3 },
                                         { "width": "50px", "targets": 4 },
                                         { "width": "50px", "targets": 5 },
                                         { "width": "150px", "targets": 6 },

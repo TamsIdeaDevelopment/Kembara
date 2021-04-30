@@ -36,7 +36,7 @@ class ListTeam
     {
         $data = $this->repository->where([
             ['HQ', '=', '0'],
-            ['status', '=', '1']])->latest()->get();
+            ['status', '!=', '0']])->latest()->get();
 
         return AgentResources::collection($data);
     }

@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Team\Deletes;
 
 
 use App\Agent;
+use App\User;
 
 class DeleteTeam
 {
@@ -29,8 +30,11 @@ class DeleteTeam
     public function deleteAgent($id)
     {
         $data = $this->repository->findOrFail($id);
-
         $data->status = 2;
+
+        $id_agent = User::find($data->user_id);
+        $id_agent->status = 1;
+        $id_agent->save();
 
         if($data->save()){
             return $data;

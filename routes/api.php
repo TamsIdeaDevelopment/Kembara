@@ -177,6 +177,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
             Route::get('{territory_id}/{agent_levels_id}/search-teams', 'ListTeam@SearchTeam')->name('search-teams');
             Route::get('{levelID}/list-new-leader', 'ListTeam@listNewLeader')->name('list-new-leader');
             Route::get('{id}/list-new-leader-based-on-parent', 'ListTeam@listNewLeaderBasedOnParent')->name('list-new-leader-based-on-parent');
+
+            Route::get('{status}/admin-filter-team', 'FilterTeam@adminFilter')->name('admin-filter-team');
         });
     });
 

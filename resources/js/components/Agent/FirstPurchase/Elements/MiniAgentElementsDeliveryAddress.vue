@@ -205,7 +205,7 @@
                 console.log(this.$parent.DeliveryDetails.state);
 
                 this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
-                if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak')
+                if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak' || this.$parent.DeliveryDetails.state =='Labuan')
                 {
                     this.$parent.delivery_fee = 27;
 
@@ -280,7 +280,7 @@
 
 
                 this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
-                if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak')
+                if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak' || this.$parent.DeliveryDetails.state =='Labuan')
                 {
                     this.$parent.delivery_fee = 27;
 

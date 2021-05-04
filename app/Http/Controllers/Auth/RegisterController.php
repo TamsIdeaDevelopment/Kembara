@@ -76,7 +76,7 @@ class RegisterController extends Controller
         {
             $east_west = 'Semenanjung';
 
-            if($data['state'] == 12 || $data['state'] == 11)
+            if($data['state'] == 12 || $data['state'] == 11 || $data['state'] == 18)
             {
                 $east_west = 'SS';
             }

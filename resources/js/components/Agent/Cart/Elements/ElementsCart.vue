@@ -352,7 +352,7 @@
                                 }
                             }
 
-                            if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak')
+                            if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak' || this.$parent.DeliveryDetails.state =='Labuan')
                             {
                                 this.$parent.delivery_fee = 27;
                                 if(this.isSeller == 1)

@@ -9,6 +9,8 @@
 namespace App\Http\Controllers\Common;
 
 
+use App\Agent;
+use App\States;
 use App\User;
 
 use Illuminate\Http\Request;
@@ -64,6 +66,10 @@ class ProfileSettings
         $user->bank_acc_no = $request->input('bank_acc_no');
         $user->bank_acc_name = $request->input('bank_acc_name');
 
+        $state = States::where('name', $request->input('state'))->first();
+        $membership_state = Agent::where('user_id',$user->id)->first();
+        $membership_state->state_id = $state->id;
+        $membership_state->save();
 
         if($user->save()){
             return $user;

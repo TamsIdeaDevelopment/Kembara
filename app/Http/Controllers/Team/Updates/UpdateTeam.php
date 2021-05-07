@@ -11,6 +11,8 @@ namespace App\Http\Controllers\Team\Updates;
 
 use App\Agent;
 use App\Running_numbers;
+use App\States;
+use App\User;
 use Illuminate\Http\Request;
 
 class UpdateTeam
@@ -39,6 +41,11 @@ class UpdateTeam
 
         $data->territory_id = $request->input('territory_id');
         $data->state_id = $request->input('state_id');
+
+        $state = States::where('id', $request->input('state_id'))->first();
+        $profile_state = User::where('id',$data->user_id)->first();
+        $profile_state->state = $state->name;
+        $profile_state->save();
 
         if($data->save()){
             return $data;

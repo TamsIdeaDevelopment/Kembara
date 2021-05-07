@@ -267,6 +267,10 @@
                             placeholder: this.detailsState.name,
                             allowClear: true
                         });
+                        $('#update-select-state-profile').select2({
+                            placeholder: this.detailsState.name,
+                            allowClear: true
+                        });
                         $('#update-select-territory').select2({
                             placeholder: this.detailsTerritory.name,
                             allowClear: true

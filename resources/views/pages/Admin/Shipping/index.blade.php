@@ -17,9 +17,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <admin-shipping-dashboard></admin-shipping-dashboard>
+                    <admin-shipping-dashboard></admin-shipping-dashboard>
                 {{--<agent-stock-dashboard :data="{{Auth::user()->id}}"></agent-stock-dashboard>--}}
+                </div>
             </div>
         </div>
     </div>

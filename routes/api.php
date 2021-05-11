@@ -240,7 +240,6 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
                 Route::post('/create-order', 'CreateOrder@createOrder')->name('create-order');
                 Route::post('/create-first-purchase', 'CreateFirstPurchase@createFirstPurchase')->name('create-first-purchase');
                 Route::post('/create-test-order', 'CreateOrder@createTestOrder')->name('create-test-order');
-                Route::post('/create-mini-agent-order', 'CreateOrder@createMiniAgentOrder')->name('create-mini-agent-order');
             });
 
             Route::group(['prefix' => 'Updates', 'as' => 'Updates.','namespace' => 'Updates'], function () {

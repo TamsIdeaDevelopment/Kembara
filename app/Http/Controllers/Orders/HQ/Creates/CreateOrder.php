@@ -534,8 +534,6 @@ class CreateOrder
                 $point->point = $point->point - $input['point'];
                 $point->save();
             }
-
-            return response ($order);
             Cart::destroy();
             return ['redirect' => route('billplz-create',$order->id)];
         }

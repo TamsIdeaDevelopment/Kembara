@@ -344,8 +344,8 @@
                 this.Orders.point=this.point;
 
                 this.Orders.Carts = this.Carts;
-                this.Orders.details.HQ = this.IsSellerHQ;
-                this.Orders.details.seller_id = this.seller_id;
+                this.Orders.details.HQ = 1;
+                this.Orders.details.seller_id = 1;
                 this.Orders.details.buyer_id = this.BillingDetails.id;
                 this.Orders.details.total = this.Totals;
                 this.Orders.details.deliver_to = this.DeliveryDetails.name;
@@ -367,7 +367,7 @@
                 formData.append("order", JSON.stringify(this.Orders));
                 formData.append("proof_of_payment", this.proof_of_payment_image);
                 let vm= this;
-                axios.post('/api/v1/orders/HQ/Creates/create-order', formData, config)
+                axios.post('/api/v1/orders/HQ/Creates/create-mini-agent-order', formData, config)
                     .then(function (data) {
                         console.log(data.data.redirect);
                         window.location = data.data.redirect;

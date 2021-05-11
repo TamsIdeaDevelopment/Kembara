@@ -18522,8 +18522,8 @@ __webpack_require__.r(__webpack_exports__);
       this.Orders.proof_of_payment = this.proof_of_payment_image;
       this.Orders.point = this.point;
       this.Orders.Carts = this.Carts;
-      this.Orders.details.HQ = 1;
-      this.Orders.details.seller_id = 1;
+      this.Orders.details.HQ = this.IsSellerHQ;
+      this.Orders.details.seller_id = this.seller_id;
       this.Orders.details.buyer_id = this.BillingDetails.id;
       this.Orders.details.total = this.Totals;
       this.Orders.details.deliver_to = this.DeliveryDetails.name;
@@ -18544,7 +18544,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append("order", JSON.stringify(this.Orders));
       formData.append("proof_of_payment", this.proof_of_payment_image);
       var vm = this;
-      axios.post('/api/v1/orders/HQ/Creates/create-mini-agent-order', formData, config).then(function (data) {
+      axios.post('/api/v1/orders/HQ/Creates/create-order', formData, config).then(function (data) {
         console.log(data.data.redirect);
         window.location = data.data.redirect;
       })["catch"](function (error) {

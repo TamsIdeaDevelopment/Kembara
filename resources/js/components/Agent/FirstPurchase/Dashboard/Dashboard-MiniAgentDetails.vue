@@ -344,8 +344,8 @@
                 this.Orders.point=this.point;
 
                 this.Orders.Carts = this.Carts;
-                this.Orders.details.HQ = 1;
-                this.Orders.details.seller_id = 1;
+                this.Orders.details.HQ = this.IsSellerHQ;
+                this.Orders.details.seller_id = this.seller_id;
                 this.Orders.details.buyer_id = this.BillingDetails.id;
                 this.Orders.details.total = this.Totals;
                 this.Orders.details.deliver_to = this.DeliveryDetails.name;

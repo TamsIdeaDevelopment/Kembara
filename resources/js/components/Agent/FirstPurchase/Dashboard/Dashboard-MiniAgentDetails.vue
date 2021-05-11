@@ -367,7 +367,7 @@
                 formData.append("order", JSON.stringify(this.Orders));
                 formData.append("proof_of_payment", this.proof_of_payment_image);
                 let vm= this;
-                axios.post('/api/v1/orders/HQ/Creates/create-mini-agent-order', formData, config)
+                axios.post('/api/v1/orders/HQ/Creates/create-order', formData, config)
                     .then(function (data) {
                         console.log(data.data.redirect);
                         window.location = data.data.redirect;

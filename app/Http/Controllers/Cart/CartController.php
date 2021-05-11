@@ -116,7 +116,7 @@ class CartController
             $leader_id = $agent_detail['leader_id']['user_id'];
             $paid = $agent_detail['paid'];
             $stock = 0;
-            $HQ = 0;
+            $HQ = 1;
 
             for($i=0; $i<count($package_details); $i++)
             {

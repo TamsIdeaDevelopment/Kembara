@@ -126,7 +126,7 @@ class CartController
                 $cart_items [] = CartItem::create([
                     'rowId' =>  $cart[$i]->rowId,
                     'product_id' =>  $package_details[$i]['product_id']['id'],
-                    'seller_id' =>  $leader_id,
+                    'seller_id' =>  1,
                     'HQ' =>  $HQ,
                     'quantity' =>  $package_details[$i]['qty'],
                     'status' =>  0,

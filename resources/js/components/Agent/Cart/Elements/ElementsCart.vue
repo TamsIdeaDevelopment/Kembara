@@ -426,7 +426,8 @@
             },
             changeQuantity(rowId,quantity,productId,stock,product_name)
             {
-                if(quantity > stock)
+                stock += 1;
+                if(quantity >= (stock +1))
                 {
 //                    this.$parent.CartStatus = false;
                     toastr.options = {

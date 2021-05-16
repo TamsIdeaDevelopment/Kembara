@@ -114,17 +114,14 @@ class ListProduct
     {
         $details = $this->agent->where('user_id', $user_id)->first();
 
-        $data = $this->agent_price->where([['agent_levels_id',$details->agent_levels_id],['status','On']])->get();
+        $data = $this->agent_price->where([['agent_levels_id',$details->agent_levels_id]])->get();
 
         return $data;
     }
 
     public function StockLeaderList($user_id)
     {
-
-
         $agent_detail = $this->agent_details->agentInformation($user_id);
-
 
         $agent_detail = json_decode(json_encode($agent_detail), true);
 
@@ -153,31 +150,68 @@ class ListProduct
         {
             $product = $this->stockListPriceAndMOQ($user_id);
 
-
-
             $stock_leader = $this->stock_leader->where('user_id',$leader_id)->get();
 
             $stock_details = array();
             foreach($stock_leader as $key)
             {
-                $stock_details[] = array(
-                    'product_id' => $key['product_id'],
-                    'quantity' => $key['quantity'],
-                );
-
+                if($key['quantity'] > 0)
+                {
+                    $stock_details[] = array(
+                        'product_id' => $key['product_id'],
+                        'quantity' => $key['quantity'],
+                    );
+                }
+                else {
+                    foreach ($product as $sample)
+                    {
+                        if($key['product_id'] == $sample['product_id'])
+                        {
+                            if($sample['status'] == 'On')
+                            {
+                                $stock_details[] = array(
+                                    'product_id' => $key['product_id'],
+                                    'quantity' => $key['quantity'],
+                                );
+                            }
+                        }
+                    }
+                }
             }
+
             $product_details = array();
             foreach($product as $data)
             {
-                $product_details[] = array(
-                    'product_id' => $data['product_id'],
-                    'price' => $data['price'],
-                    'ss_price' => $data['ss_price'],
-                    'minimum_order' => $data['minimum_order'],
-                    'quantity' => 0,
-                );
-
+                if($data['status'] == 'Off')
+                {
+                    foreach($stock_leader as $stock)
+                    {
+                        if($data['product_id'] == $stock['product_id'])
+                        {
+                            if($stock['quantity'] > 0)
+                            {
+                                $product_details[] = array(
+                                    'product_id' => $data['product_id'],
+                                    'price' => $data['price'],
+                                    'ss_price' => $data['ss_price'],
+                                    'minimum_order' => $data['minimum_order'],
+                                    'quantity' => 0,
+                                );
+                            }
+                        }
+                    }
+                }
+                else {
+                    $product_details[] = array(
+                        'product_id' => $data['product_id'],
+                        'price' => $data['price'],
+                        'ss_price' => $data['ss_price'],
+                        'minimum_order' => $data['minimum_order'],
+                        'quantity' => 0,
+                    );
+                }
             }
+
             $final =$stock_details;
             foreach ($product_details as $value) {
                 $flag = 0;
@@ -212,24 +246,63 @@ class ListProduct
         $stock_details = array();
         foreach($stock_leader as $key)
         {
-            $stock_details[] = array(
-                'product_id' => $key['product_id'],
-                'quantity' => $key['quantity'],
-            );
-
+            if($key['quantity'] > 0)
+            {
+                $stock_details[] = array(
+                    'product_id' => $key['product_id'],
+                    'quantity' => $key['quantity'],
+                );
+            }
+            else {
+                foreach ($product as $sample)
+                {
+                    if($key['product_id'] == $sample['product_id'])
+                    {
+                        if($sample['status'] == 'On')
+                        {
+                            $stock_details[] = array(
+                                'product_id' => $key['product_id'],
+                                'quantity' => $key['quantity'],
+                            );
+                        }
+                    }
+                }
+            }
         }
+
         $product_details = array();
         foreach($product as $data)
         {
-            $product_details[] = array(
-                'product_id' => $data['product_id'],
-                'price' => $data['price'],
-                'ss_price' => $data['ss_price'],
-                'minimum_order' => $data['minimum_order'],
-                'quantity' => 0,
-            );
-
+            if($data['status'] == 'Off')
+            {
+                foreach($stock_leader as $stock)
+                {
+                    if($data['product_id'] == $stock['product_id'])
+                    {
+                        if($stock['quantity'] > 0)
+                        {
+                            $product_details[] = array(
+                                'product_id' => $data['product_id'],
+                                'price' => $data['price'],
+                                'ss_price' => $data['ss_price'],
+                                'minimum_order' => $data['minimum_order'],
+                                'quantity' => 0,
+                            );
+                        }
+                    }
+                }
+            }
+            else {
+                $product_details[] = array(
+                    'product_id' => $data['product_id'],
+                    'price' => $data['price'],
+                    'ss_price' => $data['ss_price'],
+                    'minimum_order' => $data['minimum_order'],
+                    'quantity' => 0,
+                );
+            }
         }
+
         $final =$stock_details;
         foreach ($product_details as $value) {
             $flag = 0;
@@ -262,29 +335,73 @@ class ListProduct
         $stock_details = array();
         foreach($stock_leader as $key)
         {
-            $stock_details[] = array(
-                'product_id' => $key['product_id'],
-                'stock' => $key['quantity'],
-                'quantity' => 0,
-                'total_price' => 0,
-                'item_id' => $key['product_id'],
-            );
-
+            if($key['quantity'] > 0)
+            {
+                $stock_details[] = array(
+                    'product_id' => $key['product_id'],
+                    'stock' => $key['quantity'],
+                    'quantity' => 0,
+                    'total_price' => 0,
+                    'item_id' => $key['product_id'],
+                );
+            }
+            else {
+                foreach ($product as $sample)
+                {
+                    if($key['product_id'] == $sample['product_id'])
+                    {
+                        if($sample['status'] == 'On')
+                        {
+                            $stock_details[] = array(
+                                'product_id' => $key['product_id'],
+                                'stock' => $key['quantity'],
+                                'quantity' => 0,
+                                'total_price' => 0,
+                                'item_id' => $key['product_id'],
+                            );
+                        }
+                    }
+                }
+            }
         }
+
         $product_details = array();
         foreach($product as $data)
         {
-            $product_details[] = array(
-                'product_id' => $data['product_id'],
-                'price' => $data['price'],
-                'minimum_order' => $data['minimum_order'],
-                'stock' => 0,
-                'quantity' => 0,
-                'total_price' => 0,
-                'item_id' =>$data['product_id'],
-            );
-
+            if($data['status'] == 'Off')
+            {
+                foreach($stock_leader as $stock)
+                {
+                    if($data['product_id'] == $stock['product_id'])
+                    {
+                        if($stock['quantity'] > 0)
+                        {
+                            $product_details[] = array(
+                                'product_id' => $data['product_id'],
+                                'price' => $data['price'],
+                                'minimum_order' => $data['minimum_order'],
+                                'stock' => 0,
+                                'quantity' => 0,
+                                'total_price' => 0,
+                                'item_id' =>$data['product_id'],
+                            );
+                        }
+                    }
+                }
+            }
+            else {
+                $product_details[] = array(
+                    'product_id' => $data['product_id'],
+                    'price' => $data['price'],
+                    'minimum_order' => $data['minimum_order'],
+                    'stock' => 0,
+                    'quantity' => 0,
+                    'total_price' => 0,
+                    'item_id' =>$data['product_id'],
+                );
+            }
         }
+
         $final =$stock_details;
         foreach ($product_details as $value) {
             $flag = 0;

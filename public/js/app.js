@@ -8127,7 +8127,7 @@ __webpack_require__.r(__webpack_exports__);
           'Pick Up Date*': '01/03/2021',
           'Sender Name*': 'KEMBARA MEALS',
           'Sender Company': 'SAUDAGAR KITCHEN SDN BHD',
-          'Sender Contact*': '0198686297',
+          'Sender Contact*': '60198686297',
           'Sender Alt Contact': '',
           'Sender Email': 'sales@kembarameals.com',
           'Sender Address': 'NO CS 25, JALAN PUTERI 2A/6, CUBICA SQUARE, BANDAR PUTERI BANGI',
@@ -8135,7 +8135,7 @@ __webpack_require__.r(__webpack_exports__);
           'Sender City*': 'KAJANG',
           'receiver_name': this.shipment_selected[i].deliver_to,
           'receiver_company': "",
-          'receiver_contact': this.shipment_selected[i].deliver_to_phone_no,
+          'receiver_contact': '6' + this.shipment_selected[i].deliver_to_phone_no,
           'receiver_alt_contact': "",
           'receiver_email': "",
           'receiver_address': this.shipment_selected[i].shipping_address,
@@ -14554,7 +14554,9 @@ __webpack_require__.r(__webpack_exports__);
     changeQuantity: function changeQuantity(rowId, quantity, productId, stock, product_name) {
       var _this4 = this;
 
-      if (quantity > stock) {
+      stock += 1;
+
+      if (quantity >= stock + 1) {
         //                    this.$parent.CartStatus = false;
         toastr.options = {
           "closeButton": true,
@@ -19378,7 +19380,9 @@ __webpack_require__.r(__webpack_exports__);
     changeQuantity: function changeQuantity(rowId, quantity, productId, stock, product_name) {
       var _this4 = this;
 
-      if (quantity > stock) {
+      stock += 1;
+
+      if (quantity >= stock + 1) {
         //                    this.$parent.CartStatus = false;
         toastr.options = {
           "closeButton": true,

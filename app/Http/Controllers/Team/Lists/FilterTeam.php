@@ -50,4 +50,22 @@ class FilterTeam
         return AgentResources::collection($data);
     }
 
+    public function agentFilter($id, $status)
+    {
+        if( $status == '3')
+        {
+            $data = $this->repository->where([
+//                ['HQ', '=', '0'],
+                ['leader_id', '=', $id],
+                ['status', '!=', '2']])->latest()->get();
+        }
+        else{
+            $data = $this->repository->where([
+//                ['HQ', '=', '0'],
+                ['leader_id', '=', $id],
+                ['status', '=', $status]])->latest()->get();
+        }
+
+        return AgentResources::collection($data);
+    }
 }

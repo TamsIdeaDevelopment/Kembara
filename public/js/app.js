@@ -23364,6 +23364,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
   data: function data() {
@@ -23686,12 +23688,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       image_source: 'storage/ProfilePicture/',
       Teams: [],
-      dataTable: null
+      dataTable: null,
+      filterTeam: 3
     };
   },
   created: function created() {
@@ -23703,18 +23721,88 @@ __webpack_require__.r(__webpack_exports__);
     VueEvent.$on('fetchTeam', function () {
       _this.fetchTeam();
     });
+    VueEvent.$on('searchTeam', function () {
+      _this.searchTeam();
+    });
+    $('#select-agent-filter-team').select2({
+      placeholder: "Status",
+      allowClear: true
+    });
+    $("#select-agent-filter-team").change(function () {
+      this.filterTeam = $("#select-agent-filter-team").val();
+    }.bind(this));
   },
   methods: {
-    fetchTeam: function fetchTeam() {
+    filterValidation: function filterValidation() {
+      if (this.filterTeam == 3) {
+        this.fetchTeam();
+      } else {
+        this.searchTeam();
+      }
+    },
+    searchTeam: function searchTeam() {
       var _this2 = this;
 
-      fetch('/api/v1/team/Lists/' + this.$parent.data.id + '/team-members').then(function (response) {
+      fetch('/api/v1/team/Lists/' + this.$parent.data.id + '/' + this.filterTeam + '/agent-filter-team').then(function (response) {
         return response.json();
       }).then(function (response) {
         _this2.Teams = response.data;
         $('#table-team-member').DataTable().destroy();
 
         _this2.$nextTick(function () {
+          $('#table-team-member').DataTable({
+            responsive: true,
+            select: {
+              items: 'Status'
+            },
+            pagingType: 'full_numbers',
+            columnDefs: [{
+              "width": "50px",
+              "targets": 0
+            }, {
+              "width": "50px",
+              "targets": 1
+            }, {
+              "width": "550px",
+              "targets": 2
+            }, {
+              "width": "90px",
+              "targets": 3
+            }, {
+              "width": "50px",
+              "targets": 4
+            }, {
+              "width": "50px",
+              "targets": 5
+            }, {
+              "width": "150px",
+              "targets": 6
+            }, {
+              "width": "50px",
+              "targets": 7
+            }, {
+              //targets: 3,
+              width: '50px',
+              title: 'Actions',
+              orderable: false,
+              render: function render(data, type, full, meta) {}
+            }]
+          });
+        });
+      })["catch"](function (error) {
+        return console.log(error);
+      });
+    },
+    fetchTeam: function fetchTeam() {
+      var _this3 = this;
+
+      fetch('/api/v1/team/Lists/' + this.$parent.data.id + '/team-members').then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        _this3.Teams = response.data;
+        $('#table-team-member').DataTable().destroy();
+
+        _this3.$nextTick(function () {
           $('#table-team-member').DataTable({
             //dom: 'Blfrtip',
             scrollX: false,
@@ -45748,7 +45836,7 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "wizard-desc" }, [
-                                  _vm._v("Choose Payment Method")
+                                  _vm._v("Payment Method")
                                 ]),
                                 _vm._v(" "),
                                 "payment_error" in _vm.errors
@@ -45986,9 +46074,7 @@ var staticRenderFns = [
           _vm._v("Complete your cart")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "wizard-desc" }, [
-          _vm._v("Choose Payment Method")
-        ])
+        _c("div", { staticClass: "wizard-desc" }, [_vm._v("Payment Method")])
       ])
     ])
   },
@@ -65029,6 +65115,17 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("td", [
+                  Team.status == "0"
+                    ? _c(
+                        "span",
+                        {
+                          staticClass:
+                            "label label-warning label-pill label-inline mr-2"
+                        },
+                        [_vm._v("Pending")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
                   Team.status == "1"
                     ? _c(
                         "span",
@@ -65037,6 +65134,17 @@ var render = function() {
                             "label label-success label-pill label-inline mr-2"
                         },
                         [_vm._v("Active")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  Team.status == "2"
+                    ? _c(
+                        "span",
+                        {
+                          staticClass:
+                            "label label-danger label-pill label-inline mr-2"
+                        },
+                        [_vm._v("Not Active")]
                       )
                     : _vm._e()
                 ]),
@@ -65615,7 +65723,67 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card card-custom" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "card-header flex-wrap py-5" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-toolbar" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-8" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.filterTeam,
+                    expression: "filterTeam"
+                  }
+                ],
+                staticClass: "form-control select2",
+                staticStyle: { width: "100%" },
+                attrs: { id: "select-agent-filter-team" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.filterTeam = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "3" } }, [_vm._v("All")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "1" } }, [_vm._v("Active")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "0" } }, [_vm._v("Pending")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "2" } }, [_vm._v("Not Active")])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-4" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-sm btn-primary",
+                on: { click: _vm.filterValidation }
+              },
+              [_vm._v(" Search")]
+            )
+          ])
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -65630,13 +65798,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header flex-wrap py-5" }, [
-      _c("div", { staticClass: "card-title" }, [
-        _c("h3", { staticClass: "card-label" }, [
-          _vm._v("Teams\n                "),
-          _c("span", { staticClass: "d-block text-muted pt-2 font-size-sm" }, [
-            _vm._v("List of Teams")
-          ])
+    return _c("div", { staticClass: "card-title" }, [
+      _c("h3", { staticClass: "card-label" }, [
+        _vm._v("Teams\n                "),
+        _c("span", { staticClass: "d-block text-muted pt-2 font-size-sm" }, [
+          _vm._v("List of Teams")
         ])
       ])
     ])

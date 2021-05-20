@@ -70,7 +70,7 @@ class ListTeam
     }
     public function TeamMember($id)
     {
-        $data = $this->repository->where([['leader_id',$id]])->latest()->get();
+        $data = $this->repository->where([['leader_id',$id]])->where('status','!=','2')->latest()->get();
 
         return AgentResources::collection($data);
     }

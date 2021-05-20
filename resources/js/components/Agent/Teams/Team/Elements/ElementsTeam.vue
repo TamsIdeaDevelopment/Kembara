@@ -43,7 +43,9 @@
 
                 </td>
                 <td>
+                    <span v-if="Team.status =='0'" class="label label-warning label-pill label-inline mr-2">Pending</span>
                     <span v-if="Team.status =='1'" class="label label-success label-pill label-inline mr-2">Active</span>
+                    <span v-if="Team.status =='2'" class="label label-danger label-pill label-inline mr-2">Not Active</span>
                 </td>
                 <td>
                     <span v-if="!Team.user_id.payment_api_key" class="label label-warning label-pill label-inline mr-2">Not Active {{Team.user_id.payment_api_key }}</span>

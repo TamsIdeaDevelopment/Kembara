@@ -55422,7 +55422,7 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "wizard-desc" }, [
-                                  _vm._v("Choose Payment Method")
+                                  _vm._v("Payment Method")
                                 ]),
                                 _vm._v(" "),
                                 "payment_error" in _vm.errors
@@ -55666,9 +55666,7 @@ var staticRenderFns = [
           _vm._v("Complete your cart")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "wizard-desc" }, [
-          _vm._v("Choose Payment Method")
-        ])
+        _c("div", { staticClass: "wizard-desc" }, [_vm._v("Payment Method")])
       ])
     ])
   },
@@ -55878,7 +55876,7 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "wizard-desc" }, [
-                                  _vm._v("Choose Payment Method")
+                                  _vm._v("Payment Method")
                                 ]),
                                 _vm._v(" "),
                                 "payment_error" in _vm.errors
@@ -56118,9 +56116,7 @@ var staticRenderFns = [
           _vm._v("Complete your cart")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "wizard-desc" }, [
-          _vm._v("Choose Payment Method")
-        ])
+        _c("div", { staticClass: "wizard-desc" }, [_vm._v("Payment Method")])
       ])
     ])
   },

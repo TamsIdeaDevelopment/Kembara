@@ -50,7 +50,7 @@
                                             <div class="wizard-number">3</div>
                                             <div class="wizard-label">
                                                 <div class="wizard-title">Setup Payment</div>
-                                                <div class="wizard-desc">Choose Payment Method</div>
+                                                <div class="wizard-desc">Payment Method</div>
                                                 <span class="card-label font-weight-bolder text-danger" v-if="('payment_error' in errors)">{{errors['payment_error']}}</span>
                                             </div>
                                         </div>
@@ -60,7 +60,7 @@
                                             <div class="wizard-number">3</div>
                                             <div class="wizard-label">
                                                 <div class="wizard-title text-danger">Complete your cart</div>
-                                                <div class="wizard-desc">Choose Payment Method</div>
+                                                <div class="wizard-desc">Payment Method</div>
                                             </div>
                                         </div>
                                     </div>

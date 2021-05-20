@@ -3,18 +3,18 @@
 @section('content')
     @include('layouts.others.mobile')
     <div class="d-flex flex-column flex-root">
-        <div class="d-flex flex-row flex-column-fluid page">
+        <div class="d-flex flex-row flex-column-fluid page">)
+        @if($agent->agent_levels_id == 5 && $agent->paid == 0)
+            @include('menus.minimenu')
+        @elseif($agent->agent_levels_id <= 5)
             @include('menus.menu')
-            @if($agent->agent_levels_id == 5 && $agent->paid == 0)
-                @include('menus.minimenu')
-            @endif
+        @endif
             <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
                 @if($agent->agent_levels_id == 5 && $agent->paid == 0)
                     @include('menus.minitop-bar')
                 @elseif($agent->agent_levels_id <= 5)
                     @include('menus.top-bar')
                 @endif
-
                 <!--begin::Content-->
                 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
                     <div class="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">

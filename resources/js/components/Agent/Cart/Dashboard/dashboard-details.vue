@@ -96,7 +96,9 @@
                                                 <button type="button" class="btn btn-light-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-prev">Previous</button>
                                             </div>
                                             <div>
-                                                <button type="submit" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-state="action-submit" data-wizard-type="action-submit">Order</button>
+                                                <button type="submit" v-if="this.delivery_type == 0 && this.total_delivery_fee > 0" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-state="action-submit" data-wizard-type="action-submit">Order</button>
+                                                <button type="submit" v-if="this.delivery_type == 1 && this.total_delivery_fee == 0" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-state="action-submit" data-wizard-type="action-submit">Order</button>
+                                                <button type="button" @click="checkDelivery()" v-if="this.delivery_type == 0 && this.total_delivery_fee == 0" class="btn btn-success font-weight-bolder text-uppercase px-9 py-4" data-wizard-state="action-submit" data-wizard-type="action-submit">Order</button>
                                                 <button type="button" v-show="CartStatus === true" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">Next</button>
                                                 <button type="button" v-show="CartStatus === false" disabled class="btn btn-secondary font-weight-bolder text-uppercase px-9 py-4" data-wizard-type="action-next">Next</button>
                                             </div>
@@ -362,7 +364,6 @@
                 this.Orders.details.postcode = this.DeliveryDetails.postcode;
                 this.Orders.details.remarks = this.remarks;
 
-
                 let currentObj = this;
                 const config = {
                     headers: { 'content-type': 'multipart/form-data' }
@@ -414,7 +415,24 @@
 //                    if (!response.ok) {
 //                    }
 //                })
-            }
+            },
+            checkDelivery() {
+                Swal.fire({
+                    title: 'No delivery was charged.',
+                    html: 'You need to <strong><u>hard refresh</u></strong> your browser to continue.',
+                    icon: 'warning',
+                    confirmButtonColor: '#1BC5BD',
+                    confirmButtonText: 'OK!',
+                    footer: '<a target="_blank" href="//webdogs.com/blog/how-to-clear-your-browser-cache/">How to hard refresh my browser?</a>',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/cart-details";
+                    }
+                    else {
+                        window.location.href = "/cart-details";
+                    }
+                });
+            },
         }
 
     }

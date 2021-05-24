@@ -373,8 +373,8 @@
                                     this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
                                 }
                             }
-                            console.log('Total: ' + this.$parent.Totals )
-                            console.log('Shipping: ' + this.$parent.total_delivery_fee )
+                            console.log('Total: ' + this.$parent.Totals );
+                            console.log('Shipping: ' + this.$parent.total_delivery_fee );
                         }
 
                     }.bind(this));

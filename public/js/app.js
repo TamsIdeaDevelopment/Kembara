@@ -18317,6 +18317,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
   data: function data() {
@@ -18602,6 +18604,22 @@ __webpack_require__.r(__webpack_exports__);
       ////                    if (!response.ok) {
       ////                    }
       //                })
+    },
+    checkDelivery: function checkDelivery() {
+      Swal.fire({
+        title: 'No delivery was charged.',
+        html: 'You need to <strong><u>hard refresh</u></strong> your browser then, click <strong>Buy Now</strong> to continue.',
+        icon: 'warning',
+        confirmButtonColor: '#1BC5BD',
+        confirmButtonText: 'OK!',
+        footer: '<a target="_blank" href="//webdogs.com/blog/how-to-clear-your-browser-cache/">How to hard refresh my browser?</a>'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          window.location.href = "/home";
+        } else {
+          window.location.href = "/home";
+        }
+      });
     }
   }
 });
@@ -18617,6 +18635,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -19002,6 +19022,22 @@ __webpack_require__.r(__webpack_exports__);
       ////                    if (!response.ok) {
       ////                    }
       //                })
+    },
+    checkDelivery: function checkDelivery() {
+      Swal.fire({
+        title: 'No delivery was charged.',
+        html: 'You need to <strong><u>hard refresh</u></strong> your browser to continue.',
+        icon: 'warning',
+        confirmButtonColor: '#1BC5BD',
+        confirmButtonText: 'OK!',
+        footer: '<a target="_blank" href="//webdogs.com/blog/how-to-clear-your-browser-cache/">How to hard refresh my browser?</a>'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          window.location.href = "/cart-first-purchase";
+        } else {
+          window.location.href = "/cart-first-purchase";
+        }
+      });
     }
   }
 });
@@ -55602,19 +55638,64 @@ var render = function() {
                                 _vm._m(5),
                                 _vm._v(" "),
                                 _c("div", [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
-                                      attrs: {
-                                        type: "submit",
-                                        "data-wizard-state": "action-submit",
-                                        "data-wizard-type": "action-submit"
-                                      }
-                                    },
-                                    [_vm._v("Order")]
-                                  ),
+                                  this.delivery_type == 0 &&
+                                  this.total_delivery_fee > 0
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
+                                          attrs: {
+                                            type: "submit",
+                                            "data-wizard-state":
+                                              "action-submit",
+                                            "data-wizard-type": "action-submit"
+                                          }
+                                        },
+                                        [_vm._v("Order")]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  this.delivery_type == 1 &&
+                                  this.total_delivery_fee == 0
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
+                                          attrs: {
+                                            type: "submit",
+                                            "data-wizard-state":
+                                              "action-submit",
+                                            "data-wizard-type": "action-submit"
+                                          }
+                                        },
+                                        [_vm._v("Order")]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  this.delivery_type == 0 &&
+                                  this.total_delivery_fee == 0
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
+                                          attrs: {
+                                            type: "button",
+                                            "data-wizard-state":
+                                              "action-submit",
+                                            "data-wizard-type": "action-submit"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.checkDelivery()
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Order")]
+                                      )
+                                    : _vm._e(),
                                   _vm._v(" "),
                                   _c(
                                     "button",
@@ -56052,19 +56133,64 @@ var render = function() {
                                 _vm._m(5),
                                 _vm._v(" "),
                                 _c("div", [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
-                                      attrs: {
-                                        type: "submit",
-                                        "data-wizard-state": "action-submit",
-                                        "data-wizard-type": "action-submit"
-                                      }
-                                    },
-                                    [_vm._v("Order")]
-                                  ),
+                                  this.delivery_type == 0 &&
+                                  this.total_delivery_fee > 0
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
+                                          attrs: {
+                                            type: "submit",
+                                            "data-wizard-state":
+                                              "action-submit",
+                                            "data-wizard-type": "action-submit"
+                                          }
+                                        },
+                                        [_vm._v("Order")]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  this.delivery_type == 1 &&
+                                  this.total_delivery_fee == 0
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
+                                          attrs: {
+                                            type: "submit",
+                                            "data-wizard-state":
+                                              "action-submit",
+                                            "data-wizard-type": "action-submit"
+                                          }
+                                        },
+                                        [_vm._v("Order")]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  this.delivery_type == 0 &&
+                                  this.total_delivery_fee == 0
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
+                                          attrs: {
+                                            type: "button",
+                                            "data-wizard-state":
+                                              "action-submit",
+                                            "data-wizard-type": "action-submit"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.checkDelivery()
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Order")]
+                                      )
+                                    : _vm._e(),
                                   _vm._v(" "),
                                   _c(
                                     "button",

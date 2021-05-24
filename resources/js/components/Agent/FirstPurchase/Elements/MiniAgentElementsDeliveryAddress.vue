@@ -230,8 +230,8 @@
                         this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
                     }
                 }
-                console.log('Total: ' + this.$parent.Totals )
-                console.log('Shipping: ' + this.$parent.total_delivery_fee )
+                console.log('Total: ' + this.$parent.Totals );
+                console.log('Shipping: ' + this.$parent.total_delivery_fee );
             }.bind(this));
         },
         methods: {
@@ -303,8 +303,8 @@
                         this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
                     }
                 }
-                console.log('Total: ' + this.$parent.Totals )
-                console.log('Shipping: ' + this.$parent.total_delivery_fee )
+                console.log('Total: ' + this.$parent.Totals );
+                console.log('Shipping: ' + this.$parent.total_delivery_fee );
             },
         }
     }

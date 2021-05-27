@@ -98,7 +98,7 @@
                 <div v-show="$parent.IsSellerHQ == 0">
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-lg-4 col-xxl-2 justify-content-center">
+                            <div class="col-lg-4 col-xxl-4 justify-content-center">
                                 <div style="width: 200px; height: 200px">
                                     <img v-if="$parent.SellerDetails.bank_name =='CIMB'" style="width: 100%;" class="mt-20 pb-0" src="assets/bank/cimb.png">
                                     <img v-if="$parent.SellerDetails.bank_name =='Hong Leong'" style="width: 100%;" class="mt-20 pb-0" src="assets/bank/hongleong.png">
@@ -119,7 +119,7 @@
                                     <img v-if="$parent.SellerDetails.bank_name =='Others'" style="width: 50%;" class="mt-15 ml-10 pb-0" src="assets/bank/others.png">
                                 </div>
                             </div>
-                            <div class="col-lg-8  col-xxl-10 d-flex justify-content-start mt-18">
+                            <div class="col-lg-8  col-xxl-8 d-flex justify-content-start mt-18">
                                 <table class="font-size-h4">
                                     <tr>
                                         <td>Bank </td>

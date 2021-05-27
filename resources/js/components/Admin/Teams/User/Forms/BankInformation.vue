@@ -9,11 +9,12 @@
                         </span>
                         Bank Information
                     </h3>
+                    <span class="card-label font-weight-bolder text-danger" v-if="('bank_info' in errors)">{{errors['bank_info']}}</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <form  @submit.prevent="UpdateProfile">
+                    <form  @submit.prevent="checkValidation">
                         <div class="card-body p-0 pl-0">
                             <div class="form-group">
                                 <label>Bank Name <span class="text-danger">*</span></label>
@@ -91,76 +92,100 @@
         created() {
 
         },
-        methods:
-            {
-                UpdateProfile() {
-                    this.errors = [];
-                    if((this.$parent.details.bank_name !== '') && (this.$parent.details.bank_acc_no !== '') && (this.$parent.details.bank_acc_name !== ''))
-                    {
-                        var url = '/api/v1/profile/'+ this.$parent.details.id +'/update-profile', method = 'post';
+        methods: {
+            UpdateProfile() {
+                var url = '/api/v1/profile/'+ this.$parent.details.id +'/update-profile', method = 'post';
 
-                        fetch(url, {
-                            method: method,
-                            body: JSON.stringify({
-                                name: this.$parent.details.name,
-                                nric:this.$parent.details.nric,
-                                email: this.$parent.details.email,
-                                facebook: this.$parent.details.facebook,
-                                instagram: this.$parent.details.instagram,
-                                Shopee: this.$parent.details.Shopee,
-                                Lazada: this.$parent.details.Lazada,
-                                phone_no: this.$parent.details.phone_no,
-                                postcode : this.$parent.details.postcode,
-                                city: this.$parent.details.city,
-                                country: this.$parent.details.country,
-                                address_1: this.$parent.details.address_1,
-                                bank_name: this.$parent.details.bank_name,
-                                bank_acc_no: this.$parent.details.bank_acc_no,
-                                bank_acc_name: this.$parent.details.bank_acc_name,
-                            }),
-                            headers: {
-                                'content-type': 'application/json'
-                            }
-                        }).then((response) => {
-                            toastr.options = {
-                                "closeButton": true,
-                                "debug": false,
-                                "newestOnTop": false,
-                                "progressBar": false,
-                                "positionClass": "toast-top-right",
-                                "preventDuplicates": false,
-                                "onclick": null,
-                                "showDuration": "300",
-                                "hideDuration": "1000",
-                                "timeOut": "5000",
-                                "extendedTimeOut": "1000",
-                                "showEasing": "swing",
-                                "hideEasing": "linear",
-                                "showMethod": "fadeIn",
-                                "hideMethod": "fadeOut"
-                            };
-
-                            toastr.success("Successfully changed the personal information.", "Profile Updated");
-                        })
+                fetch(url, {
+                    method: method,
+                    body: JSON.stringify({
+                        name: this.$parent.details.name,
+                        nric:this.$parent.details.nric,
+                        email: this.$parent.details.email,
+                        facebook: this.$parent.details.facebook,
+                        instagram: this.$parent.details.instagram,
+                        Shopee: this.$parent.details.Shopee,
+                        Lazada: this.$parent.details.Lazada,
+                        phone_no: this.$parent.details.phone_no,
+                        postcode : this.$parent.details.postcode,
+                        city: this.$parent.details.city,
+                        state: this.$parent.details.state,
+                        country: this.$parent.details.country,
+                        address_1: this.$parent.details.address_1,
+                        bank_name: this.$parent.details.bank_name,
+                        bank_acc_no: this.$parent.details.bank_acc_no,
+                        bank_acc_name: this.$parent.details.bank_acc_name,
+                    }),
+                    headers: {
+                        'content-type': 'application/json'
                     }
+                }).then((response) => {
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
 
-                    if(!this.$parent.details.bank_name)
-                    {
-                        this.errors['bank_name'] = "Please choose the bank name"
-                    }
+                    toastr.success("Successfully changed the personal information.", "Profile Updated");
+                })
+            },
+            checkValidation () {
+                this.errors = [];
+                if((this.$parent.details.bank_name) && (this.$parent.details.bank_acc_no) && (this.$parent.details.bank_acc_name))
+                {
+                    this.UpdateProfile();
+                }
 
-                    if(!this.$parent.details.bank_acc_no){
-                        this.errors['bank_acc_no'] = "Please insert the account no"
-                    }
+                if(!this.$parent.details.bank_name)
+                {
+                    this.errors['bank_name'] = "Please choose the bank name"
+                }
 
-                    if(!this.$parent.details.bank_acc_name)
-                    {
-                        this.errors['bank_acc_name'] = "Please insert the account holder name"
-                    }
+                if(!this.$parent.details.bank_acc_no){
+                    this.errors['bank_acc_no'] = "Please insert the account no"
+                }
 
-                },
-            }
+                if(!this.$parent.details.bank_acc_name)
+                {
+                    this.errors['bank_acc_name'] = "Please insert the account holder name"
+                }
+
+                if((!this.$parent.details.bank_name) || (!this.$parent.details.bank_acc_no) || (!this.$parent.details.bank_acc_name))
+                {
+                    this.errors['bank_info'] = "Please complete the details"
+
+                    toastr.options = {
+                        "closeButton": true,
+                        "debug": false,
+                        "newestOnTop": false,
+                        "progressBar": false,
+                        "positionClass": "toast-top-right",
+                        "preventDuplicates": false,
+                        "onclick": null,
+                        "showDuration": "300",
+                        "hideDuration": "1000",
+                        "timeOut": "5000",
+                        "extendedTimeOut": "1000",
+                        "showEasing": "swing",
+                        "hideEasing": "linear",
+                        "showMethod": "fadeIn",
+                        "hideMethod": "fadeOut"
+                    };
+                    toastr.error("Please complete your personal information.", "Failed");
+                }
+            },
+        }
     }
-
-
 </script>

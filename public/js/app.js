@@ -6120,6 +6120,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
   data: function data() {
@@ -6391,6 +6393,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -7204,6 +7208,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -12788,6 +12794,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
   data: function data() {
@@ -12807,53 +12814,57 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {},
   methods: {
     UpdateProfile: function UpdateProfile() {
+      var url = '/api/v1/profile/' + this.$parent.details.id + '/update-profile',
+          method = 'post';
+      fetch(url, {
+        method: method,
+        body: JSON.stringify({
+          name: this.$parent.details.name,
+          nric: this.$parent.details.nric,
+          email: this.$parent.details.email,
+          facebook: this.$parent.details.facebook,
+          instagram: this.$parent.details.instagram,
+          Shopee: this.$parent.details.Shopee,
+          Lazada: this.$parent.details.Lazada,
+          phone_no: this.$parent.details.phone_no,
+          postcode: this.$parent.details.postcode,
+          city: this.$parent.details.city,
+          state: this.$parent.details.state,
+          country: this.$parent.details.country,
+          address_1: this.$parent.details.address_1,
+          bank_name: this.$parent.details.bank_name,
+          bank_acc_no: this.$parent.details.bank_acc_no,
+          bank_acc_name: this.$parent.details.bank_acc_name
+        }),
+        headers: {
+          'content-type': 'application/json'
+        }
+      }).then(function (response) {
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        };
+        toastr.success("Successfully changed the personal information.", "Profile Updated");
+      });
+    },
+    checkValidation: function checkValidation() {
       this.errors = [];
 
-      if (this.$parent.details.bank_name !== '' && this.$parent.details.bank_acc_no !== '' && this.$parent.details.bank_acc_name !== '') {
-        var url = '/api/v1/profile/' + this.$parent.details.id + '/update-profile',
-            method = 'post';
-        fetch(url, {
-          method: method,
-          body: JSON.stringify({
-            name: this.$parent.details.name,
-            nric: this.$parent.details.nric,
-            email: this.$parent.details.email,
-            facebook: this.$parent.details.facebook,
-            instagram: this.$parent.details.instagram,
-            Shopee: this.$parent.details.Shopee,
-            Lazada: this.$parent.details.Lazada,
-            phone_no: this.$parent.details.phone_no,
-            postcode: this.$parent.details.postcode,
-            city: this.$parent.details.city,
-            country: this.$parent.details.country,
-            address_1: this.$parent.details.address_1,
-            bank_name: this.$parent.details.bank_name,
-            bank_acc_no: this.$parent.details.bank_acc_no,
-            bank_acc_name: this.$parent.details.bank_acc_name
-          }),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(function (response) {
-          toastr.options = {
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": false,
-            "progressBar": false,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "onclick": null,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-          };
-          toastr.success("Successfully changed the personal information.", "Profile Updated");
-        });
+      if (this.$parent.details.bank_name && this.$parent.details.bank_acc_no && this.$parent.details.bank_acc_name) {
+        this.UpdateProfile();
       }
 
       if (!this.$parent.details.bank_name) {
@@ -12866,6 +12877,28 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.$parent.details.bank_acc_name) {
         this.errors['bank_acc_name'] = "Please insert the account holder name";
+      }
+
+      if (!this.$parent.details.bank_name || !this.$parent.details.bank_acc_no || !this.$parent.details.bank_acc_name) {
+        this.errors['bank_info'] = "Please complete the details";
+        toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "5000",
+          "extendedTimeOut": "1000",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        };
+        toastr.error("Please complete your personal information.", "Failed");
       }
     }
   }
@@ -13300,6 +13333,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -33452,7 +33489,11 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(2)
+            _vm._m(2),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _vm._m(3)
           ])
         ])
       ])
@@ -33474,6 +33515,16 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-prepend" }, [
       _c("span", { staticClass: "input-group-text" }, [_vm._v("RM")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", [
+      _c("strong", [
+        _vm._v("*No special characters in a file name. E.g., ! @ # ? ] } )")
+      ])
     ])
   },
   function() {
@@ -34483,7 +34534,11 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(2)
+            _vm._m(2),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _vm._m(3)
           ])
         ])
       ])
@@ -34505,6 +34560,16 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-prepend" }, [
       _c("span", { staticClass: "input-group-text" }, [_vm._v("RM")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", [
+      _c("strong", [
+        _vm._v("*No special characters in a file name. E.g., ! @ # ? ] } )")
+      ])
     ])
   },
   function() {
@@ -36288,13 +36353,17 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
-                              _vm._m(3)
+                              _vm._m(3),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(" "),
+                              _vm._m(4)
                             ])
                           ])
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(4)
+                      _vm._m(5)
                     ]
                   )
                 ])
@@ -36338,6 +36407,16 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "input-group-prepend" }, [
       _c("span", { staticClass: "input-group-text" }, [_vm._v("RM")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", [
+      _c("strong", [
+        _vm._v("*No special characters in a file name. E.g., ! @ # ? ] } )")
+      ])
     ])
   },
   function() {
@@ -44384,7 +44463,19 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row " }, [
     _c("div", { staticClass: "col-lg-12" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-12" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          "bank_info" in _vm.errors
+            ? _c(
+                "span",
+                { staticClass: "card-label font-weight-bolder text-danger" },
+                [_vm._v(_vm._s(_vm.errors["bank_info"]))]
+              )
+            : _vm._e()
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-lg-12" }, [
@@ -44394,7 +44485,7 @@ var render = function() {
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.UpdateProfile($event)
+                  return _vm.checkValidation($event)
                 }
               }
             },
@@ -44617,15 +44708,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-12" }, [
-        _c("h3", { staticClass: "card-title" }, [
-          _c("span", { staticClass: "nav-icon mr-3" }, [
-            _c("i", { staticClass: "far fa-credit-card text-primary" })
-          ]),
-          _vm._v("\n                    Bank Information\n                ")
-        ])
-      ])
+    return _c("h3", { staticClass: "card-title" }, [
+      _c("span", { staticClass: "nav-icon mr-3" }, [
+        _c("i", { staticClass: "far fa-credit-card text-primary" })
+      ]),
+      _vm._v("\n                    Bank Information\n                ")
     ])
   },
   function() {
@@ -45627,19 +45714,19 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "form",
-              {
-                attrs: { method: "post", enctype: "multipart/form-data" },
-                on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.UploadImages($event)
-                  }
+          _c(
+            "form",
+            {
+              attrs: { method: "post", enctype: "multipart/form-data" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.UploadImages($event)
                 }
-              },
-              [
+              }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-lg-12 col-xxl-12" }, [
                   _c("div", { staticClass: "form-group row" }, [
                     _c(
@@ -45651,10 +45738,8 @@ var render = function() {
                       [_vm._v("Upload Files:")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-9 col-xxl-9" }, [
+                    _c("div", { staticClass: "col-lg-7 col-xxl-7" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("div"),
-                        _vm._v(" "),
                         _c("div", { staticClass: "custom-file" }, [
                           _c("input", {
                             staticClass: "custom-file-input",
@@ -45670,18 +45755,24 @@ var render = function() {
                             },
                             [_vm._v("Choose file")]
                           )
-                        ]),
-                        _vm._v(" "),
-                        _vm._m(1)
-                      ])
-                    ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _vm._m(2)
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-3 col-xxl-3" })
                   ])
-                ]),
-                _vm._v(" "),
-                _vm._m(2)
-              ]
-            )
-          ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
+            ]
+          )
         ])
       ])
     ])
@@ -45707,27 +45798,39 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("small", [
+      _c("strong", [
+        _vm._v("*No special characters in a file name. E.g., ! @ # ? ] } )")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("small", [_c("strong", [_vm._v("*Max size: 2MB")])])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12 col-xxl-12" }, [
-      _c(
-        "div",
-        {
-          staticClass: "card-footer pr-0",
-          staticStyle: { display: "flex", "justify-content": "flex-end" }
-        },
-        [
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-            [_vm._v("Upload")]
-          )
-        ]
-      )
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-12 col-xxl-12" }, [
+        _c(
+          "div",
+          {
+            staticClass: "card-footer pr-0",
+            staticStyle: { display: "flex", "justify-content": "flex-end" }
+          },
+          [
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+              [_vm._v("Upload")]
+            )
+          ]
+        )
+      ])
     ])
   }
 ]
@@ -49143,7 +49246,7 @@ var render = function() {
               _c("div", { staticClass: "row" }, [
                 _c(
                   "div",
-                  { staticClass: "col-lg-4 col-xxl-2 justify-content-center" },
+                  { staticClass: "col-lg-4 col-xxl-4 justify-content-center" },
                   [
                     _c(
                       "div",
@@ -49294,7 +49397,7 @@ var render = function() {
                   "div",
                   {
                     staticClass:
-                      "col-lg-8  col-xxl-10 d-flex justify-content-start mt-18"
+                      "col-lg-8  col-xxl-8 d-flex justify-content-start mt-18"
                   },
                   [
                     _c("table", { staticClass: "font-size-h4" }, [

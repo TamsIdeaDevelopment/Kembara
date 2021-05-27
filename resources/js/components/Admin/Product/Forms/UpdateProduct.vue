@@ -102,6 +102,8 @@
                                                             <input type="file" class="custom-file-input" id="customFile" @change="selectFile"/>
                                                             <label class="custom-file-label" for="customFile">Choose file</label>
                                                         </div>
+                                                        <small><strong>*No special characters in a file name. E.g., ! @ # ? ] } )</strong></small>
+                                                        </br>
                                                         <small><strong>*Max size: 2MB</strong></small>
                                                     </div>
                                                 </div>

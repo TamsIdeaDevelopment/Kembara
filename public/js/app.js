@@ -13552,6 +13552,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['data'],
   data: function data() {
@@ -46141,7 +46142,27 @@ var render = function() {
                                     : _vm._e(),
                                   _vm._v(" "),
                                   this.delivery_type == 0 &&
-                                  this.total_delivery_fee == 0
+                                  this.total_delivery_fee == 0 &&
+                                  this.seller_id > 1
+                                    ? _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-success font-weight-bolder text-uppercase px-9 py-4",
+                                          attrs: {
+                                            type: "submit",
+                                            "data-wizard-state":
+                                              "action-submit",
+                                            "data-wizard-type": "action-submit"
+                                          }
+                                        },
+                                        [_vm._v("Order")]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  this.delivery_type == 0 &&
+                                  this.total_delivery_fee == 0 &&
+                                  this.seller_id == 1
                                     ? _c(
                                         "button",
                                         {

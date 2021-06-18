@@ -420,7 +420,7 @@
             checkDelivery() {
                 Swal.fire({
                     title: 'No delivery was charged.',
-                    html: 'You need to <strong><u>hard refresh</u></strong> your browser to continue.',
+                    html: 'Please ensure you have <strong><u>strong</u></strong> internet connection.<br><br> You may need to <strong><u>hard refresh</u></strong> your browser to continue.',
                     icon: 'warning',
                     confirmButtonColor: '#1BC5BD',
                     confirmButtonText: 'OK!',

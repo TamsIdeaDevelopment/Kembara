@@ -322,6 +322,7 @@
                 axios.get('/api/v1/cart/count-cart')
                     .then(function (response) {
                         this.$parent.Count = response.data;
+                        let quantity;
 
                         if(this.$parent.DeliveryDetails.state != null)
                         {
@@ -332,22 +333,30 @@
                             {
                                 if(this.$parent.Carts[key].options.product_type === 'Normal')
                                 {
-
-                                    var quantity = parseInt(this.$parent.Carts[key].qty);
-                                    var quantity = quantity / 10;
+                                    quantity = parseInt(this.$parent.Carts[key].qty);
+                                    quantity = quantity / 10;
+                                    quantity = parseInt(Math.ceil(quantity));
                                     this.$parent.tempCount += quantity;
                                 }
                                 if(this.$parent.Carts[key].options.product_type === 'Special')
                                 {
-                                    var quantity = parseInt(this.$parent.Carts[key].qty);
-                                    var quantity = quantity / 10;
+                                    quantity = parseInt(this.$parent.Carts[key].qty);
+                                    quantity = quantity / 10;
+                                    quantity = parseInt(Math.ceil(quantity));
                                     this.$parent.tempCount += quantity;
                                 }
                                 if(this.$parent.Carts[key].options.product_type === 'Add-On')
                                 {
-                                    var quantity = parseInt(this.$parent.Carts[key].qty);
-                                    var quantity = quantity / 20;
-                                    var quantity = parseInt(quantity);
+                                    quantity = parseInt(this.$parent.Carts[key].qty);
+                                    quantity = quantity / 20;
+                                    quantity = parseInt(Math.ceil(quantity));
+                                    this.$parent.tempCount += quantity;
+                                }
+                                if (this.$parent.Carts[key].options.product_type === 'Single')
+                                {
+                                    quantity = parseInt(this.$parent.Carts[key].qty);
+                                    quantity = quantity / 15;
+                                    quantity = parseInt(Math.ceil(quantity));
                                     this.$parent.tempCount += quantity;
                                 }
                             }
@@ -388,6 +397,7 @@
                         if(this.$parent.total_delivery_fee != 0)
                         {
                             this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
+                            this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
 
                         }
                     }.bind(this));

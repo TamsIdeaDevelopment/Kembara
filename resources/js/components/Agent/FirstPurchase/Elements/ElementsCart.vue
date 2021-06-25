@@ -515,12 +515,24 @@
                     let quantity = parseInt(this.$parent.Carts[rowId].qty);
 
                     this.$parent.TotalNormal = this.$parent.TotalNormal - quantity;
+
+                    if(this.$parent.TotalNormal == 0)
+                    {
+                        this.$parent.TotalMOQNormal = 0;
+                        this.$parent.TotalNormal = 0;
+                    }
                 }
                 if(this.$parent.Carts[rowId].options.product_type === 'Special')
                 {
                     let quantity = parseInt(this.$parent.Carts[rowId].qty);
 
                     this.$parent.TotalSpecial = this.$parent.TotalSpecial - quantity;
+
+                    if(this.$parent.TotalSpecial == 0)
+                    {
+                        this.$parent.TotalMOQSpecial = 0;
+                        this.$parent.TotalSpecial = 0;
+                    }
                 }
                 if(this.$parent.Carts[rowId].options.product_type === 'Add-On')
                 {
@@ -531,6 +543,12 @@
                     let quantity = parseInt(this.$parent.Carts[rowId].qty);
 
                     this.$parent.TotalAddOn = this.$parent.TotalAddOn - quantity;
+
+                    if(this.$parent.TotalAddOn == 0)
+                    {
+                        this.$parent.TotalMOQAddOn = 0;
+                        this.$parent.TotalAddOn = 0;
+                    }
                 }
                 if(this.$parent.Carts[rowId].options.product_type === 'Single')
                 {

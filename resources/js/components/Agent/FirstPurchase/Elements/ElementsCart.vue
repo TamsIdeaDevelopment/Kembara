@@ -14,30 +14,30 @@
             <div class="card-body">
                 <div class="row" v-if="$parent.TotalMOQAddOn != 0">
                     <div class="col-lg-12">
-                        <div class="row  d-inline"  v-if="$parent.TotalMOQAddOn > $parent.CountAddOn">
+                        <div class="row  d-inline"  v-if="$parent.TotalMOQAddOn > $parent.TotalAddOn">
                             <div class="col-lg-12 d-flex justify-content-end">
                                 <h6 class="font-weight-bolder  mt-n5">MOQ AddOn: <span class="text-danger">{{$parent.TotalMOQAddOn}}</span></h6>
 
                             </div>
                         </div>
-                        <div class="row d-inline"  v-if="$parent.TotalMOQAddOn > $parent.CountAddOn">
+                        <div class="row d-inline"  v-if="$parent.TotalMOQAddOn > $parent.TotalAddOn">
                             <div class="col-lg-12 d-flex justify-content-end">
-                                <h6 class="font-weight-bolder  mt-n5">Set AddOn: <span class="text-danger">{{$parent.TotalMOQAddOn - $parent.CountAddOn}} More ..</span></h6>
+                                <h6 class="font-weight-bolder  mt-n5">Set AddOn: <span class="text-danger">{{$parent.TotalMOQAddOn - $parent.TotalAddOn}} More ..</span></h6>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row" v-if="$parent.TotalMOQSpecial != 0">
                     <div class="col-lg-12 ">
-                        <div class="row  d-inline"  v-if="$parent.TotalMOQSpecial > $parent.CountSpecial">
+                        <div class="row  d-inline"  v-if="$parent.TotalMOQSpecial > $parent.TotalSpecial">
                             <div class="col-lg-12 d-flex justify-content-end">
                                 <h6 class="font-weight-bolder  mt-n5">MOQ Special: <span class="text-danger">{{$parent.TotalMOQSpecial}}</span></h6>
 
                             </div>
                         </div>
-                        <div class="row d-inline"  v-if="$parent.TotalMOQSpecial > $parent.CountSpecial">
+                        <div class="row d-inline"  v-if="$parent.TotalMOQSpecial > $parent.TotalSpecial">
                             <div class="col-lg-12 d-flex justify-content-end">
-                                <h6 class="font-weight-bolder  mt-n5">Set Special: <span class="text-danger">{{$parent.TotalMOQSpecial - $parent.CountSpecial}} More ..</span></h6>
+                                <h6 class="font-weight-bolder  mt-n5">Set Special: <span class="text-danger">{{$parent.TotalMOQSpecial - $parent.TotalSpecial}} More ..</span></h6>
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="row  d-flex justify-content-end" v-if="$parent.TotalMOQNormal != 0 || $parent.TotalMOQSpecial != 0 || $parent.TotalMOQAddOn != 0">
-                    <div class="row d-inline"  v-if="$parent.TotalNormal >= $parent.TotalMOQNormal && $parent.CountSpecial >= $parent.TotalMOQSpecial && $parent.CountAddOn >= $parent.TotalMOQAddOn">
+                    <div class="row d-inline"  v-if="$parent.TotalNormal >= $parent.TotalMOQNormal && $parent.TotalSpecial >= $parent.TotalMOQSpecial && $parent.TotalAddOn >= $parent.TotalMOQAddOn">
                         <div class="col-lg-12 d-flex justify-content-end">
                             <h6 class="font-weight-bolder  mt-n5"><span class="text-success">You can place order now</span></h6>
                         </div>
@@ -211,12 +211,9 @@
         },
         methods: {
             fetchAgentDetails(){
-                console.log(this.$parent.isSellerHQ)
                 fetch('/api/v1/team/Lists/' + this.$parent.data +'/agent-info').then(response => response.json())
                     .then(response => {
                         this.isSeller = response.data.leader_id.HQ;
-                        console.log(this.isSeller);
-
                     })
                     .catch(error => console.log(error))
             },
@@ -226,63 +223,88 @@
                 {
                     this.$parent.Totals= this.$parent.Totals - this.$parent.AgentDetails.point;
                     this.$parent.point = this.$parent.point + this.$parent.AgentDetails.point;
-                    console.log('Point :' + this.$parent.point);
                 }
                 if(this.isCoupon != true)
                 {
                     this.$parent.Totals= this.$parent.Totals + this.$parent.AgentDetails.point;
                     this.$parent.point = this.$parent.point - this.$parent.AgentDetails.point;
-                    console.log('Point :' + this.$parent.point);
                 }
             },
             fetchCart(){
                 axios.get('/api/v1/cart/list-cart')
                     .then(function (response) {
                         this.$parent.Carts = response.data;
+
                         this.isSeller = this.$parent.IsSellerHQ;
                         this.$parent.TotalNormal = 0;
-                        for (var key in this.$parent.Carts) {
+                        this.$parent.TotalSpecial = 0;
+                        this.$parent.TotalAddOn = 0;
+                        this.$parent.TotalSingle = 0;
+
+                        for (let key in this.$parent.Carts)
+                        {
                             if(this.$parent.Carts[key].options.product_type === 'Normal')
                             {
-                                var moq = parseInt(this.$parent.Carts[key].options.MOQ);
-
+                                let moq = parseInt(this.$parent.Carts[key].options.MOQ);
                                 this.$parent.TotalMOQNormal = moq;
 
-
-                                var quantity = parseInt(this.$parent.Carts[key].qty);
-
+                                let quantity = parseInt(this.$parent.Carts[key].qty);
                                 this.$parent.TotalNormal = this.$parent.TotalNormal + quantity;
+
                                 if(this.$parent.CountNormal !== 0)
                                 {
                                     this.$parent.CountNormal = this.$parent.Carts[key].qty;
                                 }
-
                             }
                             if(this.$parent.Carts[key].options.product_type === 'Special')
                             {
-                                var moq = parseInt(this.$parent.Carts[key].options.MOQ);
+                                let moq = parseInt(this.$parent.Carts[key].options.MOQ);
                                 this.$parent.TotalMOQSpecial = moq;
-                                var quantity = parseInt(this.$parent.Carts[key].qty);
-                                this.$parent.CountSpecial = quantity;
 
+                                let quantity = parseInt(this.$parent.Carts[key].qty);
+                                this.$parent.TotalSpecial = this.$parent.TotalSpecial + quantity;
+
+                                if(this.$parent.CountSpecial !== 0)
+                                {
+                                    this.$parent.CountSpecial = this.$parent.Carts[key].qty;
+                                }
                             }
                             if(this.$parent.Carts[key].options.product_type === 'Add-On')
                             {
-                                var moq = parseInt(this.$parent.Carts[key].options.MOQ);
+                                // Only for One Product
+                                // var moq = parseInt(this.$parent.Carts[key].options.MOQ);
+                                // this.$parent.TotalMOQAddOn = moq;
+                                // var quantity = parseInt(this.$parent.Carts[key].qty);
+                                // this.$parent.CountAddOn = quantity;
 
+                                let moq = parseInt(this.$parent.Carts[key].options.MOQ);
                                 this.$parent.TotalMOQAddOn = moq;
-                                var quantity = parseInt(this.$parent.Carts[key].qty);
 
-                                this.$parent.CountAddOn = quantity;
+                                let quantity = parseInt(this.$parent.Carts[key].qty);
+                                this.$parent.TotalAddOn = this.$parent.TotalAddOn + quantity;
 
+                                if(this.$parent.CountAddOn !== 0)
+                                {
+                                    this.$parent.CountAddOn = this.$parent.Carts[key].qty;
+                                }
+                            }
+                            if(this.$parent.Carts[key].options.product_type === 'Single')
+                            {
+                                let quantity = parseInt(this.$parent.Carts[key].qty);
+                                this.$parent.TotalSingle = this.$parent.TotalSingle + quantity;
+
+                                if(this.$parent.CountSingle!== 0)
+                                {
+                                    this.$parent.CountSingle = this.$parent.Carts[key].qty;
+                                }
                             }
                         }
 
-                        if(this.$parent.TotalMOQNormal > this.$parent.TotalNormal || this.$parent.TotalMOQSpecial > this.$parent.CountSpecial || this.$parent.TotalMOQAddOn > this.$parent.CountAddOn)
+                        if(this.$parent.TotalMOQNormal > this.$parent.TotalNormal || this.$parent.TotalMOQSpecial > this.$parent.TotalSpecial || this.$parent.TotalMOQAddOn > this.$parent.TotalAddOn)
                         {
                             this.$parent.CartStatus = false;
                         }
-                        if( this.$parent.TotalNormal >= this.$parent.TotalMOQNormal && this.$parent.CountSpecial >= this.$parent.TotalMOQSpecial && this.$parent.CountAddOn >= this.$parent.TotalMOQAddOn)
+                        if( this.$parent.TotalNormal >= this.$parent.TotalMOQNormal && this.$parent.TotalSpecial >= this.$parent.TotalMOQSpecial && this.$parent.TotalAddOn >= this.$parent.TotalMOQAddOn)
                         {
                             this.$parent.CartStatus = true;
                         }
@@ -295,32 +317,54 @@
                     .then(function (response) {
                         this.$parent.Count = response.data;
 
+                        let quantity;
+
                         if(this.$parent.DeliveryDetails.state != null)
                         {
-                            this.$parent.tempCount = 0;
                             this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
 
-                            for (var key in this.$parent.Carts)
+                            for (let key in this.$parent.Carts)
                             {
                                 if(this.$parent.Carts[key].options.product_type === 'Normal')
                                 {
+                                    quantity = parseInt(this.$parent.TotalNormal);
+                                    quantity = quantity / 10;
+                                    quantity = parseInt(Math.ceil(quantity));
+                                    this.$parent.tempCountNormal = quantity;
 
-                                    var quantity = parseInt(this.$parent.Carts[key].qty);
-                                    var quantity = quantity / 10;
-                                    this.$parent.tempCount += quantity;
+                                    console.log('CountN: '+this.$parent.tempCountNormal);
                                 }
                                 if(this.$parent.Carts[key].options.product_type === 'Special')
                                 {
-                                    var quantity = parseInt(this.$parent.Carts[key].qty);
-                                    var quantity = quantity / 10;
-                                    this.$parent.tempCount += quantity;
+                                    quantity = parseInt(this.$parent.TotalSpecial);
+                                    quantity = quantity / 10;
+                                    quantity = parseInt(Math.ceil(quantity));
+                                    this.$parent.tempCountSpecial = quantity;
+
+                                    console.log('CountS: '+this.$parent.tempCountSpecial);
                                 }
                                 if(this.$parent.Carts[key].options.product_type === 'Add-On')
                                 {
-                                    var quantity = parseInt(this.$parent.Carts[key].qty);
-                                    var quantity = quantity / 20;
-                                    var quantity = parseInt(quantity);
-                                    this.$parent.tempCount += quantity;
+                                    // Total Qty of Product Set for Individual Product
+                                    // quantity = parseInt(this.$parent.Carts[key].qty);
+                                    // quantity = quantity / 20;
+                                    // quantity = parseInt(Math.ceil(quantity));
+                                    // this.$parent.tempCount += quantity;
+
+                                    // Total Qty of Product Set for All Products
+                                    quantity = parseInt(this.$parent.TotalAddOn);
+                                    quantity = quantity / 20;
+                                    quantity = parseInt(Math.ceil(quantity));
+                                    this.$parent.tempCountAddOn = quantity;
+
+                                    console.log('CountA: '+this.$parent.tempCountAddOn);
+                                }
+                                if (this.$parent.Carts[key].options.product_type === 'Single')
+                                {
+                                    quantity = parseInt(this.$parent.TotalSingle);
+                                    quantity = quantity / 15;
+                                    quantity = parseInt(Math.ceil(quantity));
+                                    this.$parent.tempCountSingle = quantity;
                                 }
                             }
 
@@ -329,7 +373,9 @@
                                 this.$parent.delivery_fee = 27;
                                 if(this.isSeller == 1)
                                 {
-                                    this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
+                                    this.$parent.tempTotalCount = this.$parent.tempCountNormal + this.$parent.tempCountSpecial + this.$parent.tempCountAddOn + this.$parent.tempCountSingle;
+
+                                    this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempTotalCount;
                                     this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
 
                                     this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
@@ -340,15 +386,15 @@
                                 this.$parent.delivery_fee = 6.90;
                                 if(this.isSeller == 1)
                                 {
-                                    this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempCount;
+                                    this.$parent.tempTotalCount = this.$parent.tempCountNormal + this.$parent.tempCountSpecial + this.$parent.tempCountAddOn + this.$parent.tempCountSingle;
+
+                                    this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempTotalCount;
                                     this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
 
                                     this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
                                     this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
                                 }
                             }
-                            console.log('Total: ' + this.$parent.Totals );
-                            console.log('Shipping: ' + this.$parent.total_delivery_fee );
                         }
                     }.bind(this));
             },
@@ -361,16 +407,16 @@
                         if(this.$parent.total_delivery_fee != 0)
                         {
                             this.$parent.Totals = this.$parent.Totals + this.$parent.total_delivery_fee;
-
+                            this.$parent.Totals = parseFloat((this.$parent.Totals).toFixed(2));
                         }
                     }.bind(this));
-
             },
             decreaseQuantity(rowId,quantity,productId)
             {
                 quantity = quantity -1;
-                console.log(this.$parent.total_delivery_fee)
+
 //                this.$parent.total_delivery_fee = this.$parent.total_delivery_fee - 6.90;
+
                 var url = '/api/v1/cart/'+ this.$parent.data+'/'+ rowId + '/' +  quantity +'/decrease-quantity', method = 'post';
 
                 fetch(url, {
@@ -385,16 +431,10 @@
                         {
                             this.$parent.total_delivery_fee = this.$parent.total_delivery_fee - this.$parent.delivery_fee;
                             this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
-
                         }
                         this.fetchCart();
-
-                        console.log('decrease :' + this.$parent.Totals)
                         EventBus.$emit('updateDashboardCart');
                         EventBus.$emit('updateTotalCart');
-;
-
-
                     })
             },
             changeQuantity(rowId,quantity,productId,stock,product_name)
@@ -422,11 +462,9 @@
                     };
                     toastr.error("Please change the quantity", product_name +' \nQuantity Exceeds Stock');
                     this.fetchCart();
-
                 }
                 else
                 {
-
                     var quantity = parseInt(quantity);
                     var url = '/api/v1/cart/'+ this.$parent.data +'/'+ rowId + '/' +  quantity +'/add-quantity', method = 'post';
 
@@ -443,14 +481,10 @@
                             EventBus.$emit('updateDashboardCart');
                             EventBus.$emit('updateTotalCart');
                         })
-
                 }
-
-
             },
             addQuantity(rowId,quantity,productId)
             {
-
                 var quantity = parseInt(quantity);
                 quantity = quantity +1;
 //                this.$parent.total_delivery_fee = this.$parent.total_delivery_fee + 6.90;
@@ -468,40 +502,45 @@
                         {
                             this.$parent.total_delivery_fee = this.$parent.total_delivery_fee + this.$parent.delivery_fee;
                             this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
-
                         }
                         this.fetchCart();
-
                         EventBus.$emit('updateDashboardCart');
                         EventBus.$emit('updateTotalCart');
-
-
-
                     })
-
             },
-
             removeItems(rowId)
             {
                 if(this.$parent.Carts[rowId].options.product_type === 'Normal')
                 {
-                    var quantity = parseInt(this.$parent.Carts[rowId].qty);
+                    let quantity = parseInt(this.$parent.Carts[rowId].qty);
 
                     this.$parent.TotalNormal = this.$parent.TotalNormal - quantity;
                 }
                 if(this.$parent.Carts[rowId].options.product_type === 'Special')
                 {
-                    this.$parent.TotalMOQSpecial =0;
-                    this.$parent.CountSpecial = 0;
+                    let quantity = parseInt(this.$parent.Carts[rowId].qty);
 
+                    this.$parent.TotalSpecial = this.$parent.TotalSpecial - quantity;
                 }
                 if(this.$parent.Carts[rowId].options.product_type === 'Add-On')
                 {
-                    this.$parent.TotalMOQAddOn = 0;
-                    this.$parent.CountAddOn = 0;
+                    // Only for One Product
+                    // this.$parent.TotalMOQAddOn = 0;
+                    // this.$parent.CountAddOn = 0;
 
+                    let quantity = parseInt(this.$parent.Carts[rowId].qty);
+
+                    this.$parent.TotalAddOn = this.$parent.TotalAddOn - quantity;
                 }
+                if(this.$parent.Carts[rowId].options.product_type === 'Single')
+                {
+                    let quantity = parseInt(this.$parent.Carts[rowId].qty);
+
+                    this.$parent.TotalSingle = this.$parent.TotalSingle - quantity;
+                }
+
                 this.$parent.total_delivery_fee = 0;
+
                 var url = '/api/v1/cart/'+ this.$parent.data +'/'+ rowId +'/remove-item', method = 'post';
 
                 fetch(url, {
@@ -517,11 +556,8 @@
                         EventBus.$emit('updateDashboardCart');
                         EventBus.$emit('updateTotalCart');
                         this.$parent.Totals = this.$parent.Totals-this.$parent.total_delivery_fee;
-
                     })
             }
         }
-
     }
-
 </script>

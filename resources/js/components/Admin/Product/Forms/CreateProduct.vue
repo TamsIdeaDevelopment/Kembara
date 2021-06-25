@@ -27,6 +27,7 @@
                 <option value="Normal">Normal</option>
                 <option value="Special">Special</option>
                 <option value="Add-On">Add-On</option>
+                <option value="Single">Single</option>
             </select>
         </div>
         <!--<div class="form-group">-->

@@ -56,7 +56,9 @@
                 <span v-if="Order.status =='4'" class="label label-warning label-pill label-inline mr-2">PENDING PAYMENT</span>
             </td>
             <td>
-                <a :href="Order.id +'/order-details'" class="btn btn-sm btn-primary">View</a>
+                <a v-if="Order.paid == '0'" :href="'get-billplz/' +Order.id" class="btn btn-sm btn-primary">View</a>
+                <a v-if="Order.paid == '1'" :href="Order.id +'/order-details'" class="btn btn-sm btn-primary">View</a>
+                <a v-if="Order.paid == '2'" :href="Order.id +'/order-details'" class="btn btn-sm btn-primary">View</a>
             </td>
 
         </tr>

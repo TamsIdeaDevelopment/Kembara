@@ -17,7 +17,11 @@
         <tbody>
         <tr v-for="(Order, index) in data">
             <td>{{index+1}}</td>
-            <td><a :href="Order.id +'/order-details'"># {{String('00000' + Order.id).slice(-6)}}</a></td>
+            <td>
+                <a v-if="Order.paid == '0'" :href="'get-billplz/' +Order.id"># {{String('00000' + Order.id).slice(-6)}}</a>
+                <a v-if="Order.paid == '1'" :href="Order.id +'/order-details'"># {{String('00000' + Order.id).slice(-6)}}</a>
+                <a v-if="Order.paid == '2'" :href="Order.id +'/order-details'"># {{String('00000' + Order.id).slice(-6)}}</a>
+            </td>
             <td>
                 <div class="row">
                     <div class="col-auto">
@@ -70,8 +74,11 @@
                     </div>
                 </div>
             </td>
-            <td  v-if="Order.status =='1' || Order.status =='3' || Order.status =='4'">
+            <td  v-if="Order.status =='1' || Order.status =='3'">
                 <a :href="Order.id +'/order-details'" class="btn btn-sm btn-secondary">View</a>
+            </td>
+            <td  v-if="Order.status =='4'">
+                <a  :href="'get-billplz/' +Order.id" class="btn btn-sm btn-secondary">View</a>
             </td>
             <!--<td>-->
                 <!--<button class="btn btn-sm btn-danger">Delete</button>-->

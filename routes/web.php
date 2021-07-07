@@ -42,6 +42,8 @@ Route::get('billplz/{order_id}','BillplzController@createBill')->name('billplz-c
 Route::post('billplz-callback','BillplzController@callBack')->name('billplz-callback');
 Route::get('billplz-return-url/{order_id}','BillplzController@returnURL')->name('billplz-return-url');
 
+// To retrieve again latest paid status
+Route::get('get-billplz/{order_id}','BillplzController@getBill')->name('billplz-getBill');
 
 Route::get('senang-pay/{order_id}','SenangpayController@createPayment')->name('senang-pay-create');
 Route::get('senang-pay-returl-url', 'SenangpayController@callback');

@@ -26,7 +26,8 @@ Vue.component('downloadExcel', JsonExcel);
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('state-territory-component', require('./components/StateTerritory.vue').default);
-
+Vue.component('membership-type-component', require('./components/MembershipType.vue').default);
+Vue.component('country-component', require('./components/Country.vue').default);
 
 /********************************************* Admin ****************************************************************/
 

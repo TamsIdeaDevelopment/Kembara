@@ -1033,23 +1033,10 @@
                                     </div>
                                 @endif
                                 <form class="login-signup-form " method="POST" action="{{ route('register') }}">
+                                    <div id="app">
                                     @csrf
-                                    <div class="form-group ">
-                                        <div class="input-group input-group-merge ">
-                                            <div class="input-icon ">
-                                                <span class="color-primary "></span>
-                                            </div>
-                                            <select class="form-control   @error('name') is-invalid @enderror" name="level" required>
-                                                @foreach($list_levels as $list_level)
-                                                    <option value="{{$list_level->id}}">{{$list_level->name}}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('level')
-                                            <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                            @enderror
-                                        </div>
+                                    <div class="form-group">
+                                        <membership-type-component></membership-type-component>
                                     </div>
                                     <div class="form-group ">
                                         <div class="input-group input-group-merge ">
@@ -1229,10 +1216,8 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <div id="app">
-                                            <state-territory-component></state-territory-component>
-                                        </div>
+                                    <div class="form-group">
+                                        <state-territory-component></state-territory-component>
                                     </div>
                                     <div class="form-group ">
                                         <div class="input-group input-group-merge ">
@@ -1249,23 +1234,8 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="form-group ">
-                                        <div class="input-group input-group-merge ">
-                                            <div class="input-icon ">
-                                                <span class="color-primary "></span>
-                                            </div>
-{{--                                            <input id="country" type="text" class="form-control @error('country') is-invalid @enderror"--}}
-{{--                                                   name="country" value="{{ old('country') }}" required autocomplete="country" autofocus  placeholder="Country">--}}
-
-                                            <select class="form-control" style="width:100%" id="update-select-country" name="country" required>
-                                                <option value="Malaysia">Malaysia</option>
-                                            </select>
-                                            @error('country')
-                                            <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                            @enderror
-                                        </div>
+                                    <div class="form-group">
+                                        <country-component></country-component>
                                     </div>
                                     <div class="form-group ">
                                         <div class="input-group input-group-merge ">
@@ -1291,11 +1261,12 @@
                                     <button type="submit" class="btn btn-block secondary-solid-btn border-radius mt-4 mb-3 ">
                                         Daftar
                                     </button>
+                                    </div>
                                 </form>
 
                             </div>
-                            <div class="card-footer px-md-5 bg-transparent border-top "><small>By registering you agree to the Kembara</small>
-                                <a href="# " class="small ">Term of Use</a></div>
+                            <div class="card-footer px-md-5 bg-transparent border-top text-center"><small>By registering you agree to the Kembara</small>
+                                <a href="javascript:;" class="small ">Term of Use</a></div>
                         </div>
                     </div> </div>
             </div>

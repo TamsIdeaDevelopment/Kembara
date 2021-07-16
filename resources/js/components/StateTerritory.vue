@@ -5,8 +5,7 @@
                 <div class="input-icon ">
                     <span class="color-primary "></span>
                 </div>
-                <select class="form-control" style="width:100%" id="update-select-state" v-model="this.state_id" name="state" required>
-                    <option selected disabled>State</option>
+                <select class="form-control select2" style="width:100%" id="register-select-state" v-model="this.state_id" name="state" required>
                     <option  v-for="State in States" :value="State.id">{{ State.name }}</option>
                 </select>
             </div>
@@ -16,7 +15,7 @@
                 <div class="input-icon ">
                     <span class="color-primary "></span>
                 </div>
-                <select class="form-control"style="width:100%" id="update-select-territory" v-model="this.territory_id" name="territory" required>
+                <select class="form-control select2"style="width:100%" id="register-select-territory" v-model="this.territory_id" name="territory" required>
                     <option  v-for="Territory in territories" :value="Territory.id">{{ Territory.name }}</option>
                 </select>
             </div>
@@ -37,15 +36,31 @@
             this.getStateName();
         },
         mounted() {
-            $("#update-select-state").change(function(){
-                this.state_id = $("#update-select-state").val();
-                console.log(this.state_id);
+            $('#register-select-state').select2({
+                placeholder: 'State',
+                allowClear: true
+            });
+            $('#register-select-territory').select2({
+                placeholder: 'Territory',
+                allowClear: true,
+                disabled: true
+            });
+            $("#register-select-state").change(function(){
+
+                this.state_id = $("#register-select-state").val();
                 this.getTerritoryName();
 
-            }.bind(this));
-            $("#update-select-territory").change(function(){
-                this.territory_id = $("#update-select-territory").val();
-                console.log(this.territory_id);
+                $("#register-select-territory").prop('disabled', true);
+
+                if (this.state_id != null)
+                {
+                    $("#register-select-territory").prop('disabled', false);
+
+                    $("#register-select-territory").change(function(){
+                        this.territory_id = $("#register-select-territory").val();
+                    }.bind(this));
+                }
+
             }.bind(this));
         },
 

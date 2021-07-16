@@ -84,4 +84,12 @@ return view('pages.User.Invite.index')->with(['leader'=>$leader, 'user'=> $user 
 
         //return view('pages.User.Invite.index', new AgentResources($leader));
     }
+
+    public function listMembershipType()
+    {
+        $agent_levels = $this->agent_levels->whereNotNull('parent')->get();
+
+        return $agent_levels;
+    }
+
 }

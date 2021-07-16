@@ -30,7 +30,7 @@
 
     <!--google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700%7COpen+Sans:400,600&display=swap" rel="stylesheet">
-
+    <link rel="canonical" href="https://keenthemes.com/metronic" />
     <!--Bootstrap css-->
     <link rel="stylesheet" href="/assets2/css/bootstrap.min.css">
     <!--Magnific popup css-->
@@ -50,6 +50,8 @@
     <link rel="stylesheet" href="/assets2/css/style.css">
     <!--responsive css-->
     <link rel="stylesheet" href="/assets2/css/responsive.css">
+    <!--dropdown select2 css-->
+    <link rel="stylesheet" href="/assets2/css/select2.css">
 
 </head>
 {{--<head>--}}

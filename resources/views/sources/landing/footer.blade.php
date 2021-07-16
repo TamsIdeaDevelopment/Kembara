@@ -21,5 +21,7 @@
 <script src="/assets2/js/validator.min.js "></script>
 <!--custom js-->
 <script src="/assets2/js/scripts.js "></script>
+<!--dropdown select2 js-->
+<script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 
 <script src="{{ asset('js/app.js') }}"></script>

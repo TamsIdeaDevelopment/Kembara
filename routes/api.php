@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function () {
 
+    Route::get('/list-membership-type', 'CreateInvite@listMembershipType')->name('list-membership-type');
 
     Route::group(['prefix' => 'Customer', 'as' => 'Customer.', 'namespace' => 'Customer'], function () {
 
@@ -300,7 +301,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
                 Route::get('{user_id}/agent-chart', 'ListChart@listChart')->name('agent-chart');
 
                 Route::get('{user_id}/{leader_id}/{agent_levels_id}/list-hall-of-fame-restock', 'ListHallOfFameRestock@HallOfFameRestock')->name('agent-list-hall-of-fame-restock');
-
+                Route::get('{user_id}/list-hall-of-fame-leader-mini-agent', 'ListHallOfFameRestock@adminlistMiniAgent')->name('agent-list-hall-of-fame-leader-mini-agent');
+                Route::get('{user_id}/list-hall-of-fame-leader-agent', 'ListHallOfFameRestock@adminlistAgent')->name('agent-list-hall-of-fame-leader-agent');
+                Route::get('{user_id}/list-hall-of-fame-leader-stokis', 'ListHallOfFameRestock@adminlistStokis')->name('agent-list-hall-of-fame-leader-stokis');
 
             });
 

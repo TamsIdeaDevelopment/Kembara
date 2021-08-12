@@ -1,8 +1,14 @@
 <template>
     <div class="d-flex flex-column-fluid">
         <div class="container-fluid">
+            <div class="row" v-if="isSpinner">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <div class="spinner spinner-success d-flex align-items-center">
+                    </div>
+                </div>
+            </div>
             <!--<agent-dashboard-chart :data="data"></agent-dashboard-chart>-->
-            <div class="row mt-5">
+            <div class="row mt-5" v-if="!isSpinner">
                 <div class="col-lg-12 col-xxl-12">
                     <div class="wizard wizard-4" id="kt_wizard_v3" data-wizard-state="step-first" data-wizard-clickable="true">
                         <div class="wizard-nav">
@@ -135,6 +141,7 @@
                 TempTotal: 0,
                 DeliveryFees:0,
                 TempDeliveryFees:0,
+                isSpinner: false,
             }
         },
         mounted() {},
@@ -217,6 +224,8 @@
             },
             CreateOrder()
             {
+                this.isSpinner = !this.isSpinner;
+
                 this.Orders.Carts = this.CustomerCart;
                 this.Orders.details.HQ = 0;
                 this.Orders.details.seller_id = this.data.id;
@@ -232,8 +241,6 @@
                 this.Orders.details.country = this.DeliveryDetails.country;
                 this.Orders.details.postcode = this.DeliveryDetails.postcode;
 
-
-                console.log(this.Orders);
 
                 let currentObj = this;
                 const config = {

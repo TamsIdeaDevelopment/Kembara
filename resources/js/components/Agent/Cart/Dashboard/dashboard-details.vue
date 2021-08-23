@@ -162,6 +162,7 @@
                 SellerDetails:[],
                 delivery_type:0,
                 delivery_fee: 6.90,
+                delivery_fee_single: 27,
                 total_delivery_fee:0,
                 CartStatus: false,
                 TotalMOQNormal:0,

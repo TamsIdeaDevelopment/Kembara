@@ -370,12 +370,13 @@
 
                             if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak' || this.$parent.DeliveryDetails.state =='Labuan')
                             {
-                                this.$parent.delivery_fee = 27;
+                                this.$parent.delivery_fee = 30.90;
+                                this.$parent.delivery_fee_single = 27;
                                 if(this.isSeller == 1)
                                 {
-                                    this.$parent.tempTotalCount = this.$parent.tempCountNormal + this.$parent.tempCountSpecial + this.$parent.tempCountAddOn + this.$parent.tempCountSingle;
+                                    this.$parent.tempTotalCount = this.$parent.tempCountNormal + this.$parent.tempCountSpecial + this.$parent.tempCountAddOn;
 
-                                    this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.$parent.tempTotalCount;
+                                    this.$parent.total_delivery_fee = (this.$parent.delivery_fee * this.$parent.tempTotalCount) + (this.$parent.delivery_fee_single * this.$parent.tempCountSingle);
                                     this.$parent.total_delivery_fee = parseFloat((this.$parent.total_delivery_fee).toFixed(2));
 
                                     this.$parent.Totals = this.$parent.Totals +this.$parent.total_delivery_fee;
@@ -557,6 +558,7 @@
                     this.$parent.TotalSingle = this.$parent.TotalSingle - quantity;
                 }
 
+                this.fetchCount();
                 this.$parent.total_delivery_fee = 0;
 
                 var url = '/api/v1/cart/'+ this.$parent.data +'/'+ rowId +'/remove-item', method = 'post';

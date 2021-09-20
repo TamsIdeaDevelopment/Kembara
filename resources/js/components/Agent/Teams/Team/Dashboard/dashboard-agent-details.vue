@@ -68,13 +68,21 @@
                                                             </a>
                                                         </li>
                                                         <li class="nav-item">
-                                                            <a class="nav-link navi-link py-4" id="sales-tab" data-toggle="tab" href="#sales-detail">
+                                                            <a class="nav-link navi-link py-4" id="personal-sales-tab" data-toggle="tab" href="#personal-sales-detail">
                                                                 <span class="nav-icon">
                                                                     <i class="flaticon-price-tag"></i>
                                                                 </span>
                                                                 <span class="nav-text">Sales</span>
                                                             </a>
                                                         </li>
+<!--                                                        <li class="nav-item">-->
+<!--                                                            <a class="nav-link navi-link py-4" id="sales-tab" data-toggle="tab" href="#sales-detail">-->
+<!--                                                                <span class="nav-icon">-->
+<!--                                                                    <i class="flaticon-price-tag"></i>-->
+<!--                                                                </span>-->
+<!--                                                                <span class="nav-text">Sales</span>-->
+<!--                                                            </a>-->
+<!--                                                        </li>-->
                                                         <li class="nav-item">
                                                             <a class="nav-link navi-link py-4" id="stock-tab" data-toggle="tab" href="#stock-detail">
                                                                 <span class="nav-icon">
@@ -132,19 +140,19 @@
                                                         </div>
                                                         <agent-restock-team-elements :data="this.Orders"></agent-restock-team-elements>
                                                     </div>
-                                                    <div class="tab-pane fade" id="sales-detail" role="tabpanel">
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <h3 class="card-title">
-                                                                    <span class="nav-icon mr-3">
-                                                                        <i class="flaticon-price-tag text-primary"></i>
-                                                                    </span>
-                                                                    Sales
-                                                                </h3>
-                                                            </div>
-                                                        </div>
-                                                        <agent-sales-team-elements :data="this.AgentOrder"></agent-sales-team-elements>
-                                                    </div>
+<!--                                                    <div class="tab-pane fade" id="sales-detail" role="tabpanel">-->
+<!--                                                        <div class="row">-->
+<!--                                                            <div class="col-lg-12">-->
+<!--                                                                <h3 class="card-title">-->
+<!--                                                                    <span class="nav-icon mr-3">-->
+<!--                                                                        <i class="flaticon-price-tag text-primary"></i>-->
+<!--                                                                    </span>-->
+<!--                                                                    Sales-->
+<!--                                                                </h3>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+<!--                                                        <agent-sales-team-elements :data="this.AgentOrder"></agent-sales-team-elements>-->
+<!--                                                    </div>-->
                                                     <div class="tab-pane fade" id="stock-detail" role="tabpanel">
                                                         <div class="row">
                                                             <div class="col-lg-12">
@@ -158,6 +166,19 @@
                                                         </div>
                                                         <agent-stock-elements :data="this.Stock"></agent-stock-elements>
                                                         <!--<agent-sales-team-elements :data="this.AgentOrder"></agent-sales-team-elements>-->
+                                                    </div>
+                                                    <div class="tab-pane fade" id="personal-sales-detail" role="tabpanel">
+                                                        <div class="row">
+                                                            <div class="col-lg-12">
+                                                                <h3 class="card-title">
+                                                                    <span class="nav-icon mr-3">
+                                                                        <i class="flaticon-price-tag text-primary"></i>
+                                                                    </span>
+                                                                    Sales
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                        <agent-customer-elements :data="this.CustomerOrder"></agent-customer-elements>
                                                     </div>
                                                 </div>
                                             </div>
@@ -189,6 +210,7 @@
                 Orders:[],
                 AgentOrder:[],
                 Stock:[],
+                CustomerOrder:[],
             }
         },
         mounted() {
@@ -212,9 +234,10 @@
                         this.detailsTerritory = response.data.territory_id;
                         this.fetchTeam();
                         this.fetchHQOrder();
-                        this.fetchAgentOrder();
+                        // this.fetchAgentOrder();
                         this.fetchLeaderDetails();
                         this.fetchProduct();
+                        this.fetchCustomerOrder();
                         $('#update-select-state').select2({
                             placeholder: this.detailsState.name,
                             allowClear: true
@@ -366,6 +389,42 @@
                                         { "width": "50px", "targets": 0 },
                                         { "width": "450px", "targets": 1 },
                                         { "width": "50px", "targets": 2 },
+                                    ],
+                                }
+                            );
+                        });
+
+                    })
+                    .catch(error => console.log(error))
+            },
+            fetchCustomerOrder(){
+                fetch('/api/v1/Customer/Lists/'+ this.details.id + '/agent-list-customer-order').then(response => response.json())
+                    .then(response => {
+                        this.CustomerOrder = response.data;
+                        $('#table-customer-order').DataTable().destroy();
+                        this.$nextTick(() =>
+                        {
+                            $('#table-customer-order').DataTable(
+                                {
+                                    scrollX: false,
+                                    scrollCollapse: true,
+                                    responsive: true,
+                                    pagingType: 'full_numbers',
+                                    columnDefs: [
+                                        { "width": "50px", "targets": 0 },
+                                        { "width": "150px", "targets": 1 },
+                                        { "width": "300px", "targets": 2 },
+                                        { "width": "100px", "targets": 3 },
+                                        { "width": "50px", "targets": 4 },
+                                        {
+                                            //targets: 3,
+                                            width: '50px',
+                                            title: 'Actions',
+                                            orderable: false,
+                                            render: function(data, type, full, meta) {
+
+                                            },
+                                        },
                                     ],
                                 }
                             );

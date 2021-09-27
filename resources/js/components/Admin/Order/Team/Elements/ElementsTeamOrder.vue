@@ -42,6 +42,7 @@
                 <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">Pending</span>
                 <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">Success</span>
                 <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">Decline</span>
+                <span v-if="Order.status =='4'" class="label label-warning label-pill label-inline mr-2">Pending Payment</span>
             </td>
             <td>
                 <a :href="Order.id +'/order-details'" class="btn btn-sm btn-primary">View</a>

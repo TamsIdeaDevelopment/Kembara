@@ -207,7 +207,7 @@
                 this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
                 if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak' || this.$parent.DeliveryDetails.state =='Labuan')
                 {
-                    this.$parent.delivery_fee = 30.90;
+                    this.$parent.delivery_fee = 25;
 
                     if(this.isSeller == 1)
                     {
@@ -282,7 +282,7 @@
                 this.$parent.Totals = this.$parent.Totals - this.$parent.total_delivery_fee;
                 if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak' || this.$parent.DeliveryDetails.state =='Labuan')
                 {
-                    this.$parent.delivery_fee = 30.90;
+                    this.$parent.delivery_fee = 25;
 
                     {
                         this.$parent.total_delivery_fee = this.$parent.delivery_fee * this.tempCount;

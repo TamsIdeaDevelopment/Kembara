@@ -399,7 +399,7 @@
 
                             if(this.$parent.DeliveryDetails.state =='Sabah' || this.$parent.DeliveryDetails.state =='Sarawak' || this.$parent.DeliveryDetails.state =='Labuan')
                             {
-                                this.$parent.delivery_fee = 30.90;
+                                this.$parent.delivery_fee = 25;
                                 this.$parent.delivery_fee_single = 27;
                                 if(this.isSeller == 1)
                                 {

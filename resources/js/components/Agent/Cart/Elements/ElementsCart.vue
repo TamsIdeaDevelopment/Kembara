@@ -57,8 +57,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="row  d-flex justify-content-end" v-if="$parent.TotalMOQNormal != 0 || $parent.TotalMOQSpecial != 0 || $parent.TotalMOQAddOn != 0">
-                    <div class="row d-inline"  v-if="$parent.TotalNormal >= $parent.TotalMOQNormal && $parent.TotalSpecial >= $parent.TotalMOQSpecial && $parent.TotalAddOn >= $parent.TotalMOQAddOn">
+                <div class="row" v-if="$parent.TotalMOQSingle != 0">
+                    <div class="col-lg-12 ">
+                        <div class="row  d-inline"  v-if="$parent.TotalMOQSingle > $parent.TotalSingle">
+                            <div class="col-lg-12 d-flex justify-content-end">
+                                <h6 class="font-weight-bolder  mt-n5">MOQ Single : <span class="text-danger">{{$parent.TotalMOQSingle}}</span></h6>
+
+                            </div>
+                        </div>
+                        <div class="row d-inline"  v-if="$parent.TotalMOQSingle > $parent.TotalSingle">
+                            <div class="col-lg-12 d-flex justify-content-end">
+                                <h6 class="font-weight-bolder  mt-n5">Set Single : <span class="text-danger">{{$parent.TotalMOQSingle - $parent.TotalSingle}} More ..</span></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  d-flex justify-content-end" v-if="$parent.TotalMOQNormal != 0 || $parent.TotalMOQSpecial != 0 || $parent.TotalMOQAddOn != 0 || $parent.TotalMOQSingle != 0">
+                    <div class="row d-inline"  v-if="$parent.TotalNormal >= $parent.TotalMOQNormal && $parent.TotalSpecial >= $parent.TotalMOQSpecial && $parent.TotalAddOn >= $parent.TotalMOQAddOn && $parent.TotalSingle >= $parent.TotalMOQSingle">
                         <div class="col-lg-12 d-flex justify-content-end">
                             <h6 class="font-weight-bolder  mt-n5"><span class="text-success">You can place order now</span></h6>
                         </div>
@@ -319,6 +334,9 @@
                             }
                             if(this.$parent.Carts[key].options.product_type === 'Single')
                             {
+                                let moq = parseInt(this.$parent.Carts[key].options.MOQ);
+                                this.$parent.TotalMOQSingle = moq;
+
                                 let quantity = parseInt(this.$parent.Carts[key].qty);
                                 this.$parent.TotalSingle = this.$parent.TotalSingle + quantity;
 
@@ -329,11 +347,11 @@
                             }
                         }
 
-                        if(this.$parent.TotalMOQNormal > this.$parent.TotalNormal || this.$parent.TotalMOQSpecial > this.$parent.TotalSpecial || this.$parent.TotalMOQAddOn > this.$parent.TotalAddOn)
+                        if(this.$parent.TotalMOQNormal > this.$parent.TotalNormal || this.$parent.TotalMOQSpecial > this.$parent.TotalSpecial || this.$parent.TotalMOQAddOn > this.$parent.TotalAddOn || this.$parent.TotalMOQSingle > this.$parent.TotalSingle)
                         {
                             this.$parent.CartStatus = false;
                         }
-                        if( this.$parent.TotalNormal >= this.$parent.TotalMOQNormal && this.$parent.TotalSpecial >= this.$parent.TotalMOQSpecial && this.$parent.TotalAddOn >= this.$parent.TotalMOQAddOn)
+                        if( this.$parent.TotalNormal >= this.$parent.TotalMOQNormal && this.$parent.TotalSpecial >= this.$parent.TotalMOQSpecial && this.$parent.TotalAddOn >= this.$parent.TotalMOQAddOn && this.$parent.TotalSingle >= this.$parent.TotalMOQSingle)
                         {
                             this.$parent.CartStatus = true;
                         }

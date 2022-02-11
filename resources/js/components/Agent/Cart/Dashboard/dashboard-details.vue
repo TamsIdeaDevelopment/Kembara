@@ -168,6 +168,7 @@
                 TotalMOQNormal:0,
                 TotalMOQSpecial:0,
                 TotalMOQAddOn:0,
+                TotalMOQSingle:0,
                 TotalItems:0,
                 CountNormal: [],
                 CountSpecial: [],

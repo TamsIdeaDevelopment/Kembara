@@ -82,6 +82,7 @@ class FilterOrder
                     ->where('status',1)
                     ->where('buyer_type',null)
                     ->whereMonth('created_at', '=', Carbon::now()->month)
+                    ->whereYear('created_at', '=', Carbon::now()->year)
                     ->latest()->get();
 
             }
@@ -118,6 +119,7 @@ class FilterOrder
                 $data = Order::where('seller_id',$seller_id)
                     ->where('status',1)
                     ->whereMonth('created_at', '=', Carbon::now()->month)
+                    ->whereYear('created_at', '=', Carbon::now()->year)
                     ->latest()->get();
 
             }

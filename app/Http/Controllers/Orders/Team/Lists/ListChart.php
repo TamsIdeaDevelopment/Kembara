@@ -50,6 +50,7 @@ class ListChart
                 ->where('buyer_type',null)
                 ->where('status',1)
                 ->whereMonth('created_at', '=', Carbon::now()->month)
+                ->whereYear('created_at', '=', Carbon::now()->year)
                 ->sum('total');
 
             $month = number_format((float)$month, 2, '.', '');
@@ -94,6 +95,7 @@ class ListChart
                 ->where('HQ',1)
                 ->where('status',1)
                 ->whereMonth('created_at', '=', Carbon::now()->month)
+                ->whereYear('created_at', '=', Carbon::now()->year)
                 ->sum('total');
 
             $month = number_format((float)$month, 2, '.', '');

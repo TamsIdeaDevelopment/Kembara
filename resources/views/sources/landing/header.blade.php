@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- SEO Meta description -->
-    <meta name="description" content="BizBite corporate business template or agency and marketing template helps you easily create websites for your business.">
+    <meta name="description" content="PENDAPATAN ANDA TERJEJAS AKIBAT PKP? KETAHUI BAGAIMANA EJEN KAMI MAMPU TAMBAH PENDAPATAN DENGAN PRODUK READY-TO-EAT (RTE)!">
     <meta name="author" content="ThemeTags">
 
     <!-- OG Meta Tags to improve the way the post looks when you share the page on LinkedIn, Facebook, Google+ -->

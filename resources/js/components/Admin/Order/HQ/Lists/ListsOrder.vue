@@ -24,7 +24,17 @@
             </div>
         </div>
         <div class="card-body">
-            <order-hq-elements :data="this.Orders"></order-hq-elements>
+            <div v-show="isSpinner">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <button class="btn btn-light" type="button" disabled>
+                        <span class="spinner-border text-primary spinner-border-sm mr-05" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                </div>
+            </div>
+            <div v-show="!isSpinner">
+                <order-hq-elements :data="this.Orders"></order-hq-elements>
+            </div>
         </div>
     </div>
 </template>
@@ -35,6 +45,7 @@
                 Orders:[],
                 filterOrder:4,
                 dataTable:null,
+                isSpinner: false,
             }
         },
         created(){
@@ -71,9 +82,11 @@
             },
             searchOrder()
             {
+                this.isSpinner = true;
                 fetch('/api/v1/orders/HQ/Lists/'+ this.filterOrder +'/1/No/admin-filter-order').then(response => response.json())
                     .then(response => {
                         this.Orders = response.data;
+                        this.isSpinner = false;
                         $('#kt_datatable').DataTable().destroy();
                         this.$nextTick(() =>
                         {
@@ -110,10 +123,12 @@
                     .catch(error => console.log(error))
             },
             fetchOrder(){
+                this.isSpinner = true;
                 fetch('/api/v1/orders/HQ/Lists/orders').then(response => response.json())
                     .then(response => {
                         this.Orders = response.data;
-                        console.log(this.Orders);
+                        // console.log(this.Orders);
+                        this.isSpinner = false;
                         $('#kt_datatable').DataTable().destroy();
                         this.$nextTick(() =>
                         {

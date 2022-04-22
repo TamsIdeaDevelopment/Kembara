@@ -57,28 +57,30 @@
                 <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">PROCESSING</span>
                 <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">SUCCESS</span>
                 <span v-if="Order.status =='3'" class="label label-danger label-pill label-inline mr-2">REJECTED</span>
-                <span v-if="Order.status =='4'" class="label label-warning label-pill label-inline mr-2">PENDING PAYMENT</span>
+                <span v-if="Order.status =='0'" class="label label-warning label-pill label-inline mr-2">PENDING PAYMENT</span>
             </td>
             <td>
                 RM {{Order.total}}
             </td>
-            <td  v-if="Order.status =='2'">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <a :href="Order.id +'/order-details'" class="btn btn-sm btn-secondary">View</a>
+            <td>
+                <div v-if="Order.status =='2'">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a :href="Order.id +'/order-details'" class="btn btn-sm btn-secondary">View</a>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-12">
+                            <a href="javascript:;" @click="completeOrder(Order.id,Order.buyer_id.id)" class="btn btn-sm btn-primary">Mark as Complete</a>
+                        </div>
                     </div>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-lg-12">
-                        <a href="javascript:;" @click="completeOrder(Order.id,Order.buyer_id.id)" class="btn btn-sm btn-primary">Mark as Complete</a>
-                    </div>
+                <div v-if="Order.status =='1' || Order.status =='3'">
+                    <a :href="Order.id +'/order-details'" class="btn btn-sm btn-secondary">View</a>
                 </div>
-            </td>
-            <td  v-if="Order.status =='1' || Order.status =='3'">
-                <a :href="Order.id +'/order-details'" class="btn btn-sm btn-secondary">View</a>
-            </td>
-            <td  v-if="Order.status =='4'">
-                <a  :href="'get-billplz/' +Order.id" class="btn btn-sm btn-secondary">View</a>
+                <div v-if="Order.status =='0'">
+                    <a  :href="'get-billplz/' +Order.id" class="btn btn-sm btn-secondary">View</a>
+                </div>
             </td>
             <!--<td>-->
                 <!--<button class="btn btn-sm btn-danger">Delete</button>-->

@@ -108,7 +108,10 @@
                             <div class="ml-10 symbol symbol-60 flex-shrink-0 mr-4 bg-light">
                                 <div class="symbol-label" :style="'background-image:url( storage/Product/' + Cart.options.size +')'"></div>
                             </div>
-                            <a href="#" class="text-dark text-hover-primary">{{Cart.name}}</a>
+                            <div class="d-flex flex-column flex-grow-1">
+                                <a href="#" class="text-dark text-hover-primary">{{Cart.name}}</a>
+                                <span class="text-primary font-weight-lighter">{{Cart.options.description}}</span>
+                            </div>
 
                             <!--end::Symbol-->
                         </div>

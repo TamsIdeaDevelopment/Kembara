@@ -228,7 +228,7 @@ class CartController
             }
         }
 
-        $cart = Cart::add($data->id, $data->name, $quantity, $price, $data->weight, ['size' => $data->featured_image , 'stock' => $stock, 'MOQ' => $minimum_order, 'stock' => $stock, 'product_type' => $product_type]);
+        $cart = Cart::add($data->id, $data->name, $quantity, $price, $data->weight, ['size' => $data->featured_image , 'stock' => $stock, 'MOQ' => $minimum_order, 'stock' => $stock, 'product_type' => $product_type, 'description' => $data->description]);
 
         $cart_items = CartItem::create([
             'rowId' =>  $cart->rowId,

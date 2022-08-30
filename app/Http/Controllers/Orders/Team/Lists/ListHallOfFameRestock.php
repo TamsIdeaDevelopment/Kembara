@@ -35,6 +35,7 @@ class ListHallOfFameRestock
             ->join('agent', 'agent.user_id', '=', 'users.id')
 //            ->whereYear('orders.created_at', $year)
             ->whereMonth('orders.created_at', '=', Carbon::now()->month)
+            ->whereYear('orders.created_at', '=', Carbon::now()->year)
             ->where('orders.status', '=', 1)
 //            ->where('orders.HQ', '=', 0)
             ->where('orders.seller_id', '=', $leader_id)

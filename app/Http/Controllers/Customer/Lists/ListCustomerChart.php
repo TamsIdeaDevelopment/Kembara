@@ -37,6 +37,7 @@ class ListCustomerChart
             ->where('HQ',0)
             ->where('buyer_type','Customer')
             ->whereMonth('created_at', '=', Carbon::now()->month)
+            ->whereYear('created_at', '=', Carbon::now()->year)
             ->sum('total');
 
         $month = number_format((float)$month, 2, '.', '');

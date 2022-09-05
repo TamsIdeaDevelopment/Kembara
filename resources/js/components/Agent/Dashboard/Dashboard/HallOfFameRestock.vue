@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-header">
                         <div class="card-title">
-                            <h3 class="card-label text-success text-center">Hall Of Fame - Restock</h3>
+                            <h3 class="card-label text-success text-center">Hall Of Fame - Sales</h3>
                         </div>
                     </div>
                 </div>

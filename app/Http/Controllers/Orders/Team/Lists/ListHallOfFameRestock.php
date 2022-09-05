@@ -30,20 +30,21 @@ class ListHallOfFameRestock
 
     public function HallOfFameRestock($user_id,$leader_id,$agent_levels_id)
     {
-        $data = Order::selectRaw('SUM(total) as total, buyer_id')
-            ->join('users', 'users.id', '=', 'orders.buyer_id')
+        $data = Order::selectRaw('SUM(total) as total, orders.seller_id as buyer_id')
+            ->join('users', 'users.id', '=', 'orders.seller_id')
             ->join('agent', 'agent.user_id', '=', 'users.id')
 //            ->whereYear('orders.created_at', $year)
             ->whereMonth('orders.created_at', '=', Carbon::now()->month)
             ->whereYear('orders.created_at', '=', Carbon::now()->year)
             ->where('orders.status', '=', 1)
 //            ->where('orders.HQ', '=', 0)
-            ->where('orders.seller_id', '=', $leader_id)
-            ->where('orders.buyer_type', '=', null)
+            ->where('orders.seller_id', '!=', 1)
+//            ->where('orders.buyer_type', '!=', null)
             ->where('agent.leader_id', '=', $leader_id)
             ->where('agent.agent_levels_id', '=', $agent_levels_id)
-            ->groupBy('buyer_id')->orderBy('total', 'desc')->get()->take(10);
+            ->groupBy('orders.seller_id')->orderBy('total', 'desc')->get()->take(10);
 
         return HallOfFameResources::collection($data);
     }
 }
+

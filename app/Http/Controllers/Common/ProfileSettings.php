@@ -15,6 +15,7 @@ use App\User;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class ProfileSettings
 {
@@ -58,9 +59,9 @@ class ProfileSettings
         $user->phone_no = $request->input('phone_no');
         $user->postcode = $request->input('postcode');
         $user->city = $request->input('city');
-        $user->state = $request->input('state');
+        $user->state = Str::title($request->input('state'));
         $user->east_west = $east_west;
-        $user->country = $request->input('country');
+        $user->country = Str::title($request->input('country'));
         $user->address_1 = $request->input('address_1');
         $user->bank_name = $request->input('bank_name');
         $user->bank_acc_no = $request->input('bank_acc_no');

@@ -15,7 +15,7 @@
                                                         <div class="symbol-label"  :style="'background-image:url('+ image_source + details.avatar +')'"></div>
                                                     </div>
                                                     <div class="symbol symbol-150 symbol-xl-150" v-if="!details.avatar">
-                                                        <div class="symbol-label  w-150px h-150px"> <i  style="font-size: 70px"class="flaticon2-user"></i></div>
+                                                        <div class="symbol-label  w-150px h-150px"> <i  style="font-size: 70px" class="flaticon2-user"></i></div>
                                                     </div>
                                                     <h5 class="font-weight-bold my-2 mt-5">{{details.name}}</h5>
                                                 </div>
@@ -305,7 +305,7 @@
             fetchHQOrder(){
                 fetch('/api/v1/orders/team/Lists/'+ this.details.id + '/agent-restock').then(response => response.json())
                     .then(response => {
-                        this.Orders = response.data;
+                        this.Orders = response;
                         $('#table-agent-restock').DataTable().destroy();
                         this.$nextTick(() =>
                         {
@@ -341,7 +341,7 @@
             fetchAgentOrder(){
                 fetch('/api/v1/orders/team/Lists/'+ this.details.id + '/agent-orders').then(response => response.json())
                     .then(response => {
-                        this.AgentOrder = response.data;
+                        this.AgentOrder = response;
                         $('#table-agent-order').DataTable().destroy();
                         this.$nextTick(() =>
                         {
@@ -400,7 +400,7 @@
             fetchCustomerOrder(){
                 fetch('/api/v1/Customer/Lists/'+ this.details.id + '/agent-list-customer-order').then(response => response.json())
                     .then(response => {
-                        this.CustomerOrder = response.data;
+                        this.CustomerOrder = response;
                         $('#table-customer-order').DataTable().destroy();
                         this.$nextTick(() =>
                         {

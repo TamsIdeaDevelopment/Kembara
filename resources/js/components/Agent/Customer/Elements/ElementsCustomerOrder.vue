@@ -28,7 +28,7 @@
                     <div class="col-auto">
                         <div class="row">
                             <div class="col-sm-auto">
-                                {{Order.deliver_to}}
+                                {{Order.buyer_name}}
                             </div>
                         </div>
                     </div>

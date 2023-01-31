@@ -21,17 +21,17 @@
                     <div class="col-auto">
                         <div class="row">
                             <div class="col-12">
-                                <div class="symbol" v-if="Order.buyer_id.avatar">
-                                    <div class="symbol-label  w-50px h-50px" :style="'background-image:url('+ image_source + Order.buyer_id.avatar +')'"></div>
+                                <div class="symbol" v-if="Order.buyer_avatar">
+                                    <div class="symbol-label  w-50px h-50px" :style="'background-image:url('+ image_source + Order.buyer_avatar +')'"></div>
                                 </div>
-                                <div class="symbol" v-if="!Order.buyer_id.avatar">
+                                <div class="symbol" v-if="!Order.buyer_avatar">
                                     <div class="symbol-label  w-50px h-50px"> <i class="flaticon2-user"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-auto">
-                                {{Order.buyer_id.name}}
+                                {{Order.buyer_name}}
                             </div>
                         </div>
                     </div>

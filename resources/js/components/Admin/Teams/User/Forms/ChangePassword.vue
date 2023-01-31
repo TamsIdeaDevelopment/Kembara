@@ -13,6 +13,9 @@
             </div>
             <div class="row">
                 <div class="col-lg-12">
+                    <div class="input-info text-danger"><strong>*Cannot contain spaces</strong></div>
+                            <div class="input-info text-danger"><strong>*Max 50 characters including UPPER and lower case, numbers and symbols, i.e. @ _ - . + ! $ ^ & * ; </strong></div>
+                            <br>
                     <form @submit.prevent="updatePassword">
                         <div class="card-body   p-0 pl-0">
                             <div class="row" v-if="('success' in errors)">

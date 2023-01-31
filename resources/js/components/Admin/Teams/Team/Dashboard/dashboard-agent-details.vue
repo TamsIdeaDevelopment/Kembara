@@ -337,7 +337,7 @@
             fetchHQOrder(){
                 fetch('/api/v1/orders/team/Lists/'+ this.details.id + '/agent-restock').then(response => response.json())
                     .then(response => {
-                        this.Orders = response.data;
+                        this.Orders = response;
                         $('#table-hq-order').DataTable().destroy();
                         this.$nextTick(() =>
                         {
@@ -373,7 +373,7 @@
             fetchAgentOrder(){
                 fetch('/api/v1/orders/team/Lists/'+ this.details.id + '/agent-orders').then(response => response.json())
                     .then(response => {
-                        this.AgentOrder = response.data;
+                        this.AgentOrder = response;
                         $('#table-agent-order').DataTable().destroy();
                         this.$nextTick(() =>
                         {
@@ -409,7 +409,7 @@
             fetchCustomerOrder(){
                 fetch('/api/v1/Customer/Lists/'+ this.details.id + '/agent-list-customer-order').then(response => response.json())
                     .then(response => {
-                        this.CustomerOrder = response.data;
+                        this.CustomerOrder = response;
                         $('#table-customer-order').DataTable().destroy();
                         this.$nextTick(() =>
                         {

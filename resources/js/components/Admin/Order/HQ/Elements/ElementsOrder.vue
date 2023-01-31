@@ -27,18 +27,18 @@
                     <div class="col-auto">
                         <div class="row">
                             <div class="col-12">
-                                <div class="symbol" v-if="Order.buyer_id.avatar">
-                                    <div class="symbol-label  w-50px h-50px" :style="'background-image:url('+ image_source + Order.buyer_id.avatar +')'"></div>
+                                <div class="symbol" v-if="Order.buyer_avatar">
+                                    <div class="symbol-label  w-50px h-50px" :style="'background-image:url('+ image_source + Order.buyer_avatar +')'"></div>
                                 </div>
-                                <div class="symbol" v-if="!Order.buyer_id.avatar">
+                                <div class="symbol" v-if="!Order.buyer_avatar">
                                     <div class="symbol-label  w-50px h-50px"> <i class="flaticon2-user"></i></div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-auto">
-                                {{Order.buyer_id.name}}
-                                <span class="text-success" v-if="Order.buyer_id.paid"></span>
+                                {{Order.buyer_name}}
+                                <!-- <span class="text-success" v-if="Order.buyer_id.paid"></span> -->
                             </div>
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col-lg-12">
-                            <a href="javascript:;" @click="completeOrder(Order.id,Order.buyer_id.id)" class="btn btn-sm btn-primary">Mark as Complete</a>
+                            <a href="javascript:;" @click="completeOrder(Order.id,Order.buyer_id)" class="btn btn-sm btn-primary">Mark as Complete</a>
                         </div>
                     </div>
                 </div>

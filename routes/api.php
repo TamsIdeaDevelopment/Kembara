@@ -28,6 +28,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
 
         Route::group(['prefix' => 'Lists', 'as' => 'Lists.','namespace' => 'Lists'], function () {
             Route::get('{user_id}/agent-list-customer-order', 'ListCustomerOrder@agentListCustomerOrder')->name('agent-list-customer-order');
+            Route::get('{start_date}/{end_date}/{user_id}/search-customer-order', 'ListCustomerOrder@searchCustomerOrder')->name('search-customer-order');
 
             Route::get('{user_id}/customer-chart', 'ListCustomerChart@listChart')->name('customer-chart');
         });
@@ -258,6 +259,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
                 Route::get('{agentID}/agent-hq-orders', 'ListOrder@AgentListOrder')->name('agent.hq.orders');
                 Route::get('{orderID}/order-details', 'ListOrder@OrderDetails')->name('order.details');
                 Route::get('{orderID}/order-items', 'ListOrder@OrderItems')->name('order.items');
+                Route::get('{start_date}/{end_date}/search-customer-order', 'ListOrder@searchCustomerOrder')->name('search-customer-order');
+                
 
                 Route::get('/check-last-order', 'ListOrder@checkLastOrder')->name('check-last-order');
 
@@ -298,6 +301,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'v1', 'as' => 'api.'], function
                 Route::get('/orders', 'ListOrder@list')->name('orders');
                 Route::get('{agentID}/agent-orders', 'ListOrder@AgentListOrder')->name('agent.orders');
                 Route::get('{agentID}/agent-restock', 'ListOrder@AgentListRestock')->name('agent.restock');
+                Route::get('{start_date}/{end_date}/search-customer-order', 'ListOrder@searchCustomerOrder')->name('search-customer-order');
+                Route::get('{start_date}/{end_date}/{id}/search-customer-order-hq', 'ListOrder@searchCustomerOrderHQ')->name('search-customer-order-hq');
+                Route::get('{start_date}/{end_date}/{id}/search-customer-order-team', 'ListOrder@searchCustomerOrderTeam')->name('search-customer-order-team');
                 Route::get('{user_id}/agent-chart', 'ListChart@listChart')->name('agent-chart');
 
                 Route::get('{user_id}/{leader_id}/{agent_levels_id}/list-hall-of-fame-restock', 'ListHallOfFameRestock@HallOfFameRestock')->name('agent-list-hall-of-fame-restock');

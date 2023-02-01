@@ -34,8 +34,8 @@ class ListOrder
         // return OrdersResources::collection($data);
 
         $order = DB::select(
-            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, c.avatar as buyer_avatar, b.name as seller_name, a.total, a.created_at, a.status, c.name as buyer_name FROM orders as a, users as b, users as c 
-                                WHERE a.seller_id=b.id 
+            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, c.avatar as buyer_avatar, b.name as seller_name, a.total, a.created_at, a.status, c.name as buyer_name FROM orders as a, users as b, users as c
+                                WHERE a.seller_id=b.id
                                 AND a.buyer_id = c.id
                                 AND a.HQ = 0
                                 AND a.buyer_type IS NULL
@@ -58,8 +58,8 @@ class ListOrder
         // return OrdersResources::collection($data);
 
         $order = DB::select(
-            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, b.name as seller_name, a.total, a.created_at, a.status FROM orders as a, users as b 
-                                WHERE a.seller_id=b.id 
+            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, b.name as seller_name, a.total, a.created_at, a.status FROM orders as a, users as b
+                                WHERE a.seller_id=b.id
                                 AND a.seller_id= :seller_id
                                 AND a.buyer_type is null
                                 AND YEAR(a.created_at) = :year
@@ -75,6 +75,28 @@ class ListOrder
 
     }
 
+    public function AgentListOrderTeam($id)
+    {
+        // $data = $this->repository->where([
+        //     ['seller_id', '=', $id],['buyer_type', '=', null]])->latest()->get();
+
+        // return OrdersResources::collection($data);
+
+        $order = DB::select(
+            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, b.name as seller_name, a.total, a.created_at, a.status FROM orders as a, users as b
+                                WHERE a.seller_id=b.id
+                                AND a.seller_id= :seller_id
+                                AND a.buyer_type is null
+                                ORDER BY a.created_at DESC"),
+            array(
+                'seller_id' => $id,
+            )
+        );
+
+        return $order;
+
+    }
+
     public function AgentListRestock($id)
     {
         // $data = $this->repository->where([
@@ -83,8 +105,8 @@ class ListOrder
         // return OrdersResources::collection($data);
 
         $order = DB::select(
-            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, b.name as seller_name, a.total, a.created_at, a.status FROM orders as a, users as b 
-                                WHERE a.seller_id=b.id 
+            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, b.name as seller_name, a.total, a.created_at, a.status FROM orders as a, users as b
+                                WHERE a.seller_id=b.id
                                 AND a.buyer_id= :buyer_id
                                 AND a.buyer_type is null
                                 AND YEAR(a.created_at) = :year
@@ -100,12 +122,34 @@ class ListOrder
 
     }
 
+    public function AgentListRestockTeam($id)
+    {
+        // $data = $this->repository->where([
+        //     ['buyer_id', '=', $id],['buyer_type', '=', null]])->latest()->get();
+
+        // return OrdersResources::collection($data);
+
+        $order = DB::select(
+            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, b.name as seller_name, a.total, a.created_at, a.status FROM orders as a, users as b
+                                WHERE a.seller_id=b.id
+                                AND a.buyer_id= :buyer_id
+                                AND a.buyer_type is null
+                                ORDER BY a.created_at DESC"),
+            array(
+                'buyer_id' => $id,
+            )
+        );
+
+        return $order;
+
+    }
+
     public function searchCustomerOrder($start_date, $end_date)
     {
 
         $order = DB::select(
-            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, c.avatar as buyer_avatar, b.name as seller_name, a.total, a.created_at, a.status, c.name as buyer_name FROM orders as a, users as b, users as c 
-                            WHERE a.seller_id=b.id 
+            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, c.avatar as buyer_avatar, b.name as seller_name, a.total, a.created_at, a.status, c.name as buyer_name FROM orders as a, users as b, users as c
+                            WHERE a.seller_id=b.id
                             AND a.buyer_id = c.id
                             AND a.HQ = 0
                             AND a.buyer_type IS NULL
@@ -125,10 +169,10 @@ class ListOrder
     {
 
         $order = DB::select(
-            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, b.name as seller_name, a.total, a.created_at, a.status FROM orders as a, users as b 
+            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, b.name as seller_name, a.total, a.created_at, a.status FROM orders as a, users as b
                                 WHERE a.seller_id=b.id
                                 AND a.buyer_id= :buyer_id
-                                AND a.buyer_type IS null 
+                                AND a.buyer_type IS null
                                 AND DATE(a.created_at) >= :start_date
                                 AND DATE(a.created_at) <= :end_date"),
             array(
@@ -146,10 +190,10 @@ class ListOrder
     {
 
         $order = DB::select(
-            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as buyer_avatar, b.name as buyer_name, a.total, a.created_at, a.status FROM orders as a, users as b 
+            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as buyer_avatar, b.name as buyer_name, a.total, a.created_at, a.status FROM orders as a, users as b
                                 WHERE a.buyer_id=b.id
                                 AND a.seller_id= :seller_id
-                                AND a.buyer_type is null 
+                                AND a.buyer_type is null
                                 AND DATE(a.created_at) >= :start_date
                                 AND DATE(a.created_at) <= :end_date"),
             array(

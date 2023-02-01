@@ -335,7 +335,7 @@
                     .catch(error => console.log(error))
             },
             fetchHQOrder(){
-                fetch('/api/v1/orders/team/Lists/'+ this.details.id + '/agent-restock').then(response => response.json())
+                fetch('/api/v1/orders/team/Lists/'+ this.details.id + '/agent-restock-team').then(response => response.json())
                     .then(response => {
                         this.Orders = response;
                         $('#table-hq-order').DataTable().destroy();
@@ -371,7 +371,7 @@
                     .catch(error => console.log(error))
             },
             fetchAgentOrder(){
-                fetch('/api/v1/orders/team/Lists/'+ this.details.id + '/agent-orders').then(response => response.json())
+                fetch('/api/v1/orders/team/Lists/'+ this.details.id + '/agent-orders-team').then(response => response.json())
                     .then(response => {
                         this.AgentOrder = response;
                         $('#table-agent-order').DataTable().destroy();
@@ -407,7 +407,7 @@
                     .catch(error => console.log(error))
             },
             fetchCustomerOrder(){
-                fetch('/api/v1/Customer/Lists/'+ this.details.id + '/agent-list-customer-order').then(response => response.json())
+                fetch('/api/v1/Customer/Lists/'+ this.details.id + '/agent-list-customer-order-team').then(response => response.json())
                     .then(response => {
                         this.CustomerOrder = response;
                         $('#table-customer-order').DataTable().destroy();

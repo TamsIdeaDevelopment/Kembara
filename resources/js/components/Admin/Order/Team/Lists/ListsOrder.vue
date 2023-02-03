@@ -12,7 +12,7 @@
                         <div class="row text-right">
                             <div class="col-lg-12">
                                 <div class="row">
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-12">
                                         <select class="form-control select2" style="width:100%" id="select-filter-order"
                                             v-model="filterOrder">
                                             <option value="4">All</option>
@@ -22,10 +22,10 @@
                                             <option value="1">Completed</option>
                                         </select>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <!-- <div class="col-lg-4">
                                         <button class="btn btn-sm btn-primary" @click="filterValidation">
                                             Search</button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div><br>
@@ -126,9 +126,11 @@
             },
             searchOrder()
             {
+                this.isSpinner = true;
                 fetch('/api/v1/orders/HQ/Lists/'+ this.filterOrder +'/0/No/admin-filter-order').then(response => response.json())
                     .then(response => {
-                        this.Orders = response.data;
+                        this.Orders = response;
+                        this.isSpinner = false;
                         console.log(this.Orders);
                         $('#kt_datatable').DataTable().destroy();
                         this.$nextTick(() =>
@@ -211,7 +213,11 @@
             this.orderDetails = [];
             this.orderAll = false;
 
-            fetch('/api/v1/orders/team/Lists/' + this.StartDate + '/' + this.EndDate + '/search-customer-order').then(response => response.json())
+            if (!this.StartDate && !this.EndDate){
+                this.filterValidation();
+            }
+            if (this.StartDate && this.EndDate){
+                fetch('/api/v1/orders/team/Lists/' + this.StartDate + '/' + this.EndDate + '/' + this.filterOrder +'/search-customer-order').then(response => response.json())
                 .then(response => {
                     this.Orders = response;
 
@@ -220,33 +226,39 @@
                     $('#kt_datatable').DataTable().destroy();
                     this.$nextTick(() => {
                         $('#kt_datatable').DataTable(
-                                {
-                                    responsive: true,
-                                    pagingType: 'full_numbers',
-                                    columnDefs: [
-                                        { "responsivePriority": 1, "targets": 0 },
-                                        { "responsivePriority": 2, "targets": 4 },
-                                        { "width": "50px", "targets": 0 },
-                                        { "width": "350px", "targets": 1 },
-                                        { "width": "300px", "targets": 2 },
-                                        { "width": "100px", "targets": 3 },
-                                        { "width": "50px", "targets": 4 },
-                                        {
-                                            //targets: 3,
-                                            width: '150px',
-                                            title: 'Actions',
-                                            orderable: false,
-                                            render: function(data, type, full, meta) {
+                            {
+                                scrollX: false,
+                                scrollCollapse: true,
+                                responsive: true,
+                                pagingType: 'full_numbers',
+                                columnDefs: [
+                                    { "responsivePriority": 1, "targets": 0 },
+                                    { "responsivePriority": 2, "targets": 4 },
+                                    { "width": "50px", "targets": 0 },
+                                    { "width": "50px", "targets": 1 },
+                                    { "width": "450px", "targets": 2 },
+                                    { "width": "50px", "targets": 3 },
+                                    { "width": "100px", "targets": 4 },
+                                    { "width": "50px", "targets": 5 },
+                                    { "width": "50px", "targets": 6 },
+                                    { "width": "50px", "targets": 7 },
+                                    {
+                                        //targets: 3,
+                                        width: '50px',
+                                        title: 'Actions',
+                                        orderable: false,
+                                        render: function (data, type, full, meta) {
 
-                                            },
                                         },
-                                    ],
-                                }
-                            );
+                                    },
+                                ],
+                            }
+                        );
                     });
 
                 })
                 .catch(error => console.log(error))
+            }
         },
         }
     }

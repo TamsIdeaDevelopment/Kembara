@@ -54,7 +54,7 @@
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
         <div class="card-body">
             <div v-show="isSpinner">

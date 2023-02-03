@@ -16,6 +16,7 @@ Use App\Http\Resources\Orders as OrdersResources;
 use App\Http\Resources\OrderItems as OrderItemsResources;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class FilterOrder
@@ -39,21 +40,84 @@ class FilterOrder
 
     public function adminFilter($status,$HQ,$customer)
     {
+        // if($customer === 'Customer')
+        // {
+        //     $data = $this->repository->where('status', $status)
+        //         ->where('HQ', $HQ)
+        //         ->where('buyer_type', $customer)
+        //         ->latest()->get();
+        // }
+        // else
+        // {
+        //     $data = $this->repository->where('status', $status)
+        //         ->where('HQ', $HQ)
+        //         ->where('buyer_type', null)
+        //         ->latest()->get();
+        // }
+        // return OrdersResources::collection($data);
+
         if($customer === 'Customer')
         {
-            $data = $this->repository->where('status', $status)
-                ->where('HQ', $HQ)
-                ->where('buyer_type', $customer)
-                ->latest()->get();
+            $order = DB::select(
+                DB::raw("SELECT a.*, a.paid, a.id, b.avatar, a.HQ, DATE(a.created_at) as order_date, a.status, b.name as buyer_name FROM orders as a, users as b
+                                    WHERE a.buyer_id=b.id
+                                    AND a.status = :status
+                                    AND a.buyer_type= :customer 
+                                    AND a.HQ = :HQ
+                                    AND YEAR(a.created_at) = :year
+                                    AND MONTH(a.created_at) = :month
+                                    ORDER BY a.id DESC"),
+                array(
+                    'status' => $status,
+                    'customer' => $customer,
+                    'HQ' => $HQ,
+                    'month' => Carbon::now()->month,
+                    'year' => Carbon::now()->year,
+                )
+            );
         }
         else
         {
-            $data = $this->repository->where('status', $status)
-                ->where('HQ', $HQ)
-                ->where('buyer_type', null)
-                ->latest()->get();
+            if($HQ == 1){
+                $order = DB::select(
+                    DB::raw("SELECT a.*, a.paid, a.id, b.avatar, a.HQ, DATE(a.created_at) as order_date, a.status, b.name as buyer_name FROM orders as a, users as b
+                                        WHERE a.buyer_id=b.id
+                                        AND a.status = :status
+                                        AND a.buyer_type is null
+                                        AND a.HQ = :HQ
+                                        AND YEAR(a.created_at) = :year
+                                        AND MONTH(a.created_at) = :month
+                                        ORDER BY a.id DESC"),
+                    array(
+                        'status' => $status,
+                        'HQ' => $HQ,
+                        'month' => Carbon::now()->month,
+                        'year' => Carbon::now()->year,
+                    )
+                );
+            }
+            if($HQ == 0){
+                $order = DB::select(
+                    DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.avatar as seller_avatar, c.avatar as buyer_avatar, b.name as seller_name, a.total, DATE(a.created_at) as order_date, a.status, c.name as buyer_name FROM orders as a, users as b, users as c
+                                        WHERE a.seller_id=b.id
+                                        AND a.buyer_id = c.id
+                                        AND a.status = :status
+                                        AND a.buyer_type is null
+                                        AND a.HQ = :HQ
+                                        AND YEAR(a.created_at) = :year
+                                        AND MONTH(a.created_at) = :month
+                                        ORDER BY a.id DESC"),
+                    array(
+                        'status' => $status,
+                        'HQ' => $HQ,
+                        'month' => Carbon::now()->month,
+                        'year' => Carbon::now()->year,
+                    )
+                );
+            }
+
         }
-        return OrdersResources::collection($data);
+        return $order;
     }
 
     public function ListChartOrderHQ($option,$seller_id)

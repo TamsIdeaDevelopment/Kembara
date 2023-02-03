@@ -43,11 +43,12 @@ class ListOrder
     public function list()
     {
         $order = DB::select(
-            DB::raw("SELECT a.*, a.paid, a.id, b.avatar, a.HQ, a.created_at, a.status, b.name as buyer_name FROM orders as a, users as b 
-                                WHERE a.buyer_id=b.id 
+            DB::raw("SELECT a.*, a.paid, a.id, b.avatar, a.HQ, DATE(a.created_at) as order_date, a.status, b.name as buyer_name FROM orders as a, users as b
+                                WHERE a.buyer_id=b.id
                                 AND YEAR(a.created_at) = :year
                                 AND MONTH(a.created_at) = :month
-                                AND a.HQ = 1"),
+                                AND a.HQ = 1
+                                ORDER BY a.id DESC"),
             array(
                 'month' => Carbon::now()->month,
                 'year' => Carbon::now()->year,
@@ -117,20 +118,42 @@ class ListOrder
         //        return $data;
     }
 
-    public function searchCustomerOrder($start_date, $end_date)
+    public function searchCustomerOrder($start_date, $end_date, $filter_status)
     {
 
-        $order = DB::select(
-            DB::raw("SELECT a.*, a.paid, a.id, b.avatar, a.HQ, a.created_at, a.status, b.name as buyer_name FROM orders as a, users as b 
-                                WHERE a.buyer_id=b.id 
+        if($filter_status != 4)
+        {
+            $order = DB::select(
+                DB::raw("SELECT a.*, a.paid, a.id, b.avatar, a.HQ, DATE(a.created_at) as order_date, a.status, b.name as buyer_name FROM orders as a, users as b
+                                WHERE a.buyer_id=b.id
                                 AND DATE(a.created_at) >= :start_date
                                 AND DATE(a.created_at) <= :end_date
-                                AND a.HQ = 1"),
-            array(
-                'start_date' => $start_date,
-                'end_date' => $end_date,
-            )
-        );
+                                AND a.status = :status
+                                AND a.HQ = 1
+                                ORDER BY a.id DESC"),
+                array(
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                    'status' => $filter_status,
+                )
+            );
+        }
+
+        if($filter_status == 4)
+        {
+            $order = DB::select(
+                DB::raw("SELECT a.*, a.paid, a.id, b.avatar, a.HQ, DATE(a.created_at) as order_date, a.status, b.name as buyer_name FROM orders as a, users as b
+                                WHERE a.buyer_id=b.id
+                                AND DATE(a.created_at) >= :start_date
+                                AND DATE(a.created_at) <= :end_date
+                                AND a.HQ = 1
+                                ORDER BY a.id DESC"),
+                array(
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                )
+            );
+        }
 
         return $order;
 

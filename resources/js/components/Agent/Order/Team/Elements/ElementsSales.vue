@@ -37,7 +37,7 @@
                 </div>
             </td>
             <td>{{Order.total}}</td>
-            <td>{{Order.created_at}}</td>
+            <td>{{Order.order_date}}</td>
             <td>
                 <span v-if="Order.status =='2'" class="label label-warning label-pill label-inline mr-2">Pending</span>
                 <span v-if="Order.status =='1'" class="label label-success label-pill label-inline mr-2">Success</span>

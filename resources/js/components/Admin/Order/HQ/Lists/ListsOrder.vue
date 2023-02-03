@@ -12,7 +12,7 @@
                         <div class="row text-right">
                             <div class="col-lg-12">
                                 <div class="row">
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-12">
                                         <select class="form-control select2" style="width:100%" id="select-filter-order"
                                             v-model="filterOrder">
                                             <option value="4">All</option>
@@ -22,10 +22,10 @@
                                             <option value="1">Completed</option>
                                         </select>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <!-- <div class="col-lg-4">
                                         <button class="btn btn-sm btn-primary" @click="filterValidation">
                                             Search</button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div><br>
@@ -130,7 +130,7 @@ export default {
             this.isSpinner = true;
             fetch('/api/v1/orders/HQ/Lists/' + this.filterOrder + '/1/No/admin-filter-order').then(response => response.json())
                 .then(response => {
-                    this.Orders = response.data;
+                    this.Orders = response;
                     this.isSpinner = false;
                     $('#kt_datatable').DataTable().destroy();
                     this.$nextTick(() => {
@@ -215,7 +215,11 @@ export default {
             this.orderDetails = [];
             this.orderAll = false;
 
-            fetch('/api/v1/orders/HQ/Lists/' + this.StartDate + '/' + this.EndDate + '/search-customer-order').then(response => response.json())
+            if (!this.StartDate && !this.EndDate){
+                this.filterValidation();
+            }
+            if (this.StartDate && this.EndDate){
+                fetch('/api/v1/orders/HQ/Lists/' + this.StartDate + '/' + this.EndDate + '/' + this.filterOrder +'/search-customer-order').then(response => response.json())
                 .then(response => {
                     this.Orders = response;
 
@@ -256,6 +260,7 @@ export default {
 
                 })
                 .catch(error => console.log(error))
+            }
         },
     }
 }

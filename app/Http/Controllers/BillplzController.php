@@ -134,7 +134,7 @@ class BillplzController extends Controller
 
             if($response['billplz']['paid'] == 'false')
             {
-                $order->status = 4;
+                $order->status = 0;
                 $order->total_paid = $paid_amount;
                 $order->paid_at = $paid_at;
             }

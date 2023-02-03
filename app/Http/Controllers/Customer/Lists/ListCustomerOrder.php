@@ -35,7 +35,7 @@ class ListCustomerOrder
 
         // return OrdersResources::collection($data);
         $order = DB::select(
-            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, b.name as buyer_name, a.buyer_type, a.deliver_to, a.total, DATE(a.created_at) as order_date, a.status FROM orders as a, users as b 
+            DB::raw("SELECT a.*, a.id, a.HQ, a.paid, a.buyer_type, a.deliver_to, a.total, DATE(a.created_at) as order_date, a.status FROM orders as a, users as b 
                             WHERE a.buyer_id=b.id
                             AND a.seller_id = :seller_id
                             AND a.buyer_id = :buyer_id
